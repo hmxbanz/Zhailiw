@@ -1,4 +1,4 @@
-package com.zhailiw;
+package com.zhailiw.view.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zhailiw.waimai.R;
+import com.zhailiw.R;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -21,7 +21,7 @@ public class QrCodeActivity extends BaseActivity implements View.OnClickListener
         initViews();
         CaptureFragment captureFragment = new CaptureFragment();
         // 为二维码扫描界面设置定制化界面
-        CodeUtils.setFragmentArgs(captureFragment, R.layout.my_camera);
+        CodeUtils.setFragmentArgs(captureFragment, R.layout.qr_code_camera);
         captureFragment.setAnalyzeCallback(analyzeCallback);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
     }

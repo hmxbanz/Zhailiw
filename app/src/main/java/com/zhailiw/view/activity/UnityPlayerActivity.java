@@ -1,4 +1,4 @@
-package com.zhailiw;
+package com.zhailiw.view.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -7,15 +7,14 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.zhailiw.waimai.R;
-import com.zhailiw.permissionLibrary.PermissionsManager;
-import com.zhailiw.permissionLibrary.PermissionsResultAction;
+import com.zhailiw.R;
+import com.zhailiw.widget.permissionLibrary.PermissionsManager;
+import com.zhailiw.widget.permissionLibrary.PermissionsResultAction;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 public class UnityPlayerActivity extends BaseActivity
 {
     private static final int QRSCANNING = 1;
-    private UnityPresenter presenter;
     private String qrCode,IMEI;
 
     private static final String TAG = UnityPlayerActivity.class.getSimpleName();
@@ -26,7 +25,6 @@ public class UnityPlayerActivity extends BaseActivity
 
         getWindow().setFormat(PixelFormat.RGBX_8888); // <--- This makes xperia play happy
         setContentView(R.layout.activity_main);
-        presenter = new UnityPresenter(this);
     }
 
     public void init() {
@@ -41,9 +39,7 @@ public class UnityPlayerActivity extends BaseActivity
                 new PermissionsResultAction() {
                     @Override
                     public void onGranted() {
-
                     }
-
                     @Override
                     public void onDenied(String permission) {
                         Toast.makeText(UnityPlayerActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
@@ -68,7 +64,6 @@ public class UnityPlayerActivity extends BaseActivity
                     }
                     if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                         qrCode = bundle.getString(CodeUtils.RESULT_STRING);
-                        presenter.bindQrcode(qrCode,IMEI);
                         Toast.makeText(this, "result:" + qrCode, Toast.LENGTH_LONG).show();
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
                         Toast.makeText(this, "error", Toast.LENGTH_LONG).show();

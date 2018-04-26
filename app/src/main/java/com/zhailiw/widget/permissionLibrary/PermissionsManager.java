@@ -1,4 +1,4 @@
-package com.zhailiw.permissionLibrary;
+package com.zhailiw.widget.permissionLibrary;
 
 import android.Manifest;
 import android.app.Activity;

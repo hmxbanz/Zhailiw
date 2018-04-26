@@ -42,4 +42,6 @@ dependencies {
     //设置状态栏
     implementation 'org.greenrobot:eventbus:3.1.1'
     //异步请求
+    //Logger日志插件
+    implementation 'com.orhanobut:logger:1.8'
 }

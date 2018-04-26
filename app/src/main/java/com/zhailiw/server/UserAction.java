@@ -46,32 +46,6 @@ public class UserAction extends BaseAction {
         return instance;
     }
 
-
-//抽奖
-    public Object startLottery() throws HttpException {
-        String result = "";
-        String uri = getURL("cli-api-drawrolls.php");
-        Response response=null;
-        try {
-            response= OkHttpUtils
-                    .get()
-                    .addParams("access_key",token)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BindResponse lotteryResponse = null;
-        try {
-            lotteryResponse = JsonMananger.jsonToBean(result, BindResponse.class);
-        } catch (JSONException e) {
-            //Logger.e(TAG+"::::::%s", "LotteryResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-        return lotteryResponse;
-    }
 //绑定
     public Object bindQRCode(String qrCode,String phoneID) throws  HttpException{
         String result = "";

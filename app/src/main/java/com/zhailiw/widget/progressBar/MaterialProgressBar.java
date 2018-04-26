@@ -1,4 +1,4 @@
-package com.zhailiw.progressBar;
+package com.zhailiw.widget.progressBar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.zhailiw.waimai.R;
+import com.zhailiw.R;
 
 /**
  * Created by rowandjj on 15/8/6.
@@ -308,7 +308,7 @@ public class MaterialProgressBar extends View {
     }
     private static final float delta = 6f;
     private float temp = 0;
-    class AnimRunnable implements Runnable {
+    class AnimRunnable implements Runnable{
         @Override
         public void run() {
             if (mStartAngle == temp) {
@@ -331,7 +331,7 @@ public class MaterialProgressBar extends View {
         }
     }
 
-    static class SavedState extends BaseSavedState {
+    static class SavedState extends BaseSavedState{
 
         float mProgress;
         int mBarWidth;
@@ -372,8 +372,8 @@ public class MaterialProgressBar extends View {
         }
 
         //required field that makes Parcelables from a Parcel
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR =
+                new Creator<SavedState>() {
                     public SavedState createFromParcel(Parcel in) {
                         return new SavedState(in);
                     }

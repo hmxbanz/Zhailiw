@@ -1,4 +1,4 @@
-package com.zhailiw.permissionLibrary;
+package com.zhailiw.widget.permissionLibrary;
 
 /**
  * Enum class to handle the different states

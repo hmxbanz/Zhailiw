@@ -1,4 +1,4 @@
-package com.zhailiw;
+package com.zhailiw.widget;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.zhailiw.waimai.R;
+import com.zhailiw.R;
 import com.zhailiw.common.NToast;
 
 public class LoadDialog extends Dialog {
@@ -43,7 +43,7 @@ public class LoadDialog extends Dialog {
         this.canNotCancel = canNotCancel;
         this.tipMsg = tipMsg;
         this.getContext().setTheme(android.R.style.Theme_InputMethod);
-        setContentView(R.layout.layout_dialog_loading);
+        setContentView(R.layout.widget_dialog_loading);
 
         if (!TextUtils.isEmpty(this.tipMsg)) {
             mShowMessage = (TextView) findViewById(R.id.show_message);
