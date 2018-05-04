@@ -4,7 +4,7 @@
 
     <android.support.v4.view.ViewPager android:id="@+id/GuiderViewPager" android:layout_width="fill_parent" android:layout_height="fill_parent" />
 
-    <com.zhailiw.widget.scaleIndicator.ScaleIndicatorLayout
+    <com.zhailiw.app.widget.scaleIndicator.ScaleIndicatorLayout
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,20 +14,20 @@
         app:indicatorIncreaseSize="3dp"
         app:indicatorMinSize="6dp">
 
-        <com.zhailiw.widget.scaleIndicator.ScaleIndicatorView
+        <com.zhailiw.app.widget.scaleIndicator.ScaleIndicatorView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.zhailiw.widget.scaleIndicator.ScaleIndicatorView
+        <com.zhailiw.app.widget.scaleIndicator.ScaleIndicatorView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp" />
 
-        <com.zhailiw.widget.scaleIndicator.ScaleIndicatorView
+        <com.zhailiw.app.widget.scaleIndicator.ScaleIndicatorView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp" />
 
-    </com.zhailiw.widget.scaleIndicator.ScaleIndicatorLayout>
+    </com.zhailiw.app.widget.scaleIndicator.ScaleIndicatorLayout>
 </FrameLayout>
 

@@ -13,8 +13,30 @@
         <item name="android:textSize">20dp</item>
     </style>
 
+    <style name="AppButtonStyle">
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:background">@drawable/bg_button</item>
+    </style>
+
     <style name="AppPlaintTextStyle">
         <item name="android:textColor">@color/appTextColor</item>
         <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="MenuTitleStyle">
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="dialogFullscreen">
+        <item name="android:windowFullscreen">true</item>
     </style>
 </resources>

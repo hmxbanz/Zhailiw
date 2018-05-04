@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zhailiw">
+    package="com.zhailiw.app">
     <!-- Required 一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <application
-        android:name="com.zhailiw.MainApplication"
+        android:name="com.zhailiw.app.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"

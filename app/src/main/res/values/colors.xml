@@ -13,6 +13,7 @@
     <color name="appButtonColor">#5bc0de</color>
     <color name="appButtonBorderColor">#46b8da</color>
     <color name="appBg" >#efefef</color>
+    <drawable name="transparent_drawable">#00ffffff</drawable>
     <!--自定义的颜色-->
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
