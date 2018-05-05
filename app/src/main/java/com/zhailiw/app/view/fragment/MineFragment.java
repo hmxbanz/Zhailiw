@@ -17,7 +17,6 @@ import com.zhailiw.app.R;
 import com.zhailiw.app.common.NLog;
 import com.zhailiw.app.common.PhotoUtils;
 import com.zhailiw.app.presenter.MinePresenter;
-import com.zhailiw.app.server.broadcast.BroadcastManager;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.widget.SelectableRoundedImageView;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
@@ -33,7 +32,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
     private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder,mLayoutScore;
-    private View mView;
+    private View view;
 
     private SelectableRoundedImageView mImageView;
     private ImageView mImageSetting;
@@ -57,14 +56,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_mine, null);
+        view = inflater.inflate(R.layout.fragment_mine, null);
         initViews();
         presenter = new MinePresenter(getActivity());
         //presenter.init(mImageView,nickName);
         //initData();
 //        compareVersion();
         NLog.d("fragment-----","onCreateView");
-        return mView;
+        return view;
     }
 
     @Override
@@ -81,31 +80,27 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews() {
-        layout_back=(RelativeLayout)mView.findViewById(R.id.layout_back);
-        layout_back.setVisibility(View.INVISIBLE);
-        title=(TextView)mView.findViewById(R.id.text_title);
-        title.setText("我的");
-//        mImageSetting = (ImageView) mView.findViewById(R.id.img_setting);
-//        mImageSetting.setOnClickListener(this);
-        mImageView = (SelectableRoundedImageView) mView.findViewById(R.id.img_avator);
+        ((TextView)view.findViewById(R.id.text_title)).setText("我的");
+        view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
+        mImageView = (SelectableRoundedImageView) view.findViewById(R.id.img_avator);
         mImageView.setOnClickListener(this);
-        nickName=mView.findViewById(R.id.nick_name);
+        nickName= view.findViewById(R.id.nick_name);
 
-        mLayoutAr =  mView.findViewById(R.id.layout_dynamic);
+        mLayoutAr =  view.findViewById(R.id.layout_dynamic);
         mLayoutAr.setOnClickListener(this);
-        mLayoutMsg =  mView.findViewById(R.id.layout_message);
+        mLayoutMsg =  view.findViewById(R.id.layout_message);
         mLayoutMsg.setOnClickListener(this);
-        mLayoutMyVideo =  mView.findViewById(R.id.layout_my_video);
+        mLayoutMyVideo =  view.findViewById(R.id.layout_my_video);
         mLayoutMyVideo.setOnClickListener(this);
 
-        mLayoutSetting =  mView.findViewById(R.id.layout_setting);
+        mLayoutSetting =  view.findViewById(R.id.layout_setting);
         mLayoutSetting.setOnClickListener(this);
 
-        mLayoutShopCar =  mView.findViewById(R.id.layout_shop_car);
+        mLayoutShopCar =  view.findViewById(R.id.layout_shop_car);
         mLayoutShopCar.setOnClickListener(this);
-        mLayoutOrder =  mView.findViewById(R.id.layout_order);
+        mLayoutOrder =  view.findViewById(R.id.layout_order);
         mLayoutOrder.setOnClickListener(this);
-        mLayoutTitle =  mView.findViewById(R.id.layout_title);
+        mLayoutTitle =  view.findViewById(R.id.layout_title);
         mLayoutTitle.setOnClickListener(this);
     }
 

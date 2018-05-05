@@ -50,6 +50,7 @@ dependencies {
     //图片加载工具
     implementation ('com.youth.banner:banner:1.4.9')
     implementation ('com.android.support:recyclerview-v7:27.1.1')
+    implementation 'com.fyales.android:library:1.0.2'//标签
 }
 //MobSDK {
 //    appKey "259113d838515"

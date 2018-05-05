@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.fyales.tagcloud.library.TagBaseAdapter;
+import com.fyales.tagcloud.library.TagCloudLayout;
 import com.youth.banner.Banner;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
@@ -16,6 +19,7 @@ import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.StyleResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,6 +59,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.context=c;
         this.layoutInflater= LayoutInflater.from(c);
         glideImageLoader=new GlideImageLoader();
+        View v = layoutInflater.inflate(R.layout.listitem_gallery_header,null, false);
+        mHeaderView=v;
     }
     public void setListItems(List<GalleryResponse.DataBean> l)
     {
@@ -79,12 +85,37 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(getItemViewType(position) == TYPE_HEADER) return;
         if(getItemViewType(position) == TYPE_FOOTER) return;
         final int pos = getRealPosition(holder);
-        //if(position==listItems.size())return;
 
-        final GalleryResponse.DataBean listItem = listItems.get(position);
+        if(holder instanceof HeaderHolder) {
+            final HeaderHolder headerHolder=(HeaderHolder)holder;
+            final ArrayList mList = new ArrayList<>();
+            mList.add("日本");
+            mList.add("朝鲜");
+            mList.add("台湾");
+            mList.add("文莱");
+            mList.add("菲律宾");
+            final TagBaseAdapter mAdapter = new TagBaseAdapter(context,mList);
+            headerHolder.title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(headerHolder.tagCloudLayout.getVisibility()==View.GONE)
+                        headerHolder.tagCloudLayout.setVisibility(View.VISIBLE);
+                    else
+                        headerHolder.tagCloudLayout.setVisibility(View.GONE);
+                }
+            });
+            headerHolder.tagCloudLayout.setAdapter(mAdapter);
+            headerHolder.tagCloudLayout.setItemClickListener(new TagCloudLayout.TagItemClickListener() {
+                @Override
+                public void itemClick(int position) {
+                    mListener.onTabItemClick(position,mList.get(position).toString());
+                }
+            });
+        }
+        if(getItemViewType(position) == TYPE_HEADER) return;
+        final GalleryResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             DataHolder dataHolder=(DataHolder)holder;
             glideImageLoader.displayImage(context, Const.IMGURI+listItem.getPhotoSmall(),dataHolder.imageView);
@@ -120,7 +151,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         try {
-            if (mRecyclerView == null && mRecyclerView != recyclerView) {
+            if (mRecyclerView == null) {
                 mRecyclerView = recyclerView;
             }
             ifGridLayoutManager();
@@ -129,16 +160,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
     private void ifGridLayoutManager() {
-        if (mRecyclerView == null) return;
         final RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
-            final GridLayoutManager.SpanSizeLookup originalSpanSizeLookup = ((GridLayoutManager) layoutManager).getSpanSizeLookup();
-            ((GridLayoutManager) layoutManager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            final  GridLayoutManager l=(GridLayoutManager)layoutManager;
+            final GridLayoutManager.SpanSizeLookup originalSpanSizeLookup = l.getSpanSizeLookup();
+            l.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return (isHeaderView(position) || isFooterView(position)) ?
-                            ((GridLayoutManager) layoutManager).getSpanCount() :
-                            1;
+                    return (isHeaderView(position) || isFooterView(position)) ? l.getSpanCount() :1;
                 }
             });
         }
@@ -158,12 +187,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
     public interface ItemClickListener {
         void onItemClick(int position, GalleryResponse.DataBean item);
+        void onTabItemClick(int position, String item);
 
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
-        private Banner banner;
+        private TagCloudLayout tagCloudLayout;
+        private TextView title;
         public HeaderHolder(View itemView) {
             super(itemView);
+            tagCloudLayout =  itemView.findViewById(R.id.tab_container);
+            title =  itemView.findViewById(R.id.title);
         }
     }
 

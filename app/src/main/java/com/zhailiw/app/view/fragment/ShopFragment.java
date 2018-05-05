@@ -66,9 +66,8 @@ private static final int Blue=0x001bb4fb;
     private void initViews() {
         recycleView=  view.findViewById(R.id.recyclerView);
         swiper=  view.findViewById(R.id.swiper);
-//        //简单使用
-//        banner = (Banner) view.findViewById(R.id.banner);
-//        banner.setImageLoader(new GlideImageLoader());//设置图片加载器
+        ((TextView)view.findViewById(R.id.text_title)).setText("风格列表");
+        view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
     }
 
     @Override

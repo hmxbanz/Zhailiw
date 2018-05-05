@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginTop="5dp"
+    android:id="@+id/layout"    >
+    <TextView
+        android:id="@+id/title"
+        android:text="全部"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <com.fyales.tagcloud.library.TagCloudLayout
+        android:paddingLeft="20dp"
+        android:visibility="gone"
+        android:id="@+id/tab_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:tagSpacing="5dp"
+        app:lineSpacing="3dp"/>
+</LinearLayout>

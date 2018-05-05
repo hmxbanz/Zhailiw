@@ -11,14 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
+import com.fyales.tagcloud.library.TagBaseAdapter;
+import com.fyales.tagcloud.library.TagCloudLayout;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
-import com.youth.banner.Banner;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
-import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.presenter.HomeFragmentPresenter;
+
+import java.util.ArrayList;
 
 /**
  * Created by AMing on 16/6/21.
@@ -68,6 +70,8 @@ private static final int Blue=0x001bb4fb;
     private void initViews() {
         recycleView=  view.findViewById(R.id.recyclerView);
         swiper=  view.findViewById(R.id.swiper);
+        ((TextView)view.findViewById(R.id.text_title)).setText("灵感图库");
+        view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
 //        //简单使用
 //        banner = (Banner) view.findViewById(R.id.banner);
 //        banner.setImageLoader(new GlideImageLoader());//设置图片加载器

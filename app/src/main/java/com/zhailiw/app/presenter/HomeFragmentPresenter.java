@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.zhailiw.app.Adapter.GalleryAdapter;
 import com.zhailiw.app.Const;
+import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.listener.AlertDialogCallBack;
 import com.zhailiw.app.server.HttpException;
@@ -47,12 +49,11 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
 
     public void init(RecyclerView recyclerView, SwipeRefreshLayout swiper) {
         this.recyclerView=recyclerView;
-        this.swiper=swiper;
-        this.swiper.setOnRefreshListener(this);
-        this.recyclerView.setAdapter(dataAdapter);
-        this.recyclerView.setNestedScrollingEnabled(false);
         gridLayoutManager=new GridLayoutManager(context,2);
         this.recyclerView.setLayoutManager(gridLayoutManager);
+        this.recyclerView.setNestedScrollingEnabled(false);
+        this.swiper=swiper;
+        this.swiper.setOnRefreshListener(this);
         atm.request(GETGALLERY,HomeFragmentPresenter.this);
     }
 //    public void loadData(){
@@ -82,11 +83,11 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
                     if (response.getData().size() == 0) {
                     }
                     else {
-                        list.clear();
                         list.addAll(response.getData());
                         //设置列表
                         //dataAdapter.setHeaderView(LayoutInflater.from(context).inflate(R.layout.recyclerview_header,null));
                         dataAdapter.notifyDataSetChanged();
+                        this.recyclerView.setAdapter(dataAdapter);
                         this.swiper.setRefreshing(false);
                     }
                 }else {
@@ -126,5 +127,10 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
     @Override
     public void onItemClick(int position, GalleryResponse.DataBean item) {
 
+    }
+
+    @Override
+    public void onTabItemClick(int position, String item) {
+        NToast.shortToast(activity,item);
     }
 }
