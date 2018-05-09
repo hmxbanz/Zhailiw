@@ -30,27 +30,31 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation ('cn.yipianfengye.android:zxing-library:2.2'){
+    implementation('cn.yipianfengye.android:zxing-library:2.2') {
         exclude group: 'com.android.support'
     }
     //二维码扫描
-    implementation ('com.alibaba:fastjson:1.1.46.android')
+    implementation 'com.alibaba:fastjson:1.1.46.android'
     //Json工具
-    implementation ('com.zhy:okhttputils:2.6.2')
+    implementation 'com.zhy:okhttputils:2.6.2'
     //网络请求
-    implementation('com.jaeger.statusbarutil:library:1.5.1'){
+    implementation('com.jaeger.statusbarutil:library:1.5.1') {
         exclude group: 'com.android.support'
     }
     //设置状态栏
-    implementation ('org.greenrobot:eventbus:3.1.1')
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //异步请求
     //Logger日志插件
-    implementation ('com.orhanobut:logger:1.8')
-    implementation ('com.github.bumptech.glide:glide:3.7.0')
+    implementation 'com.orhanobut:logger:1.8'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
     //图片加载工具
-    implementation ('com.youth.banner:banner:1.4.9')
-    implementation ('com.android.support:recyclerview-v7:27.1.1')
-    implementation 'com.fyales.android:library:1.0.2'//标签
+    implementation 'com.youth.banner:banner:1.4.9'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.fyales.android:library:1.0.2'
+    //标签
+    implementation ('com.lzy.widget:ninegridview:0.2.0'){
+        exclude group: 'com.android.support'
+    }
 }
 //MobSDK {
 //    appKey "259113d838515"

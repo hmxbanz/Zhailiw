@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NLog;
 import com.zhailiw.app.common.PhotoUtils;
-import com.zhailiw.app.presenter.MinePresenter;
+import com.zhailiw.app.presenter.MineFragmentPresenter;
+import com.zhailiw.app.view.activity.AddressActivity;
 import com.zhailiw.app.view.activity.MainActivity;
+import com.zhailiw.app.view.activity.MeActivity;
 import com.zhailiw.app.widget.SelectableRoundedImageView;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
 
@@ -31,7 +33,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
     private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar,mLayoutOrder,mLayoutScore;
+    private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar, layoutAddress,mLayoutScore;
     private View view;
 
     private SelectableRoundedImageView mImageView;
@@ -43,7 +45,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private LinearLayout mTxtMe;
     private RelativeLayout layout_back;
     private TextView title;
-    private MinePresenter presenter;
+    private MineFragmentPresenter presenter;
     private TextView nickName;
 
     public static MineFragment getInstance() {
@@ -58,8 +60,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_mine, null);
         initViews();
-        presenter = new MinePresenter(getActivity());
-        //presenter.init(mImageView,nickName);
+        presenter = new MineFragmentPresenter(getActivity());
+        presenter.init(mImageView,nickName);
         //initData();
 //        compareVersion();
         NLog.d("fragment-----","onCreateView");
@@ -98,8 +100,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         mLayoutShopCar =  view.findViewById(R.id.layout_shop_car);
         mLayoutShopCar.setOnClickListener(this);
-        mLayoutOrder =  view.findViewById(R.id.layout_order);
-        mLayoutOrder.setOnClickListener(this);
+        layoutAddress =  view.findViewById(R.id.layout_address);
+        layoutAddress.setOnClickListener(this);
         mLayoutTitle =  view.findViewById(R.id.layout_title);
         mLayoutTitle.setOnClickListener(this);
     }
@@ -107,7 +109,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //BroadcastManager.getInstance(getActivity()).destroy(MinePresenter.UPDATEUNREAD);
+        //BroadcastManager.getInstance(getActivity()).destroy(MineFragmentPresenter.UPDATEUNREAD);
     }
 
     @Override
@@ -118,7 +120,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
             case R.id.layout_title:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
             case R.id.layout_message:
                 startActivity(new Intent(getActivity(), MainActivity.class));
@@ -129,11 +131,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.layout_setting:
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 break;
-            case R.id.layout_shop_car:
-                //presenter.openShopCar();
-                break;
-            case R.id.layout_order:
-                //presenter.openOrder();
+            case R.id.layout_address:
+                startActivity(new Intent(getActivity(), AddressActivity.class));
                 break;
         }
     }

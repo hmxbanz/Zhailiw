@@ -13,7 +13,7 @@
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:padding="10dip"
-        android:text="回复"
+        android:text="拍照"
         android:textColor="@color/appTextColor"
         android:textSize="18sp" />
 
@@ -29,7 +29,7 @@
         android:background="@drawable/selector_item_bg"
         android:gravity="center"
         android:padding="10dip"
-        android:text="举报"
+        android:text="从相册选择"
         android:textColor="@color/appTextColor"
         android:textSize="18sp" />
 

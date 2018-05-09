@@ -39,4 +39,10 @@
     <style name="dialogFullscreen">
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <!--编辑输入框-->
+    <style name="EditTextStyle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:background">@color/aliceblue</item>
+    </style>
 </resources>

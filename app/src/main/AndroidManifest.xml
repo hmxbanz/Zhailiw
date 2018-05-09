@@ -43,7 +43,20 @@
         <activity   android:name=".view.activity.QrCodeActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.MainActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.GuideActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.MeActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.UpdateActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.AddressActivity" android:screenOrientation="portrait" />
         <service android:name=".service.BluetoothService" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

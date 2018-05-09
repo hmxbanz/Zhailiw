@@ -8,7 +8,7 @@ public class GalleryResponse {
      * state : 1
      * msg : 成功
      * totalPages : 1
-     * data : [{"PhotoSmall":"/Images/ZL_Gallery/2018/04/19/2018041917372113_s.jpg","PhotoBig":"/Images/ZL_Gallery/2018/04/19/2018041917372113_b.jpg","PhotoInfo":null,"PhotoType":276,"GalleryID":6,"GalleryName":"00022","CreateDate":"/Date(1524125341347)/"},{"PhotoSmall":"/Images/ZL_Gallery/2018/04/19/2018041917372113_s.jpg","PhotoBig":"/Images/ZL_Gallery/2018/04/19/2018041917372113_b.jpg","PhotoInfo":null,"PhotoType":276,"GalleryID":6,"GalleryName":"00022","CreateDate":"/Date(1524125341347)/"},{"PhotoSmall":"/Images/ZL_Gallery/2018/04/19/2018041917372113_s.jpg","PhotoBig":"/Images/ZL_Gallery/2018/04/19/2018041917372113_b.jpg","PhotoInfo":null,"PhotoType":276,"GalleryID":6,"GalleryName":"00022","CreateDate":"/Date(1524125341347)/"},{"PhotoSmall":"/Images/ZL_Gallery/2018/04/19/2018041917372113_s.jpg","PhotoBig":"/Images/ZL_Gallery/2018/04/19/2018041917372113_b.jpg","PhotoInfo":null,"PhotoType":276,"GalleryID":6,"GalleryName":"00022","CreateDate":"/Date(1524125341347)/"},{"PhotoSmall":null,"PhotoBig":null,"PhotoInfo":null,"PhotoType":null,"GalleryID":2,"GalleryName":"dd","CreateDate":"/Date(1524108440337)/"},{"PhotoSmall":null,"PhotoBig":null,"PhotoInfo":null,"PhotoType":null,"GalleryID":1,"GalleryName":"图库一","CreateDate":"/Date(1524108393420)/"}]
+     * data : [{"GalleryID":1,"GalleryName":"图库一","GalleryCover":null,"CreateDate":"/Date(1524108393420)/"},{"GalleryID":2,"GalleryName":"dd","GalleryCover":null,"CreateDate":"/Date(1524108440337)/"},{"GalleryID":6,"GalleryName":"00022","GalleryCover":"/Images/ZL_Gallery/2018/04/20/2018042010160328_s.jpg","CreateDate":"/Date(1524125341347)/"},{"GalleryID":7,"GalleryName":"ddd","GalleryCover":"/Images/ZL_Gallery/2018/05/07/2018050711493122_s.png","CreateDate":"/Date(1525664947963)/"}]
      */
 
     private int state;
@@ -50,54 +50,16 @@ public class GalleryResponse {
 
     public static class DataBean {
         /**
-         * PhotoSmall : /Images/ZL_Gallery/2018/04/19/2018041917372113_s.jpg
-         * PhotoBig : /Images/ZL_Gallery/2018/04/19/2018041917372113_b.jpg
-         * PhotoInfo : null
-         * PhotoType : 276
-         * GalleryID : 6
-         * GalleryName : 00022
-         * CreateDate : /Date(1524125341347)/
+         * GalleryID : 1
+         * GalleryName : 图库一
+         * GalleryCover : null
+         * CreateDate : /Date(1524108393420)/
          */
 
-        private String PhotoSmall;
-        private String PhotoBig;
-        private Object PhotoInfo;
-        private int PhotoType;
         private int GalleryID;
         private String GalleryName;
+        private Object GalleryCover;
         private String CreateDate;
-
-        public String getPhotoSmall() {
-            return PhotoSmall;
-        }
-
-        public void setPhotoSmall(String PhotoSmall) {
-            this.PhotoSmall = PhotoSmall;
-        }
-
-        public String getPhotoBig() {
-            return PhotoBig;
-        }
-
-        public void setPhotoBig(String PhotoBig) {
-            this.PhotoBig = PhotoBig;
-        }
-
-        public Object getPhotoInfo() {
-            return PhotoInfo;
-        }
-
-        public void setPhotoInfo(Object PhotoInfo) {
-            this.PhotoInfo = PhotoInfo;
-        }
-
-        public int getPhotoType() {
-            return PhotoType;
-        }
-
-        public void setPhotoType(int PhotoType) {
-            this.PhotoType = PhotoType;
-        }
 
         public int getGalleryID() {
             return GalleryID;
@@ -113,6 +75,14 @@ public class GalleryResponse {
 
         public void setGalleryName(String GalleryName) {
             this.GalleryName = GalleryName;
+        }
+
+        public Object getGalleryCover() {
+            return GalleryCover;
+        }
+
+        public void setGalleryCover(Object GalleryCover) {
+            this.GalleryCover = GalleryCover;
         }
 
         public String getCreateDate() {

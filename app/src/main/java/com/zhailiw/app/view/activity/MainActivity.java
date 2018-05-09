@@ -74,9 +74,9 @@ public class MainActivity extends BaseActivity {
         //initData();
     }
     private void changeTextViewColor() {
-        mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.icon_qq));
-        mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.icon_qq));
-        mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.icon_qq));
+        mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.icon_design));
+        mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.icon_shop));
+        mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.icon_me));
         mTextHome.setTextColor(Color.parseColor("#abadbb"));
         mTextShop.setTextColor(Color.parseColor("#abadbb"));
         mTextMe.setTextColor(Color.parseColor("#abadbb"));
@@ -84,16 +84,16 @@ public class MainActivity extends BaseActivity {
     private void changeSelectedTabState(int position) {
         switch (position) {
             case 0:
-                mTextHome.setTextColor(Color.parseColor("#07a5ff"));
-                mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.app_icon));
+                mTextHome.setTextColor(Color.parseColor("#cdab7e"));
+                mImageHome.setImageDrawable(getResources().getDrawable(R.drawable.icon_design_on));
                 break;
             case 1:
-                mTextShop.setTextColor(Color.parseColor("#07a5ff"));
-                mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.app_icon));
+                mTextShop.setTextColor(Color.parseColor("#cdab7e"));
+                mImageShop.setImageDrawable(getResources().getDrawable(R.drawable.icon_shop_on));
                 break;
             case 2:
-                mTextMe.setTextColor(Color.parseColor("#07a5ff"));
-                mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.app_icon));
+                mTextMe.setTextColor(Color.parseColor("#cdab7e"));
+                mImageMe.setImageDrawable(getResources().getDrawable(R.drawable.icon_me_on));
                 break;
         }
     }

@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,20 +14,17 @@ import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.broadcast.BroadcastManager;
-import com.zhailiw.app.server.response.LoginResponse;
+import com.zhailiw.app.server.response.UserInfoResponse;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.widget.SelectableRoundedImageView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
  * Created by hmxbanz on 2017/4/5.
  */
 
-public class MinePresenter extends BasePresenter implements OnDataListener {
+public class MineFragmentPresenter extends BasePresenter implements OnDataListener {
     private static final int GETINFO = 2;
     private static final int GETMSGCOUNT = 3;
     public static final String UPDATEUNREAD = "updateUnread";
@@ -38,7 +34,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
     private SelectableRoundedImageView avator;
     private TextView nickName;
 
-    public MinePresenter(Context context){
+    public MineFragmentPresenter(Context context){
         super(context);
         basePresenter = BasePresenter.getInstance(context);
         glideImageLoader = new GlideImageLoader();
@@ -49,7 +45,7 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
         getInfo();
-        BroadcastManager.getInstance(context).addAction(MinePresenter.UPDATEUNREAD, new BroadcastReceiver() {
+        BroadcastManager.getInstance(context).addAction(MineFragmentPresenter.UPDATEUNREAD, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String command = intent.getAction();
@@ -93,6 +89,13 @@ public class MinePresenter extends BasePresenter implements OnDataListener {
         if (result==null)return;
         switch (requestCode) {
             case GETINFO:
+                UserInfoResponse userInfoResponse = (UserInfoResponse) result;
+                if (userInfoResponse.getState() == Const.SUCCESS) {
+                    UserInfoResponse.DataBean entity = userInfoResponse.getData();
+                    Glide.with(context).load(Const.IMGURI+entity.getPhotoSmall()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
+                    this.nickName.setText(entity.getNickName());
+                }
+                NToast.shortToast(context, userInfoResponse.getMsg());
                 break;
         }
     }

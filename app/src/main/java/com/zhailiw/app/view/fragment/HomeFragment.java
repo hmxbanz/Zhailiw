@@ -1,6 +1,8 @@
 package com.zhailiw.app.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.fyales.tagcloud.library.TagBaseAdapter;
 import com.fyales.tagcloud.library.TagCloudLayout;
+import com.lzy.ninegrid.NineGridView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
@@ -53,7 +59,25 @@ private static final int Blue=0x001bb4fb;
         presenter.init(recycleView,swiper);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         //StatusBarUtil.setTranslucent(getActivity(),0);
+        NineGridView.setImageLoader(new GlideImageLoader());
         return view;
+    }
+
+    /** Glide 加载 */
+    private class GlideImageLoader implements NineGridView.ImageLoader {
+        @Override
+        public void onDisplayImage(Context context, ImageView imageView, String url) {
+            Glide.with(context).load(url)//
+                    //.placeholder(R.drawable.ic_default_color)//
+                    //.error(R.drawable.ic_default_color)//
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)//
+                    .into(imageView);
+        }
+
+        @Override
+        public Bitmap getCacheImage(String url) {
+            return null;
+        }
     }
 
     @Override

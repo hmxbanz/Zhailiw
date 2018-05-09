@@ -85,7 +85,7 @@ public class PhotoUtils {
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Uri imageUri = FileProvider.getUriForFile(activity, "com.xtdar.app.provider", mCurrentPhotoFile);
+                Uri imageUri = FileProvider.getUriForFile(activity, "com.zhailiw.app.provider", mCurrentPhotoFile);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -143,7 +143,7 @@ public class PhotoUtils {
     private Uri buildUri(Activity activity) {
         if (CommonTools.checkSDCard()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return FileProvider.getUriForFile(activity, "com.xtdar.app.provider", mCurrentPhotoFile);
+                return FileProvider.getUriForFile(activity, "com.zhailiw.app.provider", mCurrentPhotoFile);
             } else {
                 return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
             }
@@ -170,7 +170,7 @@ public class PhotoUtils {
         //sdk>=24
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
-            Uri imageUri = FileProvider.getUriForFile(activity, "com.xtdar.app.provider", new File(url));//通过FileProvider创建一个content类型的Uri
+            Uri imageUri = FileProvider.getUriForFile(activity, "com.zhailiw.app.provider", new File(url));//通过FileProvider创建一个content类型的Uri
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.putExtra("noFaceDetection", true);//去除默认的人脸识别，否则和剪裁匡重叠
             cropIntent.setDataAndType(imageUri, "image/*");

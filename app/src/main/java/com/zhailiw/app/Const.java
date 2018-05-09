@@ -9,7 +9,7 @@ public class Const {
     public static final String OPENID = "openId";
     public static final String ACCESS_TOKEN = "access_key";
     public static final String USERINFOID = "userInfoId";
-    public static final String IMGURI="http://test.xtaigo.com/";
+    public static final String IMGURI="http://api.zhailiw.com/";
     public static final String SERVERURI="http://api.zhailiw.com/";
     public static final String ISLOGIN="isLogin";
     public static final int SUCCESS=1;

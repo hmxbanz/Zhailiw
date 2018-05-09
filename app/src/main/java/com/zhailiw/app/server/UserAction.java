@@ -1,19 +1,26 @@
 package com.zhailiw.app.server;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
 
 import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.json.JsonMananger;
+import com.zhailiw.app.server.request.UpdateRequest;
+import com.zhailiw.app.server.response.AddressResponse;
 import com.zhailiw.app.server.response.BindResponse;
 import com.zhailiw.app.server.response.CaptchaResponse;
 import com.zhailiw.app.server.response.CommonResponse;
+import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.StyleResponse;
+import com.zhailiw.app.server.response.UserInfoResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Response;
@@ -224,6 +231,32 @@ public class UserAction extends BaseAction {
         }
         return galleryResponse;
     }
+    //图库图片
+    public GalleryPicResponse getGalleryPic(String galleryId) throws HttpException {
+        String result = "";
+        String uri = getURL("Home/getGalleryPic");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("galleryId",galleryId)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GalleryPicResponse galleryPicResponse = null;
+        try {
+            galleryPicResponse = JsonMananger.jsonToBean(result, GalleryPicResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "GalleryPicResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return galleryPicResponse;
+    }
 
     public CommonResponse login(String userName, String password, String normal) throws HttpException {
         String result = "";
@@ -277,5 +310,129 @@ public class UserAction extends BaseAction {
             return null;
         }
         return styleResponse;
+    }
+
+    //上传头像
+    public CommonResponse uploadAvatar(File imgFile) throws HttpException {
+        String result = "";
+        String uri = getURL("User/updateAvatar");
+//        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+//        RequestBody requestBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("content", "Square Logo")
+//                .addFormDataPart("image", "logo-square.png",RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
+//                .build();
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .post()
+                    .addParams(Const.ACCESS_TOKEN,token)
+                    .addFile("avatar", "imgFile.jpg",imgFile)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CommonResponse commonResponse = null;
+        if (!TextUtils.isEmpty(result)) {
+            try {
+                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+            } catch (JSONException e) {
+                Logger.e(TAG+"::::::%s", "uploadAvatar occurs JSONException e=" + e.toString());
+                return null;
+            }
+        }
+        return commonResponse;
+    }
+
+    //取个人资料
+    public UserInfoResponse getInfo() throws HttpException {
+        String result = "";
+        String uri = getURL("User/getMyInfo");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        UserInfoResponse userInfoResponse = null;
+        try {
+            userInfoResponse = JsonMananger.jsonToBean(result, UserInfoResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "UserInfoResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return userInfoResponse;
+    }
+
+//修改个人资料
+    public CommonResponse save(String nickName) throws HttpException {
+        String result = "";
+        String uri = getURL("User/updateUserInfo");
+        String json = JsonMananger.beanToJson(new UpdateRequest(nickName,token));
+        Log.w(TAG, "请求的："+json);
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    //.postString()
+                    //.mediaType(MediaType.parse("application/json; charset=utf-8"))
+                    //.content(json)//.content(new Gson().toJson(new User("zhy", "123")))
+                    .get()
+                    .url(uri)
+                    .addParams("access_key",token)
+                    .addParams("NickName",nickName)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        CommonResponse commonResponse = null;
+        try {
+            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return commonResponse;
+
+    }
+
+    public AddressResponse getAddress() throws HttpException{
+        String result = "";
+        String uri = getURL("User/getMyAddress");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("access_key",token)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        AddressResponse addressResponse = null;
+        try {
+            addressResponse = JsonMananger.jsonToBean(result, AddressResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "AddressResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return addressResponse;
     }
 }

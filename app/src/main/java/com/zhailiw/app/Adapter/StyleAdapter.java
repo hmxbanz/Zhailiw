@@ -13,7 +13,6 @@ import com.youth.banner.Banner;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.loader.GlideImageLoader;
-import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.StyleResponse;
 
 import java.util.List;
@@ -72,7 +71,7 @@ public class StyleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_style_item, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_style, parent, false);
             return new DataHolder(v);
         }
     }

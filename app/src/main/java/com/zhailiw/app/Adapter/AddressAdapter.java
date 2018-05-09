@@ -7,22 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fyales.tagcloud.library.TagBaseAdapter;
-import com.fyales.tagcloud.library.TagCloudLayout;
-import com.zhailiw.app.Const;
+import com.youth.banner.Banner;
 import com.zhailiw.app.R;
 import com.zhailiw.app.loader.GlideImageLoader;
-import com.zhailiw.app.server.response.GalleryResponse;
+import com.zhailiw.app.server.response.AddressResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<GalleryResponse.DataBean> listItems;
+public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+    private List<AddressResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -33,7 +31,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private RecyclerView mRecyclerView;
     private GlideImageLoader glideImageLoader;
     private Context context;
-    private List<String> adImages;
 
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
@@ -53,14 +50,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyItemInserted(0);//告知Adapter首位置项变动了
     }
 
-    public GalleryAdapter(Context c){
+    public AddressAdapter(Context c){
         this.context=c;
         this.layoutInflater= LayoutInflater.from(c);
         glideImageLoader=new GlideImageLoader();
-        View v = layoutInflater.inflate(R.layout.listitem_gallery_header,null, false);
-        mHeaderView=v;
     }
-    public void setListItems(List<GalleryResponse.DataBean> l)
+    public void setListItems(List<AddressResponse.DataBean> l)
     {
         this.listItems=l;
     }
@@ -76,54 +71,29 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_gallery, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_address, parent, false);
             return new DataHolder(v);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if(getItemViewType(position) == TYPE_HEADER) return;
         if(getItemViewType(position) == TYPE_FOOTER) return;
         final int pos = getRealPosition(holder);
+        //if(position==listItems.size())return;
 
-        if(holder instanceof HeaderHolder) {
-            final HeaderHolder headerHolder=(HeaderHolder)holder;
-            final ArrayList mList = new ArrayList<>();
-            mList.add("日本");
-            mList.add("朝鲜");
-            mList.add("台湾");
-            mList.add("文莱");
-            mList.add("菲律宾");
-            final TagBaseAdapter mAdapter = new TagBaseAdapter(context,mList);
-            headerHolder.title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(headerHolder.tagCloudLayout.getVisibility()==View.GONE)
-                        headerHolder.tagCloudLayout.setVisibility(View.VISIBLE);
-                    else
-                        headerHolder.tagCloudLayout.setVisibility(View.GONE);
-                }
-            });
-            headerHolder.tagCloudLayout.setAdapter(mAdapter);
-            headerHolder.tagCloudLayout.setItemClickListener(new TagCloudLayout.TagItemClickListener() {
-                @Override
-                public void itemClick(int position) {
-                    mListener.onTabItemClick(position,mList.get(position).toString());
-                }
-            });
-        }
-        if(getItemViewType(position) == TYPE_HEADER) return;
-        final GalleryResponse.DataBean listItem = listItems.get(pos);
+        final AddressResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
-            final DataHolder dataHolder=(DataHolder)holder;
-            glideImageLoader.displayImage(context, Const.IMGURI+listItem.getGalleryCover(),dataHolder.imageView);
-            //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
-            //holder.imageView.setImageResource(listItem.getImgResource());
+            DataHolder dataHolder=(DataHolder)holder;
+            dataHolder.txtName.setText(listItem.getContact());
+            dataHolder.txtCellphone.setText(listItem.getCellphone());
+            dataHolder.txtAddress.setText(listItem.getAddress());
             if(mListener == null) return;
-            dataHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            dataHolder.layoutView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem,dataHolder);
+                    mListener.onItemClick(position,listItem);
                 }
             });
         }
@@ -180,53 +150,36 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int position = holder.getLayoutPosition();
         return mHeaderView == null ? position : position - 1;
     }
-    public void setAdImages(List<String> images) {
-        this.adImages=images;
-    }
     public interface ItemClickListener {
-        void onItemClick(int position, GalleryResponse.DataBean item, DataHolder dataHolder);
-        void onTabItemClick(int position, String item);
+        void onItemClick(int position, AddressResponse.DataBean item);
 
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
-        private TagCloudLayout tagCloudLayout;
-        private TextView title;
+        private Banner banner;
         public HeaderHolder(View itemView) {
             super(itemView);
-            tagCloudLayout =  itemView.findViewById(R.id.tab_container);
-            title =  itemView.findViewById(R.id.title);
         }
     }
 
-    public class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private ImageView imageView;
-        private RelativeLayout layoutView;
+        private TextView txtName;
+        private TextView txtCellphone;
+        private TextView txtAddress;
+        private TextView txtSetAddress;
+        private TextView txtDelete;
+        private LinearLayout layoutView;
+
         public DataHolder(View itemView) {
             super(itemView);
-            imageView =  itemView.findViewById(R.id.image);
+            txtName =  itemView.findViewById(R.id.txt_name);
+            txtCellphone =  itemView.findViewById(R.id.txt_cellphone);
+            txtAddress =  itemView.findViewById(R.id.txt_address);
             layoutView = itemView.findViewById(R.id.layout);
-        }
-
-        public ImageView getImageView() {
-            return imageView;
-        }
-
-        public void setImageView(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        public RelativeLayout getLayoutView() {
-            return layoutView;
-        }
-
-        public void setLayoutView(RelativeLayout layoutView) {
-            this.layoutView = layoutView;
         }
 
         @Override
         public void onClick(View v) {
-            //mListener.onItemClick(getAdapterPosition(),"a");
             switch (v.getId())
             {
                 case R.id.layout:

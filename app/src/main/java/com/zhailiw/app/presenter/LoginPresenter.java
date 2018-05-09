@@ -293,7 +293,7 @@ public class LoginPresenter extends BasePresenter  {
 //        basePresenter.initData();
 //        getInfo();
 //        rid = JPushInterface.getRegistrationID(context.getApplicationContext());
-//        BroadcastManager.getInstance(context).sendBroadcast(MinePresenter.UPDATEUNREAD, "loadAvator");
+//        BroadcastManager.getInstance(context).sendBroadcast(MineFragmentPresenter.UPDATEUNREAD, "loadAvator");
 //        BroadcastManager.getInstance(context).sendBroadcast(HomeFragmentPresenter.LOADDEVICE, "loadDevice");
 
     }
