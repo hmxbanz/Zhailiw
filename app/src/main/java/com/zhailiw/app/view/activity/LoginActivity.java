@@ -46,7 +46,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         layoutBack =  findViewById(R.id.layout_back);
         layoutBack.setOnClickListener(this);
-        txtTitle = findViewById(R.id.text_title);
+        txtTitle = findViewById(R.id.txt_title);
         mTextRight = findViewById(R.id.text_right);
         mTextRight.setOnClickListener(this);
 

@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.youth.banner.Banner;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
+import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.response.StyleResponse;
 
@@ -86,6 +88,7 @@ public class StyleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final StyleResponse.DataBean listItem = listItems.get(position);
         if(holder instanceof DataHolder) {
             DataHolder dataHolder=(DataHolder)holder;
+            dataHolder.txtStyleName.setText(listItem.getName());
             glideImageLoader.displayImage(context, Const.IMGURI+listItem.getPic(),dataHolder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
@@ -169,12 +172,22 @@ public class StyleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private ImageView imageView;
+        private TextView txtStyleName;
         private RelativeLayout layoutView;
 
         public DataHolder(View itemView) {
             super(itemView);
             imageView =  itemView.findViewById(R.id.image);
+            txtStyleName = itemView.findViewById(R.id.txt_style_name);
             layoutView = itemView.findViewById(R.id.layout);
+        }
+
+        public TextView getTxtStyleName() {
+            return txtStyleName;
+        }
+
+        public void setTxtStyleName(TextView txtStyleName) {
+            this.txtStyleName = txtStyleName;
         }
 
         public ImageView getImageView() {

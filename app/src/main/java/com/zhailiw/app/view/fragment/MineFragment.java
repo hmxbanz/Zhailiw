@@ -82,7 +82,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews() {
-        ((TextView)view.findViewById(R.id.text_title)).setText("我的");
+        ((TextView)view.findViewById(R.id.txt_title)).setText("我的");
         view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
         mImageView = (SelectableRoundedImageView) view.findViewById(R.id.img_avator);
         mImageView.setOnClickListener(this);

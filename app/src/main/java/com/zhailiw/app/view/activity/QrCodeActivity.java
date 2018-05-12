@@ -29,7 +29,7 @@ public class QrCodeActivity extends BaseActivity implements View.OnClickListener
     private void initViews() {
         layoutBack = (RelativeLayout) findViewById(R.id.layout_back);
         layoutBack.setOnClickListener(this);
-        txtTitle =(TextView) findViewById(R.id.text_title);
+        txtTitle =(TextView) findViewById(R.id.txt_title);
         txtTitle.setText("QR code Scanning");
 
     }

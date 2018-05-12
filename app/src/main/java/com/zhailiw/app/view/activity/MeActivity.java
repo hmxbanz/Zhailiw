@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhailiw.app.R;
@@ -32,7 +31,7 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void initViews(){
-        ((TextView)findViewById(R.id.text_title)).setText("资料");
+        ((TextView)findViewById(R.id.txt_title)).setText("资料");
         findViewById(R.id.layout_back).setOnClickListener(this);
         selectableRoundedImageView= findViewById(R.id.img_avator);
         selectableRoundedImageView.setOnClickListener(this);

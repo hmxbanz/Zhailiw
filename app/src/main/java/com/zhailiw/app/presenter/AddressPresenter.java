@@ -5,13 +5,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.zhailiw.app.Adapter.AddressAdapter;
-import com.zhailiw.app.Adapter.StyleAdapter;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.response.AddressResponse;
-import com.zhailiw.app.server.response.StyleResponse;
 import com.zhailiw.app.view.activity.AddressActivity;
 import com.zhailiw.app.widget.LoadDialog;
 

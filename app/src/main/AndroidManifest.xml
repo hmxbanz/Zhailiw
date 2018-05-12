@@ -46,6 +46,7 @@
         <activity   android:name=".view.activity.MeActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.UpdateActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.AddressActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.ShopActivity" android:screenOrientation="portrait" />
         <service android:name=".service.BluetoothService" />
         <provider
             android:name="android.support.v4.content.FileProvider"

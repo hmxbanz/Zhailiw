@@ -34,7 +34,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void initViews() {
         layoutBack = findViewById(R.id.layout_back);
         layoutBack.setOnClickListener(this);
-        txtTitle = findViewById(R.id.text_title);
+        txtTitle = findViewById(R.id.txt_title);
         txtTitle.setText("用户注册");
         txtProtocol = findViewById(R.id.txt_protocol);
         txtProtocol.setOnClickListener(this);

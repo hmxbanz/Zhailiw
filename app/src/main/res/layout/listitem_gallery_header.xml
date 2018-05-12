@@ -3,11 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/cornsilk"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_marginTop="5dp"
+    app:layout_goneMarginTop="5dp"
     android:id="@+id/layout"    >
     <TextView
         android:id="@+id/title"
@@ -18,10 +19,12 @@
         android:layout_height="wrap_content" />
     <com.fyales.tagcloud.library.TagCloudLayout
         android:paddingLeft="20dp"
+        android:paddingBottom="10dp"
         android:visibility="gone"
         android:id="@+id/tab_container"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
+        style="@style/AppTitleStyle"
         app:tagSpacing="5dp"
         app:lineSpacing="3dp"/>
 </LinearLayout>

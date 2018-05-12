@@ -3,7 +3,6 @@ package com.zhailiw.app.view.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhailiw.app.presenter.UpdatePresenter;
@@ -25,7 +24,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initViews() {
-        ((TextView)findViewById(R.id.text_title)).setText("修改资料");
+        ((TextView)findViewById(R.id.txt_title)).setText("修改资料");
         ((TextView)findViewById(R.id.text_right)).setText("保存");
         findViewById(R.id.layout_back).setOnClickListener(this);
         findViewById(R.id.text_right).setOnClickListener(this);

@@ -45,4 +45,8 @@
         <item name="android:textSize">14dp</item>
         <item name="android:background">@color/aliceblue</item>
     </style>
+    <style name="TabTitle">
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:textSize">12dp</item>
+    </style>
 </resources>

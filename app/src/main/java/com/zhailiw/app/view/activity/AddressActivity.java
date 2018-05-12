@@ -22,7 +22,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initViews() {
-        ((TextView)findViewById(R.id.text_title)).setText("管理收货地址");
+        ((TextView)findViewById(R.id.txt_title)).setText("管理收货地址");
         findViewById(R.id.layout_back).setOnClickListener(this);
         recyclerView = findViewById(R.id.recyclerView);
     }

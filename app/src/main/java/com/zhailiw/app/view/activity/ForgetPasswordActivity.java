@@ -28,7 +28,7 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
     private void initViews() {
         layoutBack =  findViewById(R.id.layout_back);
         layoutBack.setOnClickListener(this);
-        txtTitle =  findViewById(R.id.text_title);
+        txtTitle =  findViewById(R.id.txt_title);
         txtTitle.setText("找回密码");
 
         userName =findViewById(R.id.username);

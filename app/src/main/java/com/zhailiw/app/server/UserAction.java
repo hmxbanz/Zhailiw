@@ -10,12 +10,14 @@ import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.json.JsonMananger;
 import com.zhailiw.app.server.request.UpdateRequest;
+import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.AddressResponse;
 import com.zhailiw.app.server.response.BindResponse;
 import com.zhailiw.app.server.response.CaptchaResponse;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
+import com.zhailiw.app.server.response.ShopResponse;
 import com.zhailiw.app.server.response.StyleResponse;
 import com.zhailiw.app.server.response.UserInfoResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -435,4 +437,58 @@ public class UserAction extends BaseAction {
         }
         return addressResponse;
     }
+
+    public ShopResponse getProducts(String pageIndex, String styleId, String productTypeId) throws HttpException{
+        String result = "";
+        String uri = getURL("Home/getProducts");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addParams("pageIndex",pageIndex)
+                    .addParams("styleId",styleId)
+                    .addParams("productTypeId",productTypeId)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ShopResponse shopResponse = null;
+        try {
+            shopResponse = JsonMananger.jsonToBean(result, ShopResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "ShopResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return shopResponse;
+    }
+
+    public ADResponse getAds() throws HttpException{
+        String result = "";
+        String uri = getURL("Home/getAds");
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+            Logger.d(TAG+"::::::%s", result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ADResponse adResponse = null;
+        try {
+            adResponse = JsonMananger.jsonToBean(result, ADResponse.class);
+        } catch (JSONException e) {
+            Logger.e(TAG+"::::::%s", "ADResponse occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return adResponse;
+    }
+
 }

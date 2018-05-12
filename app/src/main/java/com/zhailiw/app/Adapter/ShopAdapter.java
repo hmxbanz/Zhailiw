@@ -7,33 +7,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fyales.tagcloud.library.TagBaseAdapter;
 import com.fyales.tagcloud.library.TagCloudLayout;
+import com.youth.banner.Banner;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.loader.GlideImageLoader;
+import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
+import com.zhailiw.app.server.response.ShopResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<GalleryResponse.DataBean> listItems;
+public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+    private List<ShopResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
-    private  final int TYPE_HEADER = 0;
-    private  final int TYPE_NORMAL = 1;
-    private  final int TYPE_FOOTER = 2;
-    private View mHeaderView;
-    private View mFooterView;
+    private  final int TYPE_AD = 0;
+    private  final int TYPE_HEADER = 1;
+    private  final int TYPE_NORMAL = 2;
+    private  final int TYPE_FOOTER = 3;
+    private View mADView,mHeaderView,mFooterView;
     private ItemClickListener mListener;
     private RecyclerView mRecyclerView;
     private GlideImageLoader glideImageLoader;
     private Context context;
     private List<String> adImages;
+    private ADHolder adHolder;
 
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
@@ -41,42 +46,63 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public View getHeaderView() {
         return mHeaderView;
     }
-    public void setHeaderView(View headerView) {
-        mHeaderView = headerView;
+    public void setHeaderView(View v) {
+        mHeaderView = v;
+        if(mADView==null)
         notifyItemInserted(0);//告知Adapter首位置项变动了
+        else
+            notifyItemInserted(0);//告知Adapter首位置项变动了
     }
     public View getFooterView() {
         return mFooterView;
     }
-    public void setFooterView(View footerView) {
-        mFooterView = footerView;
+    public void setFooterView(View v) {
+        mFooterView = v;
+        notifyItemInserted(getItemCount() - 1);//告知Adapter首位置项变动了
+    }
+    public View getmADView() {
+        return mADView;
+    }
+    public void setmADView(View v) {
+        mADView = v;
         notifyItemInserted(0);//告知Adapter首位置项变动了
     }
-
-    public GalleryAdapter(Context c){
-        this.context=c;
-        this.layoutInflater= LayoutInflater.from(c);
-        glideImageLoader=new GlideImageLoader();
-        View v = layoutInflater.inflate(R.layout.listitem_gallery_header,null, false);
-        mHeaderView=v;
-    }
-    public void setListItems(List<GalleryResponse.DataBean> l)
+    public void setListItems(List<ShopResponse.DataBean> l)
     {
         this.listItems=l;
     }
 
+    public ADHolder getAdHolder() {
+        return adHolder;
+    }
+    public void setAdHolder(ADHolder adHolder) {
+        this.adHolder = adHolder;
+    }
+
+    public ShopAdapter(Context c){
+        this.context=c;
+        this.layoutInflater= LayoutInflater.from(c);
+        glideImageLoader=new GlideImageLoader();
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(mHeaderView != null && viewType == TYPE_HEADER)
+        if(viewType == TYPE_AD)
         {
-            return new HeaderHolder(mHeaderView);
+            View v = layoutInflater.inflate(R.layout.listitem_shop_ad, parent, false);
+            mADView=v;
+            return new ADHolder(v);
+        }
+        else if(viewType == TYPE_HEADER)
+        {
+            View v = layoutInflater.inflate(R.layout.listitem_gallery_header,null, false);
+            return new HeaderHolder(v);
         }
         else if(mFooterView != null &&viewType == TYPE_FOOTER)
         {
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_gallery, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_shop, parent, false);
             return new DataHolder(v);
         }
     }
@@ -84,13 +110,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_FOOTER) return;
+        if(holder instanceof ADHolder){this.adHolder=(ADHolder) holder;
+        }
+        if(getItemViewType(position) == TYPE_AD) return;
         final int pos = getRealPosition(holder);
 
         if(holder instanceof HeaderHolder) {
             final HeaderHolder headerHolder=(HeaderHolder)holder;
             final ArrayList mList = new ArrayList<>();
+            mList.add("现代");
             mList.add("欧美");
-            mList.add("休闲");
+            mList.add("古代");
             final MyTabAdapter mAdapter = new MyTabAdapter(context,mList);
             headerHolder.title.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,17 +140,19 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
         }
         if(getItemViewType(position) == TYPE_HEADER) return;
-        final GalleryResponse.DataBean listItem = listItems.get(pos);
+        final ShopResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             final DataHolder dataHolder=(DataHolder)holder;
-            glideImageLoader.displayImage(context, Const.IMGURI+listItem.getGalleryCover(),dataHolder.imageView);
+            dataHolder.txtName.setText(listItem.getProductName());
+            dataHolder.txtPrice.setText(listItem.getProductPrice()+" 元");
+            glideImageLoader.displayImage(context, Const.IMGURI+listItem.getProductImage(),dataHolder.imageView);
             //Glide.with(context).load(listItem.getAvator()).asBitmap().into(holder.imageView);
             //holder.imageView.setImageResource(listItem.getImgResource());
             if(mListener == null) return;
             dataHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem,dataHolder);
+                    mListener.onItemClick(position,listItem);
                 }
             });
         }
@@ -129,13 +161,16 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         int count = (listItems == null ? 0 : listItems.size());
-        if (mHeaderView != null)   count++;
-        if (mFooterView != null)   count++;
-        return count;
+//        if (mHeaderView != null)   count++;
+//        if (mFooterView != null)   count++;
+//        if (mADView != null)   count++;
+        return count+2;
     }
     @Override
     public int getItemViewType(int position) {
-        if (isHeaderView(position)) {
+        if(isADView((position)))
+            return TYPE_AD;
+        else if (isHeaderView(position)) {
             return TYPE_HEADER;
         } else if (isFooterView(position)) {
             return TYPE_FOOTER;
@@ -162,30 +197,47 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             l.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return (isHeaderView(position) || isFooterView(position)) ? l.getSpanCount() :1;
+                    return (isADView(position) ||isHeaderView(position) || isFooterView(position)) ? l.getSpanCount() :1;
                 }
             });
         }
     }
+    private boolean isADView(int position) {
+        return  (position == 0);
+    }
     private boolean isHeaderView(int position) {
-        return (mHeaderView != null) && (position == 0);
+            return  (position == 1);
     }
-    private boolean isFooterView(int position) {
-        return (mFooterView != null) && (position == getItemCount() - 1);
-    }
+    private boolean isFooterView(int position) { return (mFooterView != null) && (position == getItemCount() - 1);    }
     public int getRealPosition(RecyclerView.ViewHolder holder) {
         int position = holder.getLayoutPosition();
-        return mHeaderView == null ? position : position - 1;
+        //return mHeaderView == null ? position : position - 2;
+        return position - 2;
     }
     public void setAdImages(List<String> images) {
         this.adImages=images;
     }
     public interface ItemClickListener {
-        void onItemClick(int position, GalleryResponse.DataBean item, DataHolder dataHolder);
+        void onItemClick(int position, ShopResponse.DataBean item);
         void onTabItemClick(int position, String item);
 
     }
-    class HeaderHolder extends RecyclerView.ViewHolder  {
+    public class ADHolder extends RecyclerView.ViewHolder  {
+        private Banner banner;
+        public ADHolder(View itemView) {
+            super(itemView);
+            banner =  itemView.findViewById(R.id.banner);
+        }
+
+        public Banner getBanner() {
+            return banner;
+        }
+
+        public void setBanner(Banner banner) {
+            this.banner = banner;
+        }
+    }
+    public class HeaderHolder extends RecyclerView.ViewHolder  {
         private TagCloudLayout tagCloudLayout;
         private TextView title;
         public HeaderHolder(View itemView) {
@@ -198,11 +250,32 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private ImageView imageView;
-        private RelativeLayout layoutView;
+        private TextView txtName;
+        private TextView txtPrice;
+
+        private LinearLayout layoutView;
         public DataHolder(View itemView) {
             super(itemView);
             imageView =  itemView.findViewById(R.id.image);
+            txtName =  itemView.findViewById(R.id.txt_name);
+            txtPrice =  itemView.findViewById(R.id.txt_price);
             layoutView = itemView.findViewById(R.id.layout);
+        }
+
+        public TextView getTxtName() {
+            return txtName;
+        }
+
+        public void setTxtName(TextView txtName) {
+            this.txtName = txtName;
+        }
+
+        public TextView getTxtPrice() {
+            return txtPrice;
+        }
+
+        public void setTxtPrice(TextView txtPrice) {
+            this.txtPrice = txtPrice;
         }
 
         public ImageView getImageView() {
@@ -213,11 +286,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.imageView = imageView;
         }
 
-        public RelativeLayout getLayoutView() {
+        public LinearLayout getLayoutView() {
             return layoutView;
         }
 
-        public void setLayoutView(RelativeLayout layoutView) {
+        public void setLayoutView(LinearLayout layoutView) {
             this.layoutView = layoutView;
         }
 

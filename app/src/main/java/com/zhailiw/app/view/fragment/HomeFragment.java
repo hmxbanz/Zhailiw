@@ -14,19 +14,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.fyales.tagcloud.library.TagBaseAdapter;
-import com.fyales.tagcloud.library.TagCloudLayout;
 import com.lzy.ninegrid.NineGridView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.presenter.HomeFragmentPresenter;
-
-import java.util.ArrayList;
 
 /**
  * Created by AMing on 16/6/21.
@@ -94,7 +89,7 @@ private static final int Blue=0x001bb4fb;
     private void initViews() {
         recycleView=  view.findViewById(R.id.recyclerView);
         swiper=  view.findViewById(R.id.swiper);
-        ((TextView)view.findViewById(R.id.text_title)).setText("灵感图库");
+        ((TextView)view.findViewById(R.id.txt_title)).setText("灵感图库");
         view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
 //        //简单使用
 //        banner = (Banner) view.findViewById(R.id.banner);

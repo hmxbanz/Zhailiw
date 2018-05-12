@@ -1,6 +1,5 @@
 package com.zhailiw.app.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,10 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zhailiw.app.R;
-import com.zhailiw.app.common.NToast;
-import com.zhailiw.app.presenter.HomeFragmentPresenter;
 import com.zhailiw.app.presenter.ShopFragmentPresenter;
 
 /**
@@ -66,7 +62,7 @@ private static final int Blue=0x001bb4fb;
     private void initViews() {
         recycleView=  view.findViewById(R.id.recyclerView);
         swiper=  view.findViewById(R.id.swiper);
-        ((TextView)view.findViewById(R.id.text_title)).setText("风格列表");
+        ((TextView)view.findViewById(R.id.txt_title)).setText("家居商城");
         view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
     }
 
@@ -77,7 +73,7 @@ private static final int Blue=0x001bb4fb;
     }
     @Override
     public void onClick(View v) {
-      presenter.onMeClick(v);
+
     }
 
 }
