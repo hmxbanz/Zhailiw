@@ -38,7 +38,7 @@ private static final int Blue=0x001bb4fb;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, null);
+        view = inflater.inflate(R.layout.fragment_gallery, null);
         initViews();
 //        initData();
         presenter = new ShopFragmentPresenter(getContext());

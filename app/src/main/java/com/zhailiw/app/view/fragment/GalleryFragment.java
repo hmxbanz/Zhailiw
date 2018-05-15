@@ -21,25 +21,25 @@ import com.lzy.ninegrid.NineGridView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
-import com.zhailiw.app.presenter.HomeFragmentPresenter;
+import com.zhailiw.app.presenter.GalleryFragmentPresenter;
 
 /**
  * Created by AMing on 16/6/21.
  * Company RongCloud
  */
-public class HomeFragment extends Fragment implements View.OnClickListener  {
+public class GalleryFragment extends Fragment implements View.OnClickListener  {
 private static final int Blue=0x001bb4fb;
     private View view;
-    public static HomeFragment instance = null;
-    private HomeFragmentPresenter presenter;
+    public static GalleryFragment instance = null;
+    private GalleryFragmentPresenter presenter;
     private TextView title;
     private RelativeLayout layout_me;
     private RecyclerView recycleView;
     private SwipeRefreshLayout swiper;
 
-    public static HomeFragment getInstance() {
+    public static GalleryFragment getInstance() {
         if (instance == null) {
-            instance = new HomeFragment();
+            instance = new GalleryFragment();
         }
         return instance;
     }
@@ -47,10 +47,10 @@ private static final int Blue=0x001bb4fb;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, null);
+        view = inflater.inflate(R.layout.fragment_gallery, null);
         initViews();
 //        initData();
-        presenter = new HomeFragmentPresenter(getContext());
+        presenter = new GalleryFragmentPresenter(getContext());
         presenter.init(recycleView,swiper);
         //StatusBarUtil.setTranslucent(getActivity(), StatusBarUtil.);
         //StatusBarUtil.setTranslucent(getActivity(),0);
@@ -112,7 +112,7 @@ private static final int Blue=0x001bb4fb;
         /**
          * 处理二维码扫描结果
          */
-        if (requestCode == HomeFragmentPresenter.REQUEST_CODE) {
+        if (requestCode == GalleryFragmentPresenter.REQUEST_CODE) {
             //处理扫描结果（在界面上显示）
             if (null != data) {
                 Bundle bundle = data.getExtras();

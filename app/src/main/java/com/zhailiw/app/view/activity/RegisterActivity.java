@@ -14,13 +14,9 @@ import com.zhailiw.app.presenter.RegisterPresenter;
 
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener{
-    private EditText userName, password;
+    private EditText userName, password,passwordAgain,captcha;
     private RegisterPresenter mRegisterPresenter;
-    private TextView txtCaptcha;
-    private Button btnRegister;
-    private CheckBox checkBox;
-    private EditText captcha;
-    private TextView txtProtocol;
+    private Button btnCaptcha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +24,21 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_register);
         initViews();
         mRegisterPresenter = new RegisterPresenter(this);
-        mRegisterPresenter.init();
+        mRegisterPresenter.init(userName,password,passwordAgain,captcha,btnCaptcha);
     }
 
     private void initViews() {
-        layoutBack = findViewById(R.id.layout_back);
-        layoutBack.setOnClickListener(this);
-        txtTitle = findViewById(R.id.txt_title);
-        txtTitle.setText("用户注册");
-        txtProtocol = findViewById(R.id.txt_protocol);
-        txtProtocol.setOnClickListener(this);
+        findViewById(R.id.layout_back).setOnClickListener(this);
 
-        checkBox = findViewById(R.id.checkbox);
-        Drawable drawable = this.getResources().getDrawable(R.drawable.selector_checkbox);
-        drawable.setBounds(0,0,50,50);
-        if(Build.VERSION.SDK_INT>=21)
-            drawable.setTint(getResources().getColor(R.color.mainColorBlue));
-        checkBox.setCompoundDrawables(drawable,null,null,null);
+        ((TextView)findViewById(R.id.txt_title)).setText("用户注册");
+
         userName =findViewById(R.id.username);
-        userName.setOnClickListener(this);
         password =findViewById(R.id.password);
-        password.setOnClickListener(this);
+        passwordAgain =findViewById(R.id.password_again);
         captcha =findViewById(R.id.captcha);
-        captcha.setOnClickListener(this);
-        txtCaptcha=findViewById(R.id.txt_captcha);
-        txtCaptcha.setOnClickListener(this);
-        btnRegister=findViewById(R.id.btn_register);
-        btnRegister.setOnClickListener(this);
-
+        btnCaptcha =findViewById(R.id.btn_captcha);
+        btnCaptcha.setOnClickListener(this);
+        findViewById(R.id.btn_register).setOnClickListener(this);
     }
 
 
@@ -65,14 +48,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.layout_back:
                 finish();
                 break;
-            case R.id.txt_captcha:
-                mRegisterPresenter.getCaptcha(txtCaptcha, userName);
+            case R.id.btn_captcha:
+                mRegisterPresenter.getCaptcha();
                 break;
             case R.id.btn_register:
-                mRegisterPresenter.register(checkBox, userName, password,captcha);
-                break;
-            case R.id.txt_protocol:
-                //startActivity(new Intent(this, ProtocolActivity.class));
+                mRegisterPresenter.register();
                 break;
         }
 

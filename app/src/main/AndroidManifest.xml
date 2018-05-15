@@ -41,12 +41,17 @@
         </activity>
 
         <activity   android:name=".view.activity.QrCodeActivity" android:screenOrientation="portrait" />
-        <activity   android:name=".view.activity.MainActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.MainActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.GuideActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.MeActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.UpdateActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.AddressActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.ShopActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.LoginActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
+        <activity   android:name=".view.activity.RegisterActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.ForgetPasswordActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.LoginFirstActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
+        <activity   android:name=".view.activity.BindPhoneActivity" android:screenOrientation="portrait" />
         <service android:name=".service.BluetoothService" />
         <provider
             android:name="android.support.v4.content.FileProvider"

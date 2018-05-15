@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/app_bg"
-    tools:context="com.zhailiw.app.view.activity.RegisterActivity">
+    tools:context="com.zhailiw.app.view.activity.BindPhoneActivity">
     <include layout="@layout/layout_title_top" />
 
     <LinearLayout
@@ -59,31 +59,9 @@
                 />
         </LinearLayout>
 
-        <EditText
-            android:layout_marginTop="5dp"
-            android:textSize="12dp"
-            android:id="@+id/password"
-            android:padding="2dp"
-            android:gravity="center"
-            android:hint="密码"
-            android:inputType="textPassword"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-        <EditText
-            android:layout_marginTop="5dp"
-            android:textSize="12dp"
-            android:id="@+id/password_again"
-            android:padding="2dp"
-            android:gravity="center"
-            android:hint="确认密码"
-            android:inputType="textPassword"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
         <Button
-            android:id="@+id/btn_register"
-            android:text="@string/register"
+            android:id="@+id/btn_bind_phone"
+            android:text="@string/confirm"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             style="@style/AppButtonStyle"

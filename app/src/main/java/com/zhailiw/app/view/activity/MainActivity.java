@@ -1,5 +1,7 @@
 package com.zhailiw.app.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +14,7 @@ import android.widget.TextView;
 
 import com.zhailiw.app.R;
 import com.zhailiw.app.presenter.MainPresenter;
-import com.zhailiw.app.view.fragment.HomeFragment;
+import com.zhailiw.app.view.fragment.GalleryFragment;
 import com.zhailiw.app.view.fragment.MineFragment;
 import com.zhailiw.app.view.fragment.ShopFragment;
 
@@ -33,6 +35,8 @@ public class MainActivity extends BaseActivity {
         initMianViewPager();
         changeTextViewColor();
         changeSelectedTabState(0);
+        mainPresenter = new MainPresenter(this);
+        mainPresenter.init(viewPager);
     }
     private void initViews() {
         RelativeLayout homeLayout, shopLayout,meLayout;
@@ -48,14 +52,20 @@ public class MainActivity extends BaseActivity {
         homeLayout.setOnClickListener(this);
         shopLayout.setOnClickListener(this);
         meLayout.setOnClickListener(this);
-        //请求权限
+        //请求权限Ｍａｉｎ
         //checkPermissions();
+    }
+
+    public static void StartActivity(Context context, String position) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("position",position);
+        context.startActivity(intent);
     }
     private void initMianViewPager() {
         FragmentPagerAdapter mFragmentPagerAdapter; //将 tab  页面持久在内存中
         viewPager = findViewById(R.id.main_viewpager);
         mFragments = new ArrayList<>();
-        mFragments.add(HomeFragment.getInstance());
+        mFragments.add(GalleryFragment.getInstance());
         mFragments.add(ShopFragment.getInstance());
         mFragments.add(MineFragment.getInstance());
         mFragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -110,7 +120,7 @@ public class MainActivity extends BaseActivity {
 //            }
             changeTextViewColor();
             changeSelectedTabState(position);
-            //HomeFragment homeFragment= HomeFragment.getInstance();
+            //GalleryFragment homeFragment= GalleryFragment.getInstance();
             //homeFragment.scrollView.smoothScrollTo(0, 0);
         }
         @Override
@@ -127,7 +137,7 @@ public class MainActivity extends BaseActivity {
                 viewPager.setCurrentItem(1, false);
                 break;
             case R.id.tab_layout_me:
-                viewPager.setCurrentItem(2, false);
+                mainPresenter.onMeClick();
                 break;
         }
     }

@@ -5,6 +5,13 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
+import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
+import com.zhailiw.app.Const;
+import com.zhailiw.app.common.NToast;
+import com.zhailiw.app.server.HttpException;
+import com.zhailiw.app.server.response.SystemObjResponse;
+import com.zhailiw.app.widget.ACache;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.common.CommonTools;
@@ -31,11 +38,16 @@ public class StartPresenter extends BasePresenter {
     }
 
     public void init() {
-        if (CommonTools.isFristRun(activity)) {
-            Intent intent = new Intent(activity, GuideActivity.class);
-            activity.startActivity(intent);
-            activity.finish();
-            return;
+//        if (CommonTools.isFristRun(activity)) {
+//            Intent intent = new Intent(activity, GuideActivity.class);
+//            activity.startActivity(intent);
+//            activity.finish();
+//            return;
+//        }
+        String systemObjCache = aCache.getAsString("SystemObjCache");
+        Logger.d("systemObjCache %s:", systemObjCache);
+        if (systemObjCache==null || ("null").equals(systemObjCache)) {
+            getSystemObj();
         }
         new Thread() {
             public void run() {
@@ -56,9 +68,27 @@ public class StartPresenter extends BasePresenter {
         atm.request(GETSYSTEMOBJ, this);
     }
 
-    public void getCities() {
-        LoadDialog.show(context);
-        atm.request(GETCITIES, this);
+    @Override
+    public Object doInBackground(int requestCode, String parameter) throws HttpException {
+
+        switch (requestCode) {
+            case GETSYSTEMOBJ:
+                return userAction.getSystemObj();
+        }
+        return null;
     }
 
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        LoadDialog.dismiss(context);
+        switch (requestCode) {
+            case GETSYSTEMOBJ:
+                SystemObjResponse systemObjResponse = (SystemObjResponse) result;
+                if (systemObjResponse.getState() == Const.SUCCESS) {
+                    String cache = new Gson().toJson(systemObjResponse.getSysObj());
+                    aCache.put("SystemObjCache", cache, 7 * ACache.TIME_DAY);
+                }
+                break;
+        }
+    }
 }

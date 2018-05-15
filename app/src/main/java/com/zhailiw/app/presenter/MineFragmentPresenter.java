@@ -75,10 +75,10 @@ public class MineFragmentPresenter extends BasePresenter implements OnDataListen
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
-            case GETINFO:
-                return userAction.getCaptcha("");
-            case GETMSGCOUNT:
-                return userAction.getCaptcha("");
+//            case GETINFO:
+//                return userAction.getCaptcha("");
+//            case GETMSGCOUNT:
+//                return userAction.getCaptcha("");
         }
         return null;
     }

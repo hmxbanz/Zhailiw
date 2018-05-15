@@ -6,25 +6,33 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
 
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.json.JsonMananger;
+import com.zhailiw.app.server.request.BindPhoneRequest;
+import com.zhailiw.app.server.request.RegisterRequest;
 import com.zhailiw.app.server.request.UpdateRequest;
 import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.AddressResponse;
-import com.zhailiw.app.server.response.BindResponse;
 import com.zhailiw.app.server.response.CaptchaResponse;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
+import com.zhailiw.app.server.response.LoginResponse;
 import com.zhailiw.app.server.response.ShopResponse;
 import com.zhailiw.app.server.response.StyleResponse;
+import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.server.response.UserInfoResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhailiw.app.server.request.LoginRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+import okhttp3.MediaType;
 import okhttp3.Response;
 
 
@@ -39,7 +47,6 @@ public class UserAction extends BaseAction {
     private final String ENCODING = "utf-8";
     public String token;
     public static UserAction instance;
-    private Object relateRecommend;
 
     /**
      * 构造方法
@@ -60,62 +67,14 @@ public class UserAction extends BaseAction {
         return instance;
     }
 
-//绑定
-    public Object bindQRCode(String qrCode,String phoneID) throws  HttpException{
-        String result = "";
-        String uri = Const.SERVERURI+"cli-api-bindbysn.php";
-        Response response=null;
-        try {
-            response= OkHttpUtils
-                    .get()
-                    .url(uri)
-                    .addParams("sn_qr",qrCode)
-                    .addParams("phone_id",phoneID)
-                    .build()
-                    .execute();
-            result =response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-        BindResponse bindResponse = null;
-        try {
-            bindResponse = JsonMananger.jsonToBean(result, BindResponse.class);
-        } catch (JSONException e) {
-            //Logger.e(TAG+"::::::%s", "BindResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-
-        return bindResponse;
-    }
-
     //获取验证码
-    public CaptchaResponse getCaptcha(String cellPhone) throws HttpException
+    public CaptchaResponse getCaptcha(String cellPhone,String type) throws HttpException
     {
-        String result = "";
-        String uri = getURL("cli-comm-sendregmsg.php");
-        Response response=null;
-        try {
-            response=OkHttpUtils
-                    .get()
-                    .addParams("phone_no",cellPhone)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-            Logger.d(TAG+"::::::%s", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CaptchaResponse captchaResponse = null;
-        try {
-            captchaResponse = JsonMananger.jsonToBean(result, CaptchaResponse.class);
-        } catch (JSONException e) {
-            Logger.e(TAG+"::::::%s", "CaptchaResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-        return captchaResponse;
-
+        String uri = getURL("/Home/GetCaptcha");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("cellPhone",cellPhone);
+        map.put("type",type);
+        return getRequest(CaptchaResponse.class,map,uri);
     }
 
     //获取验证码(取回密码)
@@ -147,68 +106,22 @@ public class UserAction extends BaseAction {
 
     }
     //注册
-    public CommonResponse register(String headimgurl,String nickname, String password, String captcha) throws HttpException
+    public CommonResponse register(String userName,String password, String nickName, String captcha) throws HttpException
     {
-        String result = "";
-        String uri = getURL("cli-comm-register.php");
-        Response response=null;
-        try {
-            response=OkHttpUtils
-                    .get()
-                    .addParams("nick_name",nickname)
-                    .addParams("head_img",headimgurl)
-                    .addParams("pwd",password)
-                    .addParams("rand_code",captcha)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-            Logger.d(TAG+"::::::%s", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonResponse commonResponse = null;
-        try {
-            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
-        } catch (JSONException e) {
-            Logger.e(TAG+"::::::%s", "register occurs JSONException e=" + e.toString());
-            return null;
-        }
-        return commonResponse;
-
+        String uri = getURL("User/Register");
+        String json=JsonMananger.beanToJson(new RegisterRequest(userName,password,nickName,captcha));
+        return postRequest(CommonResponse.class,json,uri);
     }
     //重置密码
-    public CommonResponse resetPassword(String cellPhone, String password, String captcha) throws HttpException
+    public CommonResponse resetPassword(String userName, String password, String captcha) throws HttpException
     {
-        String result = "";
-        String uri = getURL("cli-comm-setpwd.php");
-        Response response=null;
-        try {
-            response=OkHttpUtils
-                    .get()
-                    .addParams("nick_name",cellPhone)
-                    .addParams("new_pwd",password)
-                    .addParams("rand_code",captcha)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-            Logger.d(TAG+"::::::%s", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonResponse commonResponse = null;
-        try {
-            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
-        } catch (JSONException e) {
-            Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-        return commonResponse;
+        String uri = getURL("User/resetPassword");
+        String json=JsonMananger.beanToJson(new RegisterRequest(userName,password,null,captcha));
+        return postRequest(CommonResponse.class,json,uri);
 
     }
         //图库
-    public GalleryResponse getGallery(String pageIndex) throws HttpException {
+    public GalleryResponse getGallery(String pageIndex,String galleryTypeId) throws HttpException {
         String result = "";
         String uri = getURL("Home/getGallery");
         Response response=null;
@@ -216,6 +129,7 @@ public class UserAction extends BaseAction {
             response=OkHttpUtils
                     .get()
                     .addParams("pageIndex",pageIndex)
+                    .addParams("galleryTypeId",galleryTypeId)
                     .url(uri)
                     .build()
                     .execute();
@@ -260,32 +174,10 @@ public class UserAction extends BaseAction {
         return galleryPicResponse;
     }
 
-    public CommonResponse login(String userName, String password, String normal) throws HttpException {
-        String result = "";
-        String uri = getURL("Home/Login");
-        Response response=null;
-        try {
-            response=OkHttpUtils
-                    .get()
-                    .addParams("username",userName)
-                    .addParams("password",password)
-                    .addParams("type",normal)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-            Logger.d(TAG+"::::::%s", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonResponse commonResponse = null;
-        try {
-            commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
-        } catch (JSONException e) {
-            Logger.e(TAG+"::::::%s", "CommonResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-        return commonResponse;
+    public LoginResponse login(String userName, String password, String openId, String type) throws HttpException {
+        String uri = getURL("User/Login");
+        String json=JsonMananger.beanToJson(new LoginRequest(userName,password,openId,type));
+        return postRequest(LoginResponse.class,json,uri);
     }
 
     //取风格
@@ -328,7 +220,7 @@ public class UserAction extends BaseAction {
         try {
             response=OkHttpUtils
                     .post()
-                    .addParams(Const.ACCESS_TOKEN,token)
+                    .addParams(Const.TOKEN,token)
                     .addFile("avatar", "imgFile.jpg",imgFile)
                     .url(uri)
                     .build()
@@ -413,29 +305,8 @@ public class UserAction extends BaseAction {
     }
 
     public AddressResponse getAddress() throws HttpException{
-        String result = "";
         String uri = getURL("User/getMyAddress");
-        Response response=null;
-        try {
-            response=OkHttpUtils
-                    .get()
-                    .addParams("access_key",token)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-            Logger.d(TAG+"::::::%s", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        AddressResponse addressResponse = null;
-        try {
-            addressResponse = JsonMananger.jsonToBean(result, AddressResponse.class);
-        } catch (JSONException e) {
-            Logger.e(TAG+"::::::%s", "AddressResponse occurs JSONException e=" + e.toString());
-            return null;
-        }
-        return addressResponse;
+        return getRequest(AddressResponse.class,null,uri);
     }
 
     public ShopResponse getProducts(String pageIndex, String styleId, String productTypeId) throws HttpException{
@@ -490,5 +361,110 @@ public class UserAction extends BaseAction {
         }
         return adResponse;
     }
+    //手机绑定
+    public CommonResponse bindPhone(String userName, String captcha,String openId, String bindType ) throws HttpException
+    {
+        String uri = getURL("/User/ThirdPartBind");
+        String json=JsonMananger.beanToJson(new BindPhoneRequest(userName,captcha,openId,bindType));
+        return postRequest(CommonResponse.class,json,uri);
 
+    }
+    //取系统对象
+    public SystemObjResponse getSystemObj() throws HttpException {
+        String uri = getURL("/Sys/GetSysObj");
+        return getRequest(SystemObjResponse.class,null,uri);
+    }
+    //get请求
+    public <T> T getRequest(Class<T> t, LinkedHashMap map, String uri)throws HttpException
+    {
+        String result="";
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .get()
+                    .addHeader("token",token)
+                    .params(map)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Logger.d("请求的：%s",map);
+        Logger.d(t.getSimpleName()+"："+ result);
+        T beanResponse = null;
+        try {
+            if(t.getSimpleName().equals("SystemObjResponse") || t.getSimpleName().equals("CityResponse"))
+                beanResponse= new Gson().fromJson(result,t);
+            else
+                beanResponse = JsonMananger.jsonToBean(result, t);
+        }
+        catch (JSONException e) {
+            Logger.e(TAG, t.getSimpleName()+" occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return beanResponse;
+    }
+    //post请求
+    public <T> T postRequest(Class<T> t, String json, String uri)throws HttpException
+    {
+        String result="";
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .postString()
+                    .addHeader("token",token)
+                    .url(uri)
+                    .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                    .content(json)//.content(new Gson().toJson(new User("zhy", "123")))
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Logger.d("请求的：%s",json);
+        Logger.d(t.getSimpleName()+"："+ result);
+
+        T beanResponse = null;
+        try {
+            beanResponse = JsonMananger.jsonToBean(result, t);
+        } catch (JSONException e) {
+            Logger.e(TAG, t.getSimpleName()+" occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return beanResponse;
+    }
+    //post请求
+    public <T> T postFormRequest(Class<T> t, Map<String, String> params, String fileKey, String fileName, File file, String uri)throws HttpException
+    {
+        String result="";
+        Response response=null;
+        try {
+            response=OkHttpUtils
+                    .post()
+                    .addHeader("access_token",token)
+                    .params(params)
+                    .addFile(fileKey, fileName,file)
+                    .url(uri)
+                    .build()
+                    .execute();
+            result =response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Logger.d("请求的：%s",params);
+        Logger.d(t.getSimpleName()+"："+ result);
+
+        T beanResponse = null;
+        try {
+            beanResponse = JsonMananger.jsonToBean(result, t);
+        } catch (JSONException e) {
+            Logger.e(TAG, t.getSimpleName()+" occurs JSONException e=" + e.toString());
+            return null;
+        }
+        return beanResponse;
+    }
 }

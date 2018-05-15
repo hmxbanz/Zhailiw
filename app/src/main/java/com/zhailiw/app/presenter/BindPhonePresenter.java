@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
@@ -15,33 +14,30 @@ import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.listener.AlertDialogCallBack;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.CommonResponse;
-import com.zhailiw.app.view.activity.LoginActivity;
-import com.zhailiw.app.view.activity.RegisterActivity;
+import com.zhailiw.app.view.activity.BindPhoneActivity;
+import com.zhailiw.app.view.activity.LoginFirstActivity;
 import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
 
 
-public class RegisterPresenter extends BasePresenter {
+public class BindPhonePresenter extends BasePresenter {
     private static final int GETCAPTCHA = 1;
-    private static final int REGISTER = 2;
-    private String nickname;
-    private final String headimgurl;
-    private RegisterActivity activity;
-    private EditText userName,password,passwordAgain,captcha;
+    private static final int BINDPHONE = 2;
+    private final String openId,bindType;
+    private BindPhoneActivity activity;
+    private EditText userName,captcha;
     private Button btnCaptcha;
 
-    public RegisterPresenter(Context context){
+    public BindPhonePresenter(Context context){
         super(context);
-        activity = (RegisterActivity) context;
-        Intent fromIntent=((RegisterActivity) context).getIntent();
-        nickname = fromIntent.getStringExtra("nickname");
-        headimgurl = fromIntent.getStringExtra("headimgurl");
+        activity = (BindPhoneActivity) context;
+        Intent intent=activity.getIntent();
+        openId=intent.getStringExtra("openId");
+        bindType=intent.getStringExtra("bindType");
     }
 
-    public void init(EditText userName, EditText password, EditText passwordAgain, EditText captcha, Button btnCaptcha) {
+    public void init(EditText userName, EditText captcha,Button btnCaptcha) {
         this.userName=userName;
-        this.password=password;
-        this.passwordAgain=passwordAgain;
         this.captcha=captcha;
         this.btnCaptcha=btnCaptcha;
     }
@@ -56,40 +52,26 @@ public class RegisterPresenter extends BasePresenter {
         LoadDialog.show(activity);
         atm.request(GETCAPTCHA,this);
     }
-    public void register() {
+    public void bindPhone() {
         if(TextUtils.isEmpty(this.userName.getText()))
         {
             NToast.shortToast(context, R.string.phone_number_be_null);
-            return;
-        }
-        if (TextUtils.isEmpty(this.password.getText())) {
-            NToast.shortToast(context, R.string.password_be_null);
-            return;
-        }
-        if (this.password.getText().toString().contains(" ")) {
-            NToast.shortToast(context, R.string.password_cannot_contain_spaces);
             return;
         }
         if (TextUtils.isEmpty(this.captcha.getText())) {
             NToast.shortToast(context, R.string.captcha_cannot_be_null);
             return;
         }
-
         LoadDialog.show(activity);
-        atm.request(REGISTER,this);
-
+        atm.request(BINDPHONE,this);
     }
     @Override
     public Object doInBackground(int requestCode, String id) throws HttpException {
         switch (requestCode) {
             case GETCAPTCHA:
-                return userAction.getCaptcha(this.userName.getText().toString(),"286");//手机注册
-            case REGISTER:
-                return userAction.register(
-                        this.userName.getText().toString(),
-                        this.password.getText().toString(),
-                        "昵称",
-                        this.captcha.getText().toString());
+                return userAction.getCaptcha(this.userName.getText().toString(),"287");//手机绑定
+            case BINDPHONE:
+                return userAction.bindPhone(this.userName.getText().toString(),this.captcha.getText().toString(),openId,bindType);
         }
         return null;
     }
@@ -102,17 +84,16 @@ public class RegisterPresenter extends BasePresenter {
                 CommonResponse commonResponse = (CommonResponse) result;
                 NToast.shortToast(context, commonResponse.getMsg());
                 break;
-            case REGISTER:
+            case BINDPHONE:
                 CommonResponse commonResponse2 = (CommonResponse) result;
                 if (commonResponse2.getState() == Const.SUCCESS) {
-                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "注册成功", new AlertDialogCallBack(){
+                    DialogWithYesOrNoUtils.getInstance().showDialog(context, "绑定成功", new AlertDialogCallBack(){
                         @Override
                         public void executeEvent() {
                             super.executeEvent();
-                            LoginActivity.StartActivity(activity);
+                            LoginFirstActivity.StartActivity(activity);
                         }
                     });
-
                     NToast.shortToast(context, commonResponse2.getMsg());
                     break;
                 }

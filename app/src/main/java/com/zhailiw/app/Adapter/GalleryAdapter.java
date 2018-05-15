@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fyales.tagcloud.library.TagBaseAdapter;
 import com.fyales.tagcloud.library.TagCloudLayout;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.response.GalleryResponse;
+import com.zhailiw.app.server.response.SystemObjResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private GlideImageLoader glideImageLoader;
     private Context context;
     private List<String> adImages;
+    private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs;
 
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
@@ -88,24 +89,28 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if(holder instanceof HeaderHolder) {
             final HeaderHolder headerHolder=(HeaderHolder)holder;
-            final ArrayList mList = new ArrayList<>();
-            mList.add("欧美");
-            mList.add("休闲");
-            final MyTabAdapter mAdapter = new MyTabAdapter(context,mList);
+//            final ArrayList mList = new ArrayList<>();
+//            mList.add("欧美");
+//            mList.add("休闲");
+            final MyTabAdapter mAdapter = new MyTabAdapter(context,tabs);
             headerHolder.title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(headerHolder.tagCloudLayout.getVisibility()==View.GONE)
                         headerHolder.tagCloudLayout.setVisibility(View.VISIBLE);
                     else
+                    {
                         headerHolder.tagCloudLayout.setVisibility(View.GONE);
+                        mListener.onTabExpand();
+                    }
+
                 }
             });
             headerHolder.tagCloudLayout.setAdapter(mAdapter);
             headerHolder.tagCloudLayout.setItemClickListener(new TagCloudLayout.TagItemClickListener() {
                 @Override
                 public void itemClick(int position) {
-                    mListener.onTabItemClick(position,mList.get(position).toString());
+                    mListener.onTabItemClick(position,tabs.get(position));
                 }
             });
         }
@@ -180,10 +185,15 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void setAdImages(List<String> images) {
         this.adImages=images;
     }
+
+    public void setTabList(List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs) {
+        this.tabs=tabs;
+    }
+
     public interface ItemClickListener {
         void onItemClick(int position, GalleryResponse.DataBean item, DataHolder dataHolder);
-        void onTabItemClick(int position, String item);
-
+        void onTabItemClick(int position, SystemObjResponse.SysObjBean.ChildDictionariesBean item);
+        void onTabExpand();
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
         private TagCloudLayout tagCloudLayout;

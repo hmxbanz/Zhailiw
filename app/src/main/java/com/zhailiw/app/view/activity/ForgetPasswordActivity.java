@@ -11,36 +11,31 @@ import com.zhailiw.app.presenter.ForgetPasswordPresenter;
 
 
 public class ForgetPasswordActivity extends BaseActivity implements View.OnClickListener {
-    private EditText userName,password;
-    private Button mBtnFindPassword;
+    private EditText userName, password,passwordAgain,captcha;
+    private Button btnCaptcha;
     private ForgetPasswordPresenter mForgetPasswordPresenter;
-    private TextView txtCaptcha;
-    private EditText captcha;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         initViews();
         mForgetPasswordPresenter = new ForgetPasswordPresenter(this);
-        mForgetPasswordPresenter.init();
+        mForgetPasswordPresenter.init(userName,password,passwordAgain,captcha,btnCaptcha);
     }
 
     private void initViews() {
-        layoutBack =  findViewById(R.id.layout_back);
-        layoutBack.setOnClickListener(this);
-        txtTitle =  findViewById(R.id.txt_title);
-        txtTitle.setText("找回密码");
+        findViewById(R.id.layout_back).setOnClickListener(this);
+
+        ((TextView)findViewById(R.id.txt_title)).setText("找回密码");
 
         userName =findViewById(R.id.username);
-        userName.setOnClickListener(this);
         password =findViewById(R.id.password);
-        password.setOnClickListener(this);
+        passwordAgain =findViewById(R.id.password_again);
         captcha =findViewById(R.id.captcha);
-        captcha.setOnClickListener(this);
-        txtCaptcha=findViewById(R.id.txt_captcha);
-        txtCaptcha.setOnClickListener(this);
-        mBtnFindPassword=findViewById(R.id.btn_find_pwd);
-        mBtnFindPassword.setOnClickListener(this);
+        btnCaptcha =findViewById(R.id.btn_captcha);
+        btnCaptcha.setOnClickListener(this);
+        findViewById(R.id.btn_find_pass).setOnClickListener(this);
     }
 
     @Override
@@ -49,11 +44,11 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             case R.id.layout_back:
                 finish();
                 break;
-            case R.id.txt_captcha:
-                mForgetPasswordPresenter.getCaptcha(txtCaptcha, userName);
+            case R.id.btn_captcha:
+                mForgetPasswordPresenter.getCaptcha();
                 break;
-            case R.id.btn_find_pwd:
-                mForgetPasswordPresenter.resetPassword(userName, password,captcha);
+            case R.id.btn_find_pass:
+                mForgetPasswordPresenter.resetPassword();
                 break;
         }
 

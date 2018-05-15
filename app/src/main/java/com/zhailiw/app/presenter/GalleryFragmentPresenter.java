@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lzy.ninegrid.ImageInfo;
-import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.NineGridViewAdapter;
 import com.lzy.ninegrid.preview.ImagePreviewActivity;
 import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Adapter.GalleryAdapter;
@@ -25,7 +23,8 @@ import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
-import com.zhailiw.app.view.activity.LoginActivity;
+import com.zhailiw.app.server.response.SystemObjResponse;
+import com.zhailiw.app.view.activity.LoginFirstActivity;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
@@ -35,11 +34,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.view.View.*;
 
-
-public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapter.ItemClickListener,OnDataListener,SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = HomeFragmentPresenter.class.getSimpleName();
+public class GalleryFragmentPresenter extends BasePresenter implements GalleryAdapter.ItemClickListener,OnDataListener,SwipeRefreshLayout.OnRefreshListener {
+    private static final String TAG = GalleryFragmentPresenter.class.getSimpleName();
     private static final int GETGALLERY = 1;
     private static final int GETGALLERYPICS = 2;
     public static int REQUEST_CODE=33;
@@ -55,8 +52,10 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
     private EndlessRecyclerOnScrollListener onScrollListener;
     private int pageIndex=1,totalPages;
     private View footerView;
+    private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> Tabs;
+    private String galleryTypeId=null;
 
-    public HomeFragmentPresenter(Context context){
+    public GalleryFragmentPresenter(Context context){
         super(context);
         basePresenter = BasePresenter.getInstance(context);
         activity = (MainActivity) context;
@@ -65,6 +64,9 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
         dataAdapter.setOnItemClickListener(this);
         footerView=LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null);
         dataAdapter.setFooterView(footerView);
+        SystemObjResponse.SysObjBean option = systemObj.get(6);
+        Tabs=option.getChildDictionaries();
+        dataAdapter.setTabList(Tabs);
     }
 
     public void init(RecyclerView recyclerView, SwipeRefreshLayout swiper) {
@@ -72,6 +74,7 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
         this.swiper=swiper;
         this.swiper.setOnRefreshListener(this);
         gridLayoutManager=new GridLayoutManager(context,2);
+        gridLayoutManager.setItemPrefetchEnabled(false);
         this.recyclerView.setLayoutManager(gridLayoutManager);
         this.recyclerView.setAdapter(dataAdapter);
         this.recyclerView.setNestedScrollingEnabled(false);
@@ -86,7 +89,7 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
                 progressBar.setVisibility(View.VISIBLE);
                 tips.setText(R.string.layout_dialog_loading);
                 if(pageIndex<=totalPages) {
-                    atm.request(GETGALLERY, HomeFragmentPresenter.this);
+                    atm.request(GETGALLERY, GalleryFragmentPresenter.this);
                 }
                 else
                 {
@@ -96,15 +99,14 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
             }
         };
         this.recyclerView.addOnScrollListener(onScrollListener);
-        LoadDialog.show(context);
-        atm.request(GETGALLERY,HomeFragmentPresenter.this);
+        atm.request(GETGALLERY,GalleryFragmentPresenter.this);
     }
 
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETGALLERY:
-                return userAction.getGallery(pageIndex+"");
+                return userAction.getGallery(pageIndex+"",galleryTypeId);
             case GETGALLERYPICS:
                 return userAction.getGalleryPic(String.valueOf(localGalleryId));
         }
@@ -166,7 +168,8 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
         pageIndex=1;
         this.onScrollListener.reset();
         list.clear();
-        atm.request(GETGALLERY,HomeFragmentPresenter.this);
+        dataAdapter.notifyDataSetChanged();
+        atm.request(GETGALLERY,GalleryFragmentPresenter.this);
     }
 
     public void onMeClick(View v) {
@@ -175,7 +178,7 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
             DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", new AlertDialogCallBack() {
                 @Override
                 public void executeEvent() {
-                    context.startActivity(new Intent(context, LoginActivity.class));
+                    context.startActivity(new Intent(context, LoginFirstActivity.class));
                 }
             });
         }
@@ -188,12 +191,27 @@ public class HomeFragmentPresenter extends BasePresenter implements GalleryAdapt
     @Override
     public void onItemClick(int position, GalleryResponse.DataBean item, GalleryAdapter.DataHolder dataHolder) {
             localGalleryId=item.getGalleryID();
-            atm.request(GETGALLERYPICS,HomeFragmentPresenter.this);
+            atm.request(GETGALLERYPICS,GalleryFragmentPresenter.this);
     }
 
     @Override
-    public void onTabItemClick(int position, String item) {
-        NToast.shortToast(activity,item);
+    public void onTabItemClick(int position, SystemObjResponse.SysObjBean.ChildDictionariesBean item) {
+        galleryTypeId=item.getId()+"";
+        pageIndex=1;
+        this.onScrollListener.reset();
+        list.clear();
+        dataAdapter.notifyDataSetChanged();
+        atm.request(GETGALLERY,GalleryFragmentPresenter.this);
+    }
+
+    @Override
+    public void onTabExpand() {
+        galleryTypeId=null;
+        pageIndex=1;
+        this.onScrollListener.reset();
+        list.clear();
+        dataAdapter.notifyDataSetChanged();
+        atm.request(GETGALLERY,GalleryFragmentPresenter.this);
     }
 
 }

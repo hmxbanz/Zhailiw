@@ -8,15 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.zhailiw.app.R;
+import com.zhailiw.app.server.response.SystemObjResponse;
 
 import java.util.List;
 
 public class MyTabAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<String> mList;
+    private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> mList;
 
-    public MyTabAdapter(Context context, List<String> list) {
+    public MyTabAdapter(Context context, List<SystemObjResponse.SysObjBean.ChildDictionariesBean> list) {
         mContext = context;
         mList = list;
     }
@@ -27,7 +28,7 @@ public class MyTabAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public SystemObjResponse.SysObjBean.ChildDictionariesBean getItem(int position) {
         return mList.get(position);
     }
 
@@ -47,8 +48,8 @@ public class MyTabAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-        final String text = getItem(position);
-        holder.tagBtn.setText(text);
+        final SystemObjResponse.SysObjBean.ChildDictionariesBean text = getItem(position);
+        holder.tagBtn.setText(text.getName());
         return convertView;
     }
 

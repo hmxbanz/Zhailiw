@@ -2,27 +2,47 @@ package com.zhailiw.app.server.request;
 
 public class LoginRequest {
 
-    private String phone_no;
-    private String pwd;
+    private String userName;
+    private String password;
+    private String openId;
+    private String type;
 
-    public LoginRequest(String userName, String password) {
-        this.phone_no = userName;
-        this.pwd = password;
+    public LoginRequest(String userName, String password,String openId,String type) {
+        this.userName = userName;
+        this.password = password;
+        this.openId = openId;
+        this.type = type;
     }
 
-    public String getPhone_no() {
-        return phone_no;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPhone_no(String phone_no) {
-        this.phone_no = phone_no;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

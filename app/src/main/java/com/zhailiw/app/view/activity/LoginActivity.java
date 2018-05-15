@@ -15,11 +15,7 @@ import com.zhailiw.app.presenter.LoginPresenter;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText mUsername,mPassword;
-    private Button mBtnLogin;
-    private RelativeLayout mLayoutQqLogin,mLayoutWxLogin;
-    private TextView mTextForgetPassword;
     private LoginPresenter presenter;
-    private TextView mTextRight;
     private String openId,loginType;
 
     @Override
@@ -32,10 +28,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    public static void StartActivity(Context context, String openId, String type) {
+    public static void StartActivity(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra("openId",openId);
-        intent.putExtra("type",type);
+//        intent.putExtra("openId",openId);
+//        intent.putExtra("type",type);
         context.startActivity(intent);
     }
 
@@ -44,22 +40,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         openId = intent.getStringExtra("openId");
         loginType = intent.getStringExtra("type");
 
-        layoutBack =  findViewById(R.id.layout_back);
-        layoutBack.setOnClickListener(this);
-        txtTitle = findViewById(R.id.txt_title);
-        mTextRight = findViewById(R.id.text_right);
-        mTextRight.setOnClickListener(this);
+        findViewById(R.id.layout_back).setOnClickListener(this);
 
-        mTextForgetPassword =  findViewById(R.id.text_forget_password);
-        mLayoutQqLogin =  findViewById(R.id.layout_qq_login);
-        mLayoutQqLogin.setOnClickListener(this);
-        mLayoutWxLogin =  findViewById(R.id.layout_wx_login);
-        mLayoutWxLogin.setOnClickListener(this);
-        mTextForgetPassword.setOnClickListener(this);
+
+        findViewById(R.id.layout_login_qq).setOnClickListener(this);
+        findViewById(R.id.layout_login_wx).setOnClickListener(this);
         mUsername =  findViewById(R.id.username);
         mPassword =  findViewById(R.id.password);
-        mBtnLogin =  findViewById(R.id.btn_login);
-        mBtnLogin.setOnClickListener(this);
+        findViewById(R.id.btn_login).setOnClickListener(this);
+        findViewById(R.id.text_forget_password).setOnClickListener(this);
+        findViewById(R.id.txt_register).setOnClickListener(this);
 
     }
 
@@ -69,23 +59,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.layout_back:
                 finish();
                 break;
-            case R.id.text_right:
+            case R.id.txt_register:
                 startActivity(new Intent(this,RegisterActivity.class));
                 break;
             case R.id.btn_login:
-                if(TextUtils.isEmpty(openId)){
-                    presenter.login("nomal");  return;
-                    }
-                presenter.login("bind");
+                presenter.login("normal");
                 break;
             case R.id.text_forget_password:
                 startActivity(new Intent(this,ForgetPasswordActivity.class));
                 break;
-            case R.id.layout_wx_login:
-                //presenter.wxLogin();
+            case R.id.layout_login_wx:
+                LoginFirstActivity.StartActivity(this);
                 break;
-            case R.id.layout_qq_login:
-                //presenter.qqLogin();
+            case R.id.layout_login_qq:
+                LoginFirstActivity.StartActivity(this);
                 break;
         }
     }

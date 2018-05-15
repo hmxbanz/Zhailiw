@@ -4,90 +4,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/appBg"
+    android:background="@drawable/app_bg"
     tools:context="com.zhailiw.app.view.activity.LoginActivity">
     <include layout="@layout/layout_title_top" />
+
     <LinearLayout
-        android:background="@color/white"
-        android:layout_marginTop="15dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="2dp">
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo"
+            android:layout_marginBottom="30dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
 
             <EditText
-                android:textSize="16dp"
+                android:textSize="12dp"
                 android:id="@+id/username"
-                android:padding="5dp"
+                android:padding="2dp"
                 android:hint="请输入手机号"
                 android:inputType="number"
-                android:background="@drawable/transparent_drawable"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="35dp" />
-        </RelativeLayout>
-        <View
-            android:background="@color/grayLine"
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="2dp">
+
 
             <EditText
-                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                android:textSize="12dp"
                 android:id="@+id/password"
-                android:padding="5dp"
+                android:padding="2dp"
                 android:hint="请输入密码"
                 android:inputType="textPassword"
-                android:background="@drawable/transparent_drawable"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="35dp" />
-        </RelativeLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="50dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-
-    <Button
-        android:id="@+id/btn_login"
-        android:text="@string/login_text"
-        android:textSize="18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        style="@style/AppButtonStyle"
-        android:background="@drawable/bg_button"
-        />
-    <LinearLayout
-            android:layout_marginTop="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/text_forget_password"
-                android:gravity="right"
-                android:layout_weight="1"
-                android:text="忘记密码？"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_login"
+                android:text="@string/login_text"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                style="@style/AppButtonStyle"
+                />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_register"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:text="立即注册"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/text_forget_password"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:text="忘记密码？"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
     </LinearLayout>
 
 <RelativeLayout
+    android:layout_marginLeft="50dp"
+    android:layout_marginRight="50dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -95,13 +83,11 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:background="@drawable/app_icon"
+        android:background="@drawable/bg_line_other"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:textColor="@color/appTextColor"
-            style="@style/AppTitleStyle"
-            android:background="#f2f2f2"
             android:text="@string/other_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -109,9 +95,9 @@
     <LinearLayout
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="20dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:id="@+id/layout_nav"
@@ -120,29 +106,28 @@
                 android:layout_height="wrap_content"
                 >
                 <RelativeLayout
-                    android:id="@+id/layout_qq_login"
+                    android:id="@+id/layout_login_wx"
                     android:clickable="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
-
                     <ImageView
                         android:padding="5dp"
-                        android:id="@+id/nav_img_new"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:id="@+id/icon_wx"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/app_icon"
+                        android:src="@drawable/icon_wx"
                         />
                     <TextView
-                        android:layout_below="@+id/nav_img_new"
+                        android:layout_below="@+id/icon_wx"
                         android:gravity="center"
-                        android:text="QQ登录"
+                        android:text=""
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
                 <RelativeLayout
-                    android:id="@+id/layout_wx_login"
+                    android:id="@+id/layout_login_qq"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -150,39 +135,19 @@
                     <ImageView
                         android:padding="5dp"
                         android:layout_centerHorizontal="true"
-                        android:id="@+id/nav_img_hot"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/app_icon"
+                        android:id="@+id/icon_qq"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/icon_qq"
                         />
                     <TextView
                         android:gravity="center"
-                        android:layout_below="@+id/nav_img_hot"
-                        android:text="微信登录"
+                        android:layout_below="@+id/icon_qq"
+                        android:text=""
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </RelativeLayout>
-                <!--<RelativeLayout-->
-                    <!--android:id="@+id/layout_weibo_login"-->
-                    <!--android:gravity="center"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1">-->
-                    <!--<ImageView-->
-                        <!--android:padding="5dp"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:id="@+id/nav_img_hot3"-->
-                        <!--android:layout_width="60dp"-->
-                        <!--android:layout_height="60dp"-->
-                        <!--android:src="@drawable/icon_wb"-->
-                        <!--/>-->
-                    <!--<TextView-->
-                        <!--android:gravity="center"-->
-                        <!--android:layout_below="@+id/nav_img_hot3"-->
-                        <!--android:text="微博登录"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content" />-->
-                <!--</RelativeLayout>-->
+
             </LinearLayout>
 </RelativeLayout>
 

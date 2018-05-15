@@ -3,7 +3,10 @@ package com.zhailiw.app.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zhailiw.app.Const;
+import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
@@ -12,6 +15,10 @@ import com.zhailiw.app.server.async.AsyncTaskManager;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.R;
 import com.zhailiw.app.widget.ACache;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.zhailiw.app.server.async.AsyncTaskManager.HTTP_ERROR_CODE;
@@ -31,10 +38,12 @@ public class BasePresenter implements OnDataListener {
     protected Context context;
     public UserAction userAction;
     public AsyncTaskManager atm ;
-    protected String userInfoId;
+    protected String token;
     public ACache aCache;
     protected String userName;
     protected String password;
+
+    protected List<SystemObjResponse.SysObjBean> systemObj;
 
     public BasePresenter(Context context)
     {
@@ -46,6 +55,12 @@ public class BasePresenter implements OnDataListener {
         sp = this.context.getSharedPreferences("UserConfig", MODE_PRIVATE);
         editor = sp.edit();
         initData();
+        }
+
+        String systemObjCache = aCache.getAsString("SystemObjCache");
+        if (systemObjCache!=null ) {
+            Type type = new TypeToken<List<SystemObjResponse.SysObjBean>>() {}.getType();
+            systemObj =new Gson().fromJson(systemObjCache,type);
         }
 
     }
@@ -62,15 +77,17 @@ public class BasePresenter implements OnDataListener {
     public void initData()
     {
         isLogin = sp.getBoolean(Const.ISLOGIN, false);
-        userInfoId = sp.getString(Const.USERINFOID, "0");
-        userAction.token = GetToken();
-        userName=sp.getString(Const.LOGIN_USERNAME,"");
-        password=sp.getString(Const.LOGING_PASSWORD,"");
+        userAction.token = sp.getString("token","");
+        //userName=sp.getString(Const.LOGIN_USERNAME,"");
+        //password=sp.getString(Const.LOGING_PASSWORD,"");
     }
-    protected String GetToken(){
-        return sp.getString("access_token","");
+    protected void loginWork(String token)
+    {
+        editor.putString(Const.TOKEN, token);
+        editor.putBoolean(Const.ISLOGIN, true);
+        editor.apply();
+        initData();
     }
-
     @Override
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         return null;

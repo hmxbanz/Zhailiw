@@ -4,24 +4,20 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.NToast;
-import com.zhailiw.app.listener.AlertDialogCallBack;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.CommonResponse;
-import com.zhailiw.app.server.response.LoginResponse;
-import com.zhailiw.app.view.activity.LoginActivity;
+import com.zhailiw.app.view.activity.LoginFirstActivity;
 import com.zhailiw.app.view.activity.MainActivity;
-import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.widget.downloadService.DownloadService;
 import com.zhailiw.app.widget.permissionLibrary.PermissionsManager;
 import com.zhailiw.app.widget.permissionLibrary.PermissionsResultAction;
 
-import static com.zhailiw.app.presenter.LoginPresenter.UPLOADWBOPENID;
+
 
 
 /**
@@ -43,8 +39,8 @@ public class MainPresenter extends BasePresenter {
 
     public void init(ViewPager viewPager) {
         this.viewPager=viewPager;
-        LoadDialog.show(activity);
-        atm.request(CHECKVERSION,this);
+//        LoadDialog.show(activity);
+//        atm.request(CHECKVERSION,this);
         String[] Permissions=new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE,
@@ -69,24 +65,25 @@ public class MainPresenter extends BasePresenter {
     public void onMeClick() {
         basePresenter.initData();
         if(!basePresenter.isLogin){
-            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", new AlertDialogCallBack() {
-                @Override
-                public void executeEvent() {
-                    activity.startActivity(new Intent(activity, LoginActivity.class));
-                }
-
-            });
+//            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", new AlertDialogCallBack() {
+//                @Override
+//                public void executeEvent() {
+//                    activity.startActivity(new Intent(activity, LoginActivity.class));
+//                }
+//
+//            });
+            activity.startActivity(new Intent(activity, LoginFirstActivity.class));
         }
         else {
-            viewPager.setCurrentItem(3);
+            viewPager.setCurrentItem(2, false);
         }
 
     }
     @Override
     public Object doInBackground(int requestCode, String id) throws HttpException {
         switch (requestCode) {
-            case AUTOLOGIN:
-                return userAction.login(userName, password,"");
+//            case AUTOLOGIN:
+//                return userAction.login(userName, password,null,"");
             case CHECKVERSION:
                // return userAction.checkVersion();
         }
@@ -130,18 +127,7 @@ public class MainPresenter extends BasePresenter {
 //                    NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
 //                }
                 break;
-            case UPLOADWBOPENID:
-//                    WxLoginResponse response = (WxLoginResponse) result;
-//                if (response != null && response.getCode() == XtdConst.SUCCESS) {
-//                    WxLoginResponse.DataBean entity = response.getData();
-//                    loginWork(entity.getAccess_key());
-//
-//
-//                } else if (response.getCode() == XtdConst.FAILURE) {
-//
-//                }
-//                NToast.shortToast(context, response.getMsg());
-                break;
+
         }
 
     }
