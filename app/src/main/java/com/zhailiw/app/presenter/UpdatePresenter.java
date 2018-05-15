@@ -9,7 +9,6 @@ import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.broadcast.BroadcastManager;
 import com.zhailiw.app.server.response.CommonResponse;
-import com.zhailiw.app.view.activity.LoginActivity;
 import com.zhailiw.app.view.activity.UpdateActivity;
 import com.zhailiw.app.widget.LoadDialog;
 

@@ -1,7 +1,6 @@
 package com.zhailiw.app.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.zhailiw.app.R;
 import com.zhailiw.app.presenter.StartPresenter;

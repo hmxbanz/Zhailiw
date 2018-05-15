@@ -1,24 +1,18 @@
 package com.zhailiw.app.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.zhailiw.app.Adapter.StyleAdapter;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.NToast;
-import com.zhailiw.app.listener.AlertDialogCallBack;
-import com.zhailiw.app.listener.EndlessRecyclerOnScrollListener;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.response.StyleResponse;
-import com.zhailiw.app.view.activity.LoginActivity;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.view.activity.ShopActivity;
-import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
 
 import java.util.ArrayList;

@@ -1,12 +1,10 @@
 package com.zhailiw.app.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
@@ -16,7 +14,6 @@ import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.view.activity.ForgetPasswordActivity;
 import com.zhailiw.app.view.activity.LoginActivity;
-import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
 

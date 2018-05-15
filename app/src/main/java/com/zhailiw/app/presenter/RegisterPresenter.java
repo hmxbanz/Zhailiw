@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;

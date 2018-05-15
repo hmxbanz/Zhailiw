@@ -6,18 +6,17 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhailiw.app.Const;
-import com.zhailiw.app.server.response.SystemObjResponse;
-import com.zhailiw.app.widget.LoadDialog;
+import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.UserAction;
 import com.zhailiw.app.server.async.AsyncTaskManager;
 import com.zhailiw.app.server.async.OnDataListener;
-import com.zhailiw.app.R;
+import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.widget.ACache;
+import com.zhailiw.app.widget.LoadDialog;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;

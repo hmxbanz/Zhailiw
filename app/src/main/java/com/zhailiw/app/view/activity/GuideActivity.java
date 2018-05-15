@@ -5,8 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.zhailiw.app.Adapter.GuideAdapter;
-import com.zhailiw.app.listener.OnPageScrolledListener;
 import com.zhailiw.app.R;
+import com.zhailiw.app.listener.OnPageScrolledListener;
 import com.zhailiw.app.widget.scaleIndicator.ScaleIndicatorLayout;
 
 

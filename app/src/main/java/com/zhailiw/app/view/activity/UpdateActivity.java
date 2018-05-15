@@ -5,9 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.zhailiw.app.presenter.UpdatePresenter;
-
 import com.zhailiw.app.R;
+import com.zhailiw.app.presenter.UpdatePresenter;
 
 public class UpdateActivity extends BaseActivity implements View.OnClickListener {
     public TextView txt_right;

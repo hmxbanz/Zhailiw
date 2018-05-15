@@ -1,6 +1,5 @@
 package com.zhailiw.app.view.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,8 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
-import com.jaeger.library.StatusBarUtil;
 
 /**
  * Created by hmx on 2016/5/21.

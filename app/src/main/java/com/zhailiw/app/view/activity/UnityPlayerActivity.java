@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zhailiw.app.R;
 import com.zhailiw.app.widget.permissionLibrary.PermissionsManager;
 import com.zhailiw.app.widget.permissionLibrary.PermissionsResultAction;
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 public class UnityPlayerActivity extends BaseActivity
 {

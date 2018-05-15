@@ -3,12 +3,9 @@ package com.zhailiw.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 import com.zhailiw.app.R;
 import com.zhailiw.app.presenter.LoginPresenter;
 

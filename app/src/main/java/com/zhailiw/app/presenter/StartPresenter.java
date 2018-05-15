@@ -8,15 +8,12 @@ import android.os.Message;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
-import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.SystemObjResponse;
+import com.zhailiw.app.view.activity.MainActivity;
+import com.zhailiw.app.view.activity.StartActivity;
 import com.zhailiw.app.widget.ACache;
 import com.zhailiw.app.widget.LoadDialog;
-import com.zhailiw.app.view.activity.MainActivity;
-import com.zhailiw.app.common.CommonTools;
-import com.zhailiw.app.view.activity.GuideActivity;
-import com.zhailiw.app.view.activity.StartActivity;
 
 
 public class StartPresenter extends BasePresenter {

@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zhailiw.app.R;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.zhailiw.app.R;
 
 
 public class QrCodeActivity extends BaseActivity implements View.OnClickListener {

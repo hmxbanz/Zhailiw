@@ -2,27 +2,16 @@ package com.zhailiw.app.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.EditText;
 
-import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
-import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.LoginResponse;
-import com.zhailiw.app.view.activity.BindPhoneActivity;
 import com.zhailiw.app.view.activity.LoginActivity;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.widget.LoadDialog;
-
-import java.util.HashMap;
-
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by hmxbanz on 2017/4/5.

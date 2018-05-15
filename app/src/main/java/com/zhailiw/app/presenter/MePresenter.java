@@ -27,9 +27,9 @@ import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.UserInfoResponse;
 import com.zhailiw.app.view.activity.MeActivity;
 import com.zhailiw.app.widget.BottomMenuDialog;
+import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.widget.SelectableRoundedImageView;
-import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 
 import java.io.File;
 
