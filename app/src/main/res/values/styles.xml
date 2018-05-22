@@ -22,6 +22,15 @@
         <item name="android:background">@drawable/bg_button</item>
     </style>
 
+    <style name="ButtonStyleRadius">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:background">@drawable/bg_button3</item>
+    </style>
+
     <style name="ButtonStyle">
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
@@ -45,11 +54,35 @@
 
     <!--编辑输入框-->
     <style name="EditTextStyle">
-        <item name="android:textSize">14dp</item>
-        <item name="android:background">@color/aliceblue</item>
+        <item name="android:height">50dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:background">@color/appBg</item>
     </style>
     <style name="TabTitle">
         <item name="android:textColor">@android:color/tertiary_text_light</item>
         <item name="android:textSize">12dp</item>
     </style>
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TabTextAppearence</item>
+        <item name="tabBackground">@color/white</item>
+        <item name="tabIndicatorColor">@color/mainColorPinkDark</item>
+        <item name="tabSelectedTextColor">@color/mainColorPinkDark</item>
+    </style>
+
+    <style name="TabTextAppearence" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>

@@ -32,7 +32,7 @@
         android:visibility="gone"
         android:id="@+id/tab_container"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         style="@style/AppTitleStyle"
         app:tagSpacing="5dp"
         app:lineSpacing="3dp"/>

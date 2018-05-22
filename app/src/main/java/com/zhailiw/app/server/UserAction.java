@@ -8,16 +8,20 @@ import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.json.JsonMananger;
+import com.zhailiw.app.server.request.AddAddressRequest;
 import com.zhailiw.app.server.request.BindPhoneRequest;
 import com.zhailiw.app.server.request.LoginRequest;
 import com.zhailiw.app.server.request.RegisterRequest;
 import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.AddressResponse;
 import com.zhailiw.app.server.response.CaptchaResponse;
+import com.zhailiw.app.server.response.CheckWxQqResponse;
 import com.zhailiw.app.server.response.CommonResponse;
+import com.zhailiw.app.server.response.FavorResponse;
 import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.LoginResponse;
+import com.zhailiw.app.server.response.ShopCarResponse;
 import com.zhailiw.app.server.response.ShopResponse;
 import com.zhailiw.app.server.response.StyleResponse;
 import com.zhailiw.app.server.response.SystemObjResponse;
@@ -26,6 +30,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -63,7 +68,12 @@ public class UserAction extends BaseAction {
         }
         return instance;
     }
-
+    //检测微信QQ绑定
+    public CheckWxQqResponse checkWxQq() throws HttpException {
+        String uri = getURL("User/checkWXQQ");
+        LinkedHashMap map=new LinkedHashMap<>();
+        return getRequest(CheckWxQqResponse.class,map,uri);
+    }
     //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone,String type) throws HttpException
     {
@@ -117,38 +127,9 @@ public class UserAction extends BaseAction {
     }
     //上传头像
     public CommonResponse uploadAvatar(File imgFile) throws HttpException {
-        String result = "";
         String uri = getURL("User/updateAvatar");
-//        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-//        RequestBody requestBody = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)
-//                .addFormDataPart("content", "Square Logo")
-//                .addFormDataPart("image", "logo-square.png",RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
-//                .build();
-        Response response=null;
-        try {
-            response=OkHttpUtils
-                    .post()
-                    .addParams(Const.TOKEN,token)
-                    .addFile("avatar", "imgFile.jpg",imgFile)
-                    .url(uri)
-                    .build()
-                    .execute();
-            result =response.body().string();
-            Logger.d(TAG+"::::::%s", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CommonResponse commonResponse = null;
-        if (!TextUtils.isEmpty(result)) {
-            try {
-                commonResponse = JsonMananger.jsonToBean(result, CommonResponse.class);
-            } catch (JSONException e) {
-                Logger.e(TAG+"::::::%s", "uploadAvatar occurs JSONException e=" + e.toString());
-                return null;
-            }
-        }
-        return commonResponse;
+        HashMap<String,String> params= new HashMap<>();
+        return postFormRequest(CommonResponse.class,params,"avatar", "imgFile.jpg",imgFile,uri);
     }
     //取个人资料
     public UserInfoResponse getInfo() throws HttpException {
@@ -168,6 +149,26 @@ public class UserAction extends BaseAction {
         String uri = getURL("User/getMyAddress");
         return getRequest(AddressResponse.class,null,uri);
     }
+    //删除收货地址
+    public CommonResponse delAddress(int delAddressId) throws HttpException{
+        String uri = getURL("User/removeAddress");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("addressId",delAddressId+"");
+        return getRequest(CommonResponse.class,map,uri);
+    }
+    //删除收货地址
+    public CommonResponse setAddress(int delAddressId) throws HttpException{
+        String uri = getURL("User/setDefaultAddress");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("addressId",delAddressId+"");
+        return getRequest(CommonResponse.class,map,uri);
+    }
+    //新增收货地址
+    public CommonResponse addAddress(String contact, String cellphone, String address, boolean checked) throws HttpException{
+        String uri = getURL("User/addAddress");
+        String json=JsonMananger.beanToJson(new AddAddressRequest(contact,cellphone,address,checked));
+        return postRequest(CommonResponse.class,json,uri);
+    }
     //取商品列表
     public ShopResponse getProducts(String pageIndex, String styleId, String productTypeId) throws HttpException{
         String uri = getURL("Home/getProducts");
@@ -176,6 +177,15 @@ public class UserAction extends BaseAction {
         map.put("styleId",styleId);
         map.put("productTypeId",productTypeId);
         return getRequest(ShopResponse.class,map,uri);
+    }
+    //取购物车
+    public ShopCarResponse getShopCar(String pageIndex, String orderState, String orderType) throws HttpException{
+        String uri = getURL("User/getMyOrders");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("pageIndex",pageIndex);
+        map.put("orderState",orderState);
+        map.put("orderType",orderType);
+        return getRequest(ShopCarResponse.class,map,uri);
     }
     //取广告
     public ADResponse getAds() throws HttpException{
@@ -265,7 +275,7 @@ public class UserAction extends BaseAction {
         try {
             response=OkHttpUtils
                     .post()
-                    .addHeader("access_token",token)
+                    .addHeader("token",token)
                     .params(params)
                     .addFile(fileKey, fileName,file)
                     .url(uri)
@@ -287,5 +297,25 @@ public class UserAction extends BaseAction {
             return null;
         }
         return beanResponse;
+    }
+//取收藏
+    public FavorResponse getFavors(String pageIndex) throws HttpException {
+        String uri = getURL("User/getMyFavors");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("pageIndex",pageIndex);
+        return getRequest(FavorResponse.class,map,uri);
+    }
+
+    public CommonResponse updateBuyShop(int orderAttributeId, int count) throws  HttpException{
+        String uri = getURL("User/updateBuyShop");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderAttributeId",orderAttributeId+"");
+        map.put("count",count+"");
+        return getRequest(CommonResponse.class,map,uri);
+    }
+    public CommonResponse deleteBuyShop(String orderAttributeIds) throws  HttpException{
+        String uri = getURL("User/deleteBuyShop");
+        String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
+        return postRequest(CommonResponse.class,json,uri);
     }
 }

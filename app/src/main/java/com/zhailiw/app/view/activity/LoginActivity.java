@@ -13,7 +13,6 @@ import com.zhailiw.app.presenter.LoginPresenter;
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private EditText mUsername,mPassword;
     private LoginPresenter presenter;
-    private String openId,loginType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +32,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initViews() {
-        Intent intent=getIntent();
-        openId = intent.getStringExtra("openId");
-        loginType = intent.getStringExtra("type");
-
         findViewById(R.id.layout_back).setOnClickListener(this);
-
-
         findViewById(R.id.layout_login_qq).setOnClickListener(this);
         findViewById(R.id.layout_login_wx).setOnClickListener(this);
         mUsername =  findViewById(R.id.username);

@@ -23,8 +23,10 @@ import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.broadcast.BroadcastManager;
+import com.zhailiw.app.server.response.CheckWxQqResponse;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.UserInfoResponse;
+import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.view.activity.MeActivity;
 import com.zhailiw.app.widget.BottomMenuDialog;
 import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
@@ -41,8 +43,9 @@ public class MePresenter extends BasePresenter implements OnDataListener{
     private static final int UPLOADAVATOR = 1;
     private static final int GETINFO = 3;
     public static final String UPDATENICKNAME = "updateNickName";
+    private static final int CHECKWXQQ = 2;
     MeActivity mActivity;
-    private TextView nickName, txtBirthday;
+    private TextView nickName, txtBirthday,txtCellphone,txtWeixin,txtQQ;
     private SelectableRoundedImageView avator;
     private GlideImageLoader glideImageLoader;
     private BottomMenuDialog dialog;
@@ -58,10 +61,13 @@ public class MePresenter extends BasePresenter implements OnDataListener{
         setPortraitChangeListener();
     }
 
-    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, TextView txtBirthday) {
+    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, TextView txtBirthday, TextView txtCellphone, TextView txtWeixin, TextView txtQQ) {
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
         this.txtBirthday =txtBirthday;
+        this.txtCellphone=txtCellphone;
+        this.txtWeixin=txtWeixin;
+        this.txtQQ=txtQQ;
         //mView.initData();
         LoadDialog.show(context);
         atm.request(GETINFO, this);
@@ -85,6 +91,8 @@ public class MePresenter extends BasePresenter implements OnDataListener{
                 return userAction.uploadAvatar(selectedFile);
             case GETINFO:
                 return userAction.getInfo();
+            case CHECKWXQQ:
+                return userAction.checkWxQq();
         }
         return null;
     }
@@ -114,9 +122,22 @@ public class MePresenter extends BasePresenter implements OnDataListener{
                     Glide.with(context).load(Const.IMGURI+entity.getPhotoSmall()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
 
                     this.nickName.setText(entity.getNickName());
-                    this.txtBirthday.setText(entity.getRoleName());
+                    this.txtBirthday.setText(entity.getBirthday());
+                    this.txtCellphone.setText(entity.getCellPhone());
+                    atm.request(CHECKWXQQ,this);
                 }
                 NToast.shortToast(context, userInfoResponse.getMsg());
+                break;
+            case CHECKWXQQ:
+                if(result != null){
+                    CheckWxQqResponse checkWxQqResponse= (CheckWxQqResponse) result;
+                    if (checkWxQqResponse.getState() == Const.SUCCESS) {
+                        this.txtWeixin.setText(checkWxQqResponse.getWx());
+                        this.txtQQ.setText(checkWxQqResponse.getQq());
+                    }
+                    else
+                    NToast.showToast(context,checkWxQqResponse.getMsg(), Toast.LENGTH_LONG);
+                }
                 break;
 
 
@@ -234,5 +255,13 @@ public class MePresenter extends BasePresenter implements OnDataListener{
 
     public void onRequestPermissionsResult() {
         dialog.show();
+    }
+
+    public void loginOff() {
+            editor.putString(Const.TOKEN, "");
+            editor.putBoolean(Const.ISLOGIN, false);
+            editor.apply();
+            initData();
+            MainActivity.StartActivity(mActivity,0);
     }
 }

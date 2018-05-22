@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.youth.banner.Banner;
@@ -89,7 +88,32 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             dataHolder.txtName.setText(listItem.getContact());
             dataHolder.txtCellphone.setText(listItem.getCellphone());
             dataHolder.txtAddress.setText(listItem.getAddress());
+            if(listItem.getType()==1){
+                dataHolder.imgSetAddress.setVisibility(View.VISIBLE);
+                dataHolder.txtSetAddress.setText("默认地址");
+                dataHolder.txtSetAddress.setTextColor(context.getResources().getColor(R.color.mainColor));
+            }
+            else
+            {
+                dataHolder.imgSetAddress.setVisibility(View.GONE);
+                dataHolder.txtSetAddress.setText("设为默认");
+                dataHolder.txtSetAddress.setTextColor(context.getResources().getColor(R.color.appTextColor));
+            }
+
+
             if(mListener == null) return;
+            dataHolder.txtSetAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onTxtDelete(R.id.txt_set_address,listItem);
+                }
+            });
+            dataHolder.txtDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onTxtDelete(R.id.txt_delete,listItem);
+                }
+            });
             dataHolder.layoutView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,6 +176,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
     public interface ItemClickListener {
         void onItemClick(int position, AddressResponse.DataBean item);
+        void onTxtDelete(int id, AddressResponse.DataBean item);
 
     }
     class HeaderHolder extends RecyclerView.ViewHolder  {
@@ -168,6 +193,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView txtAddress;
         private TextView txtSetAddress;
         private TextView txtDelete;
+        private ImageView imgSetAddress;
         private LinearLayout layoutView;
 
         public DataHolder(View itemView) {
@@ -175,6 +201,9 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             txtName =  itemView.findViewById(R.id.txt_name);
             txtCellphone =  itemView.findViewById(R.id.txt_cellphone);
             txtAddress =  itemView.findViewById(R.id.txt_address);
+            txtDelete =  itemView.findViewById(R.id.txt_delete);
+            txtSetAddress =  itemView.findViewById(R.id.txt_set_address);
+            imgSetAddress=  itemView.findViewById(R.id.img_set_address);
             layoutView = itemView.findViewById(R.id.layout);
         }
 
@@ -183,6 +212,7 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             switch (v.getId())
             {
                 case R.id.layout:
+                    break;
             }
         }
     }

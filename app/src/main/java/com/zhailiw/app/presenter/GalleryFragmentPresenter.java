@@ -51,7 +51,7 @@ public class GalleryFragmentPresenter extends BasePresenter implements GalleryAd
     private ArrayList<ImageInfo> imageInfo;
     private EndlessRecyclerOnScrollListener onScrollListener;
     private int pageIndex=1,totalPages;
-    private View footerView;
+
     private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> Tabs;
     private String galleryTypeId=null;
 
@@ -62,7 +62,7 @@ public class GalleryFragmentPresenter extends BasePresenter implements GalleryAd
         dataAdapter = new GalleryAdapter(this.context);
         dataAdapter.setListItems(list);
         dataAdapter.setOnItemClickListener(this);
-        footerView=LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null);
+        View footerView=LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null);
         dataAdapter.setFooterView(footerView);
         SystemObjResponse.SysObjBean option = systemObj.get(6);
         Tabs=option.getChildDictionaries();
@@ -83,18 +83,13 @@ public class GalleryFragmentPresenter extends BasePresenter implements GalleryAd
             public void onLoadMore(int currentPage) {
                 Logger.d("GETGALLERY currentPage:%s", currentPage);
                 pageIndex = currentPage;
-                TextView tips=footerView.findViewById(R.id.tips);
-                MaterialProgressBar progressBar=footerView.findViewById(R.id.progress_wheel);
-                footerView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
-                tips.setText(R.string.layout_dialog_loading);
                 if(pageIndex<=totalPages) {
+                    dataAdapter.onLoading();
                     atm.request(GETGALLERY, GalleryFragmentPresenter.this);
                 }
                 else
                 {
-                    progressBar.setVisibility(View.GONE);
-                    tips.setText("我是有底线的");
+                    dataAdapter.onLoadingDone();
                 }
             }
         };
@@ -127,7 +122,6 @@ public class GalleryFragmentPresenter extends BasePresenter implements GalleryAd
                     else {
                         list.addAll(galleryResponse.getData());
                         dataAdapter.notifyDataSetChanged();
-                        footerView.setVisibility(View.GONE);
                         this.swiper.setRefreshing(false);
                     }
                 }else {
@@ -189,7 +183,7 @@ public class GalleryFragmentPresenter extends BasePresenter implements GalleryAd
     }
 
     @Override
-    public void onItemClick(int position, GalleryResponse.DataBean item, GalleryAdapter.DataHolder dataHolder) {
+    public void onItemClick(int position, GalleryResponse.DataBean item) {
             localGalleryId=item.getGalleryID();
             atm.request(GETGALLERYPICS,GalleryFragmentPresenter.this);
     }

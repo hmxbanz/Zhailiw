@@ -10,16 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NLog;
 import com.zhailiw.app.common.PhotoUtils;
 import com.zhailiw.app.presenter.MineFragmentPresenter;
+import com.zhailiw.app.view.activity.AboutActivity;
 import com.zhailiw.app.view.activity.AddressActivity;
+import com.zhailiw.app.view.activity.FavorActivity;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.view.activity.MeActivity;
+import com.zhailiw.app.view.activity.OrderActivity;
+import com.zhailiw.app.view.activity.ShopCarActivity;
 import com.zhailiw.app.widget.SelectableRoundedImageView;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
 
@@ -32,8 +35,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private static final int COMPAREVERSION = 54;
     public static final String SHOWRED = "SHOWRED";
     public static MineFragment mFragment = null;
-    private RelativeLayout mLayoutAr, mLayoutMyVideo, mLayoutMsg;
-    private LinearLayout mLayoutTitle, mLayoutFavor, mLayoutSetting, mLayoutComment,mLayoutShopCar, layoutAddress,mLayoutScore;
     private View view;
 
     private SelectableRoundedImageView mImageView;
@@ -43,7 +44,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private Uri selectUri;
     private MaterialProgressBar progressBar;
     private LinearLayout mTxtMe;
-    private RelativeLayout layout_back;
     private TextView title;
     private MineFragmentPresenter presenter;
     private TextView nickName;
@@ -82,28 +82,21 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initViews() {
-        ((TextView)view.findViewById(R.id.txt_title)).setText("我的");
-        view.findViewById(R.id.layout_back).setVisibility(View.INVISIBLE);
-        mImageView = (SelectableRoundedImageView) view.findViewById(R.id.img_avator);
+        mImageView = view.findViewById(R.id.img_avatar);
         mImageView.setOnClickListener(this);
         nickName= view.findViewById(R.id.nick_name);
 
-        mLayoutAr =  view.findViewById(R.id.layout_dynamic);
-        mLayoutAr.setOnClickListener(this);
-        mLayoutMsg =  view.findViewById(R.id.layout_message);
-        mLayoutMsg.setOnClickListener(this);
-        mLayoutMyVideo =  view.findViewById(R.id.layout_my_video);
-        mLayoutMyVideo.setOnClickListener(this);
+        view.findViewById(R.id.layout_buy_shop).setOnClickListener(this);
+        view.findViewById(R.id.layout_collection).setOnClickListener(this);
+        view.findViewById(R.id.layout_coupon).setOnClickListener(this);
+        view.findViewById(R.id.layout_notpay).setOnClickListener(this);
+        view.findViewById(R.id.layout_payed).setOnClickListener(this);
+        view.findViewById(R.id.layout_done).setOnClickListener(this);
 
-        mLayoutSetting =  view.findViewById(R.id.layout_setting);
-        mLayoutSetting.setOnClickListener(this);
-
-        mLayoutShopCar =  view.findViewById(R.id.layout_shop_car);
-        mLayoutShopCar.setOnClickListener(this);
-        layoutAddress =  view.findViewById(R.id.layout_address);
-        layoutAddress.setOnClickListener(this);
-        mLayoutTitle =  view.findViewById(R.id.layout_title);
-        mLayoutTitle.setOnClickListener(this);
+        view.findViewById(R.id.layout_address).setOnClickListener(this);
+        view.findViewById(R.id.layout_info).setOnClickListener(this);
+        view.findViewById(R.id.layout_nickname).setOnClickListener(this);
+        view.findViewById(R.id.layout_about).setOnClickListener(this);
     }
 
     @Override
@@ -116,23 +109,28 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.layout_dynamic:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+            case R.id.layout_buy_shop:
+                ShopCarActivity.StartActivity(getContext());
                 break;
-            case R.id.layout_title:
+            case R.id.layout_nickname:
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
-            case R.id.layout_message:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+            case R.id.layout_collection:
+                startActivity(new Intent(getActivity(), FavorActivity.class));
                 break;
-            case R.id.layout_my_video:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+            case R.id.layout_notpay:
+            case R.id.layout_payed:
+            case R.id.layout_done:
+                startActivity(new Intent(getActivity(), OrderActivity.class));
                 break;
-            case R.id.layout_setting:
-                startActivity(new Intent(getActivity(), MainActivity.class));
+            case R.id.layout_about:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.layout_address:
                 startActivity(new Intent(getActivity(), AddressActivity.class));
+                break;
+            case R.id.layout_info:
+                startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
         }
     }

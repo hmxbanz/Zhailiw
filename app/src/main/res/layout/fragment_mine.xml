@@ -6,11 +6,10 @@
     android:background="@color/appBg"
     android:orientation="vertical"
     tools:context="com.zhailiw.app.view.fragment.MineFragment">
-    <include layout="@layout/layout_title_top" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="55dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,21 +17,19 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/layout_title"
+                android:id="@+id/layout_nickname"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/white"
+                android:layout_height="150dp"
+                android:background="@drawable/mine_bg"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.zhailiw.app.widget.SelectableRoundedImageView
-                    android:id="@+id/img_avator"
+                    android:id="@+id/img_avatar"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="14sp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/app_icon"
                     app:sriv_border_color="@color/white"
@@ -42,28 +39,16 @@
                     app:sriv_right_bottom_corner_radius="50dip"
                     app:sriv_right_top_corner_radius="50dip" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
                     <TextView
                         android:id="@+id/nick_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="昵称"
-                        android:textColor="@color/appTextColor"
-                        android:textSize="18dp" />
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                         />
 
-                </LinearLayout>
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_arrow_right"
-                    android:tint="@color/grayLine" />
             </LinearLayout>
 
             <!--<View android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:background="@color/grayLine" android:layout_width="match_parent"  android:layout_height="1dp" />-->
@@ -85,61 +70,61 @@
                     android:padding="10dp"
 >
                     <RelativeLayout
-                        android:id="@+id/layout_dynamic"
+                        android:id="@+id/layout_buy_shop"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
                         <ImageView
-                            android:id="@+id/icon_ar"
+                            android:id="@+id/icon_buy_shop"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_buy_shop" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/icon_ar"
+                            android:layout_below="@+id/icon_buy_shop"
                             android:gravity="center"
                             android:text="购物车"
                             android:textSize="14dp" />
                     </RelativeLayout>
                     <RelativeLayout
-                        android:id="@+id/layout_message"
+                        android:id="@+id/layout_collection"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
                         <ImageView
-                            android:id="@+id/icon_msg"
+                            android:id="@+id/icon_collection"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_collection" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/icon_msg"
+                            android:layout_below="@+id/icon_collection"
                             android:gravity="center"
                             android:text="喜欢"
                             android:textSize="14dp" />
                     </RelativeLayout>
                     <RelativeLayout
-                        android:id="@+id/layout_my_video"
+                        android:id="@+id/layout_coupon"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
                         <ImageView
-                            android:id="@+id/icon_dynamic"
+                            android:id="@+id/icon_coupon"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_coupon" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/icon_dynamic"
+                            android:layout_below="@+id/icon_coupon"
                             android:gravity="center"
                             android:text="礼券"
                             android:textSize="14dp" />
@@ -154,8 +139,9 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_member" />
                         <TextView
+                            android:id="@+id/txt_member"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -165,6 +151,12 @@
                             android:textSize="14dp" />
                     </RelativeLayout>
                 </LinearLayout>
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="我的订单"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,27 +168,27 @@
                     android:layout_marginTop="10dp"
                     >
                     <RelativeLayout
-                        android:id="@+id/layout_dynamic1"
+                        android:id="@+id/layout_notpay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
                         <ImageView
-                            android:id="@+id/icon_ar1"
+                            android:id="@+id/icon_not_pay"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_not_pay" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/icon_ar1"
+                            android:layout_below="@+id/icon_not_pay"
                             android:gravity="center"
                             android:text="未付款"
                             android:textSize="14dp" />
                     </RelativeLayout>
                     <RelativeLayout
-                        android:id="@+id/layout_message1"
+                        android:id="@+id/layout_payed"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -205,7 +197,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_pay" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -216,41 +208,41 @@
                             android:textSize="14dp" />
                     </RelativeLayout>
                     <RelativeLayout
-                        android:id="@+id/layout_my_video1"
+                        android:id="@+id/layout_done"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
                         <ImageView
-                            android:id="@+id/icon_dynamic1"
+                            android:id="@+id/icon_done"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_done" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/icon_dynamic1"
+                            android:layout_below="@+id/icon_done"
                             android:gravity="center"
                             android:text="已完成"
                             android:textSize="14dp" />
                     </RelativeLayout>
                     <RelativeLayout
-                        android:id="@+id/layout_member1"
+                        android:id="@+id/layout_return"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
                         <ImageView
-                            android:id="@+id/icon_member1"
+                            android:id="@+id/icon_return"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_qq" />
+                            android:src="@drawable/icon_return" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_below="@+id/icon_member1"
+                            android:layout_below="@+id/icon_return"
                             android:gravity="center"
                             android:text="售后"
                             android:textSize="14dp" />
@@ -262,7 +254,7 @@
             <LinearLayout
                 android:id="@+id/layout_address"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:background="@drawable/bg_line2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -271,11 +263,11 @@
                 android:paddingRight="10dp">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/icon_qq"
-                    android:tint="@color/red" />
+                    android:src="@drawable/icon_address"
+                     />
 
                 <TextView
                     style="@style/MenuTitleStyle"
@@ -293,9 +285,9 @@
                     android:tint="@color/grayLine" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/layout_shop_car"
+                android:id="@+id/layout_info"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:background="@drawable/bg_line2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -304,11 +296,11 @@
                 android:paddingRight="10dp">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/icon_qq"
-                    android:tint="@color/red" />
+                    android:src="@drawable/icon_info"
+                     />
 
                 <TextView
                     style="@style/MenuTitleStyle"
@@ -326,9 +318,9 @@
                     android:tint="@color/grayLine" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/layout_setting"
+                android:id="@+id/layout_about"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:background="@drawable/bg_line2"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -337,11 +329,11 @@
                 android:paddingRight="10dp">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/icon_qq"
-                    android:tint="@color/red" />
+                    android:src="@drawable/icon_about"
+                     />
 
                 <TextView
                     style="@style/MenuTitleStyle"

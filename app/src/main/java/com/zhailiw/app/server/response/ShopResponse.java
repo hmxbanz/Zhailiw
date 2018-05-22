@@ -8,7 +8,7 @@ public class ShopResponse {
      * state : 1
      * msg : 成功
      * totalPages : 1
-     * data : [{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":10,"CompanyName":"宅里","CompanyAddr":"广东省","Tel":null,"CellPhone":"13729213015","ProductId":35,"ProductNo":"ZL10-F-35","ProductName":"沙发","ProductInfo":"豪华版","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"黄","CompanyCode":"ZL10","CreateDate":"/Date(1523846431467)/","ProductTypeId":248,"MatchTypeId":244,"MatchTypeName":"卧室","MaterialTypeId":261,"MaterialTypeName":"板材类","FactoryProductNo":null,"ProductPrice":143,"ProductImage":"/Images/ZL_Product/2018/04/16/2018041610403149_s.jpg"}]
+     * data : [{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":1,"CompanyName":"劲凯客厅家具","CompanyAddr":"广东省","Tel":"8888888","CellPhone":"13713713713","ProductId":49,"ProductNo":"J001-F-49","ProductName":"第十个","ProductInfo":"第十个","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"陈先生","CompanyCode":"J001","CreateDate":"/Date(1525944640367)/","ProductTypeId":248,"MatchTypeId":244,"MatchTypeName":"卧室","MaterialTypeId":262,"MaterialTypeName":"金属架类","FactoryProductNo":"第十个","ProductPrice":null,"ProductImage":"/Images/ZL_Product/2018/05/10/2018051017304037_s.png","ProductStyleId":235,"ProductStyleName":"欧美风格"},{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":1,"CompanyName":"劲凯客厅家具","CompanyAddr":"广东省","Tel":"8888888","CellPhone":"13713713713","ProductId":48,"ProductNo":"J001-F-48","ProductName":"第九个","ProductInfo":"第九个","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"陈先生","CompanyCode":"J001","CreateDate":"/Date(1525944616593)/","ProductTypeId":248,"MatchTypeId":244,"MatchTypeName":"卧室","MaterialTypeId":261,"MaterialTypeName":"板材类","FactoryProductNo":"第九个","ProductPrice":null,"ProductImage":"/Images/ZL_Product/2018/05/10/2018051017301660_s.png","ProductStyleId":235,"ProductStyleName":"欧美风格"},{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":1,"CompanyName":"劲凯客厅家具","CompanyAddr":"广东省","Tel":"8888888","CellPhone":"13713713713","ProductId":47,"ProductNo":"J001-F-47","ProductName":"第八个","ProductInfo":"第八个","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"陈先生","CompanyCode":"J001","CreateDate":"/Date(1525944370807)/","ProductTypeId":248,"MatchTypeId":244,"MatchTypeName":"卧室","MaterialTypeId":263,"MaterialTypeName":"天然石类","FactoryProductNo":"第八个","ProductPrice":null,"ProductImage":"/Images/ZL_Product/2018/05/10/2018051017261081_s.png","ProductStyleId":235,"ProductStyleName":"欧美风格"},{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":1,"CompanyName":"劲凯客厅家具","CompanyAddr":"广东省","Tel":"8888888","CellPhone":"13713713713","ProductId":46,"ProductNo":"J001-F-46","ProductName":"第七个","ProductInfo":"第七个","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"陈先生","CompanyCode":"J001","CreateDate":"/Date(1525944343523)/","ProductTypeId":248,"MatchTypeId":null,"MatchTypeName":null,"MaterialTypeId":null,"MaterialTypeName":null,"FactoryProductNo":"第七个","ProductPrice":null,"ProductImage":"/Images/ZL_Product/2018/05/10/2018051017254353_s.png","ProductStyleId":235,"ProductStyleName":"欧美风格"},{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":10,"CompanyName":"宅里","CompanyAddr":"广东省","Tel":null,"CellPhone":"13729213015","ProductId":45,"ProductNo":"ZL10-F-45","ProductName":"第六个","ProductInfo":"第六个","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"黄","CompanyCode":"ZL10","CreateDate":"/Date(1525944310770)/","ProductTypeId":248,"MatchTypeId":null,"MatchTypeName":null,"MaterialTypeId":null,"MaterialTypeName":null,"FactoryProductNo":"第六个","ProductPrice":null,"ProductImage":"/Images/ZL_Product/2018/05/10/2018051017251078_s.png","ProductStyleId":235,"ProductStyleName":"欧美风格"},{"ADPhotoes":null,"DetailPhotoes":null,"CompanyId":10,"CompanyName":"宅里","CompanyAddr":"广东省","Tel":null,"CellPhone":"13729213015","ProductId":35,"ProductNo":"ZL10-F-35","ProductName":"沙发","ProductInfo":"豪华版","ProductTypeName":"沙发","ProductTypeCode":"F","Contact":"黄","CompanyCode":"ZL10","CreateDate":"/Date(1523846431467)/","ProductTypeId":248,"MatchTypeId":244,"MatchTypeName":"卧室","MaterialTypeId":261,"MaterialTypeName":"板材类","FactoryProductNo":null,"ProductPrice":143,"ProductImage":"/Images/ZL_Product/2018/04/16/2018041610403149_s.jpg","ProductStyleId":235,"ProductStyleName":"欧美风格"}]
      */
 
     private int state;
@@ -52,28 +52,30 @@ public class ShopResponse {
         /**
          * ADPhotoes : null
          * DetailPhotoes : null
-         * CompanyId : 10
-         * CompanyName : 宅里
+         * CompanyId : 1
+         * CompanyName : 劲凯客厅家具
          * CompanyAddr : 广东省
-         * Tel : null
-         * CellPhone : 13729213015
-         * ProductId : 35
-         * ProductNo : ZL10-F-35
-         * ProductName : 沙发
-         * ProductInfo : 豪华版
+         * Tel : 8888888
+         * CellPhone : 13713713713
+         * ProductId : 49
+         * ProductNo : J001-F-49
+         * ProductName : 第十个
+         * ProductInfo : 第十个
          * ProductTypeName : 沙发
          * ProductTypeCode : F
-         * Contact : 黄
-         * CompanyCode : ZL10
-         * CreateDate : /Date(1523846431467)/
+         * Contact : 陈先生
+         * CompanyCode : J001
+         * CreateDate : /Date(1525944640367)/
          * ProductTypeId : 248
          * MatchTypeId : 244
          * MatchTypeName : 卧室
-         * MaterialTypeId : 261
-         * MaterialTypeName : 板材类
-         * FactoryProductNo : null
-         * ProductPrice : 143
-         * ProductImage : /Images/ZL_Product/2018/04/16/2018041610403149_s.jpg
+         * MaterialTypeId : 262
+         * MaterialTypeName : 金属架类
+         * FactoryProductNo : 第十个
+         * ProductPrice : null
+         * ProductImage : /Images/ZL_Product/2018/05/10/2018051017304037_s.png
+         * ProductStyleId : 235
+         * ProductStyleName : 欧美风格
          */
 
         private Object ADPhotoes;
@@ -81,7 +83,7 @@ public class ShopResponse {
         private int CompanyId;
         private String CompanyName;
         private String CompanyAddr;
-        private Object Tel;
+        private String Tel;
         private String CellPhone;
         private int ProductId;
         private String ProductNo;
@@ -97,9 +99,11 @@ public class ShopResponse {
         private String MatchTypeName;
         private int MaterialTypeId;
         private String MaterialTypeName;
-        private Object FactoryProductNo;
-        private int ProductPrice;
+        private String FactoryProductNo;
+        private Object ProductPrice;
         private String ProductImage;
+        private int ProductStyleId;
+        private String ProductStyleName;
 
         public Object getADPhotoes() {
             return ADPhotoes;
@@ -141,11 +145,11 @@ public class ShopResponse {
             this.CompanyAddr = CompanyAddr;
         }
 
-        public Object getTel() {
+        public String getTel() {
             return Tel;
         }
 
-        public void setTel(Object Tel) {
+        public void setTel(String Tel) {
             this.Tel = Tel;
         }
 
@@ -269,19 +273,19 @@ public class ShopResponse {
             this.MaterialTypeName = MaterialTypeName;
         }
 
-        public Object getFactoryProductNo() {
+        public String getFactoryProductNo() {
             return FactoryProductNo;
         }
 
-        public void setFactoryProductNo(Object FactoryProductNo) {
+        public void setFactoryProductNo(String FactoryProductNo) {
             this.FactoryProductNo = FactoryProductNo;
         }
 
-        public int getProductPrice() {
+        public Object getProductPrice() {
             return ProductPrice;
         }
 
-        public void setProductPrice(int ProductPrice) {
+        public void setProductPrice(Object ProductPrice) {
             this.ProductPrice = ProductPrice;
         }
 
@@ -291,6 +295,22 @@ public class ShopResponse {
 
         public void setProductImage(String ProductImage) {
             this.ProductImage = ProductImage;
+        }
+
+        public int getProductStyleId() {
+            return ProductStyleId;
+        }
+
+        public void setProductStyleId(int ProductStyleId) {
+            this.ProductStyleId = ProductStyleId;
+        }
+
+        public String getProductStyleName() {
+            return ProductStyleName;
+        }
+
+        public void setProductStyleName(String ProductStyleName) {
+            this.ProductStyleName = ProductStyleName;
         }
     }
 }

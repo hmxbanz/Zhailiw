@@ -8,7 +8,6 @@
 
     <LinearLayout
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="45dp"   >
@@ -16,8 +15,7 @@
         <RelativeLayout
             android:id="@+id/layout_back"
             android:layout_width="60dp"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent"  >
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -45,7 +43,6 @@
                         android:layout_height="match_parent"
                         android:text=""
                         android:textSize="18dp" />
-
                 </RelativeLayout>
             </FrameLayout>
         </RelativeLayout>
@@ -66,20 +63,18 @@
 
         </RelativeLayout>
         <RelativeLayout
-
             android:id="@+id/message"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             >
 
             <TextView
-                android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:id="@+id/text_right"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_right"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text=""
-                android:textColor="@android:color/white"
+                android:textColor="@color/appTextColor"
                 android:textSize="16dp" />
         </RelativeLayout>
     </LinearLayout>

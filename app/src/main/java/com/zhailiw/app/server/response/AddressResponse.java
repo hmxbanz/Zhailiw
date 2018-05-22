@@ -54,7 +54,7 @@ public class AddressResponse {
         private String Cellphone;
         private String Address;
         private String CreateDate;
-        private Object Type;
+        private int Type;
         private int UserInfoID;
 
         public int getAddressID() {
@@ -97,11 +97,11 @@ public class AddressResponse {
             this.CreateDate = CreateDate;
         }
 
-        public Object getType() {
+        public int getType() {
             return Type;
         }
 
-        public void setType(Object Type) {
+        public void setType(int Type) {
             this.Type = Type;
         }
 

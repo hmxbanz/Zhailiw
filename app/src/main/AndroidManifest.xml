@@ -52,6 +52,11 @@
         <activity   android:name=".view.activity.ForgetPasswordActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.LoginFirstActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
         <activity   android:name=".view.activity.BindPhoneActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.AddAddressActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.AboutActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.FavorActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.OrderActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.ShopCarActivity" android:screenOrientation="portrait" />
         <service android:name=".service.BluetoothService" />
         <provider
             android:name="android.support.v4.content.FileProvider"

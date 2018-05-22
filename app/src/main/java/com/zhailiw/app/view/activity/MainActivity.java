@@ -38,6 +38,19 @@ public class MainActivity extends BaseActivity {
         mainPresenter = new MainPresenter(this);
         mainPresenter.init(viewPager);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mainPresenter.reStart(intent);
+    }
+
     private void initViews() {
         RelativeLayout homeLayout, shopLayout,meLayout;
         homeLayout =  findViewById(R.id.tab_layout_home);
@@ -56,7 +69,7 @@ public class MainActivity extends BaseActivity {
         //checkPermissions();
     }
 
-    public static void StartActivity(Context context, String position) {
+    public static void StartActivity(Context context, int position) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("position",position);
         context.startActivity(intent);

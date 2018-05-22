@@ -185,4 +185,8 @@ public class MainPresenter extends BasePresenter {
 
     }
 
+    public void reStart(Intent intent) {
+        int position=intent.getIntExtra("position",0);
+        viewPager.setCurrentItem(position);
+    }
 }

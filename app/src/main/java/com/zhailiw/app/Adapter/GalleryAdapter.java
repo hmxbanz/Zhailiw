@@ -16,6 +16,7 @@ import com.zhailiw.app.R;
 import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.SystemObjResponse;
+import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private RecyclerView mRecyclerView;
     private GlideImageLoader glideImageLoader;
     private Context context;
-    private List<String> adImages;
     private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs;
 
     public void setOnItemClickListener(ItemClickListener listener) {
@@ -81,7 +81,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return new DataHolder(v);
         }
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(getItemViewType(position) == TYPE_FOOTER) return;
@@ -125,12 +124,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             dataHolder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem,dataHolder);
+                    mListener.onItemClick(position,listItem);
                 }
             });
         }
     }
-
     @Override
     public int getItemCount() {
         int count = (listItems == null ? 0 : listItems.size());
@@ -182,16 +180,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int position = holder.getLayoutPosition();
         return mHeaderView == null ? position : position - 1;
     }
-    public void setAdImages(List<String> images) {
-        this.adImages=images;
-    }
-
     public void setTabList(List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs) {
         this.tabs=tabs;
     }
-
     public interface ItemClickListener {
-        void onItemClick(int position, GalleryResponse.DataBean item, DataHolder dataHolder);
+        void onItemClick(int position, GalleryResponse.DataBean item);
         void onTabItemClick(int position, SystemObjResponse.SysObjBean.ChildDictionariesBean item);
         void onTabExpand();
     }
@@ -203,6 +196,21 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tagCloudLayout =  itemView.findViewById(R.id.tab_container);
             title =  itemView.findViewById(R.id.title);
         }
+    }
+
+    public void onLoading(){
+        TextView tips=mFooterView.findViewById(R.id.tips);
+        MaterialProgressBar progressBar=mFooterView.findViewById(R.id.progress_wheel);
+        mFooterView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        tips.setText(R.string.layout_dialog_loading);
+    }
+    public void onLoadingDone(){
+        mFooterView.setVisibility(View.VISIBLE);
+        TextView tips=mFooterView.findViewById(R.id.tips);
+        MaterialProgressBar progressBar=mFooterView.findViewById(R.id.progress_wheel);
+        progressBar.setVisibility(View.GONE);
+        tips.setText("我是有底线的");
     }
 
     public class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener

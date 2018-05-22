@@ -76,7 +76,7 @@ public class LoginPresenter extends BasePresenter  {
                     LoginResponse loginResponse = (LoginResponse) result;
                     if ( loginResponse.getState()== Const.SUCCESS) {
                         loginWork(loginResponse.getToken());
-                        MainActivity.StartActivity(activity,"2");
+                        MainActivity.StartActivity(activity,2);
                     }
                     NToast.shortToast(context, loginResponse.getMsg());
                     break;

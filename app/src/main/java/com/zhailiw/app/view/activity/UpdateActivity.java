@@ -24,9 +24,9 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
 
     private void initViews() {
         ((TextView)findViewById(R.id.txt_title)).setText("修改资料");
-        ((TextView)findViewById(R.id.text_right)).setText("保存");
+        ((TextView)findViewById(R.id.txt_right)).setText("保存");
         findViewById(R.id.layout_back).setOnClickListener(this);
-        findViewById(R.id.text_right).setOnClickListener(this);
+        findViewById(R.id.txt_right).setOnClickListener(this);
         nickName = (EditText) findViewById(R.id.nick_name);
     }
 
@@ -36,7 +36,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
             case R.id.layout_back:
                 finish();
                 break;
-            case R.id.text_right:
+            case R.id.txt_right:
                 presenter.save(nickName);
                 break;
         }

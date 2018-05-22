@@ -21,6 +21,7 @@ import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.ShopResponse;
+import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.view.activity.ShopActivity;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
@@ -41,6 +42,7 @@ public class ShopPresenter extends BasePresenter implements OnDataListener, Shop
     private int pageIndex=1,totalPages;
     private View footerView;
     private SwipeRefreshLayout swiper;
+    private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs;
 
     public ShopPresenter(Context context){
         super(context);
@@ -50,6 +52,9 @@ public class ShopPresenter extends BasePresenter implements OnDataListener, Shop
         dataAdapter.setOnItemClickListener(this);
         footerView= LayoutInflater.from(context).inflate(R.layout.recyclerview_footer,null);
         dataAdapter.setFooterView(footerView);
+        SystemObjResponse.SysObjBean option = systemObj.get(1);
+        tabs=option.getChildDictionaries();
+        dataAdapter.setTabs(tabs);
     }
 
     public void init(RecyclerView recyclerView, SwipeRefreshLayout swiper) {
@@ -149,8 +154,23 @@ public class ShopPresenter extends BasePresenter implements OnDataListener, Shop
     }
 
     @Override
-    public void onTabItemClick(int position, String item) {
+    public void onTabExpand() {
+        productTypeId=null;
+        pageIndex=1;
+        this.onScrollListener.reset();
+        list.clear();
+        dataAdapter.notifyDataSetChanged();
+        atm.request(GETPRODUCTS,ShopPresenter.this);
+    }
 
+    @Override
+    public void onTabItemClick(int position, SystemObjResponse.SysObjBean.ChildDictionariesBean item) {
+        productTypeId=item.getId()+"";
+        pageIndex=1;
+        this.onScrollListener.reset();
+        list.clear();
+        dataAdapter.notifyDataSetChanged();
+        atm.request(GETPRODUCTS,ShopPresenter.this);
     }
 
     @Override

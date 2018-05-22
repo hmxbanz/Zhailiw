@@ -20,6 +20,7 @@ import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.ShopResponse;
+import com.zhailiw.app.server.response.SystemObjResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +40,19 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     private Context context;
     private List<String> adImages;
     private ADHolder adHolder;
-
+    private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs;
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
     }
+
+    public List<SystemObjResponse.SysObjBean.ChildDictionariesBean> getTabs() {
+        return tabs;
+    }
+
+    public void setTabs(List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs) {
+        this.tabs = tabs;
+    }
+
     public View getHeaderView() {
         return mHeaderView;
     }
@@ -94,7 +104,7 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         }
         else if(viewType == TYPE_HEADER)
         {
-            View v = layoutInflater.inflate(R.layout.listitem_gallery_header,null, false);
+            View v = layoutInflater.inflate(R.layout.listitem_shop_header,null, false);
             return new HeaderHolder(v);
         }
         else if(mFooterView != null &&viewType == TYPE_FOOTER)
@@ -121,21 +131,25 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
             mList.add("现代");
             mList.add("欧美");
             mList.add("古代");
-            final MyTabAdapter mAdapter = new MyTabAdapter(context,mList);
+            final MyTabAdapter mAdapter = new MyTabAdapter(context,tabs);
             headerHolder.title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(headerHolder.tagCloudLayout.getVisibility()==View.GONE)
                         headerHolder.tagCloudLayout.setVisibility(View.VISIBLE);
                     else
+                    {
                         headerHolder.tagCloudLayout.setVisibility(View.GONE);
+                        mListener.onTabExpand();
+                    }
+
                 }
             });
             headerHolder.tagCloudLayout.setAdapter(mAdapter);
             headerHolder.tagCloudLayout.setItemClickListener(new TagCloudLayout.TagItemClickListener() {
                 @Override
                 public void itemClick(int position) {
-                    mListener.onTabItemClick(position,mList.get(position).toString());
+                    mListener.onTabItemClick(position,tabs.get(position));
                 }
             });
         }
@@ -161,10 +175,10 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     @Override
     public int getItemCount() {
         int count = (listItems == null ? 0 : listItems.size());
-//        if (mHeaderView != null)   count++;
-//        if (mFooterView != null)   count++;
-//        if (mADView != null)   count++;
-        return count+2;
+        if (mHeaderView != null)   count++;
+        if (mFooterView != null)   count++;
+        if (mADView != null)   count++;
+        return count+1;
     }
     @Override
     public int getItemViewType(int position) {
@@ -219,7 +233,8 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     }
     public interface ItemClickListener {
         void onItemClick(int position, ShopResponse.DataBean item);
-        void onTabItemClick(int position, String item);
+        void onTabItemClick(int position, SystemObjResponse.SysObjBean.ChildDictionariesBean item);
+        void onTabExpand();
 
     }
     public class ADHolder extends RecyclerView.ViewHolder  {

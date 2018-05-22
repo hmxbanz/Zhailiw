@@ -70,7 +70,7 @@ public class LoginFirstPresenter extends BasePresenter  {
         LoginResponse loginResponse2 = (LoginResponse) result;
         if ( loginResponse2.getState()== Const.SUCCESS) {
             loginWork(loginResponse2.getToken());
-            activity.startActivity(new Intent(activity,MainActivity.class));
+            MainActivity.StartActivity(activity,2);
         }
         else if(loginResponse2.getState()== Const.FAILURE)
         {

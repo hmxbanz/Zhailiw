@@ -55,4 +55,6 @@
     <string name="txt_home">图库</string>
     <string name="txt_shop">商城</string>
     <string name="txt_me">我的</string>
+    <string name="add_new_address">增加新地址</string>
+    <string name="str_pay">付款</string>
 </resources>
