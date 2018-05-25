@@ -15,6 +15,7 @@ import com.youth.banner.Banner;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
+import com.zhailiw.app.listener.AlertDialogCallBack;
 import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.async.OnDataListener;
@@ -22,16 +23,20 @@ import com.zhailiw.app.server.response.AddOrderResponse;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.ProductAttributeResponse;
 import com.zhailiw.app.server.response.ProductResponse;
+import com.zhailiw.app.view.activity.LoginActivity;
 import com.zhailiw.app.view.activity.ProductDetailActivity;
 import com.zhailiw.app.view.fragment.NotPayFragment;
 import com.zhailiw.app.widget.DialogBuy;
+import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
+import com.zhailiw.app.view.activity.OrderDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailPresenter extends BasePresenter implements OnDataListener, View.OnClickListener,DialogBuy.DialogPopListener,SwipeRefreshLayout.OnRefreshListener {
     private static final int GETPRODUCT = 1,GETPRODUCTATTRIBUTE=2,ADDFAVOR=3,ADDSHOPCAR=4,ADDORDER=5;
+    private final BasePresenter basePresenter;
     private ProductDetailActivity activity;
     private String productId;
     private Banner banner;
@@ -50,6 +55,7 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
     public ProductDetailPresenter(Context context){
         super(context);
         activity = (ProductDetailActivity) context;
+        basePresenter = BasePresenter.getInstance(context);
         glideImageLoader = new GlideImageLoader();
         Intent intent = activity.getIntent();
         productId = intent.getStringExtra("productId");
@@ -143,6 +149,8 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
             case ADDORDER:
                 AddOrderResponse addOrderResponse = (AddOrderResponse) result;
                 if (addOrderResponse.getState() == Const.SUCCESS) {
+                    dialog.dismiss();
+                    OrderDetailActivity.StartActivity(context,addOrderResponse.getOrderId());
                 }
                 NToast.shortToast(context, addOrderResponse.getMsg());
                 break;
@@ -152,6 +160,18 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
 
     @Override
     public void onClick(View v) {
+        basePresenter.initData();
+        if(!basePresenter.isLogin)
+        {
+            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", new AlertDialogCallBack(){
+                @Override
+                public void executeEvent() {
+                    super.executeEvent();
+                    LoginActivity.StartActivity(activity);
+                }
+            });
+            return;
+        }
         switch (v.getId()) {
             case R.id.btn_add_shop_car:
                 atm.request(GETPRODUCTATTRIBUTE,this);
@@ -179,9 +199,7 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
         dialog.setListener(this);
         dialog.show();
         dialog.setData(productAttributeResponse,productResponse,v);
-
     }
-
 
     @Override
     public void onSubmit(int orderType, int quantity, int productAttributeId) {

@@ -1,12 +1,10 @@
 package com.zhailiw.app.server;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONException;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
-import com.zhailiw.app.Const;
 import com.zhailiw.app.common.json.JsonMananger;
 import com.zhailiw.app.server.request.AddAddressRequest;
 import com.zhailiw.app.server.request.BindPhoneRequest;
@@ -18,10 +16,12 @@ import com.zhailiw.app.server.response.AddressResponse;
 import com.zhailiw.app.server.response.CaptchaResponse;
 import com.zhailiw.app.server.response.CheckWxQqResponse;
 import com.zhailiw.app.server.response.CommonResponse;
+import com.zhailiw.app.server.response.DefaultAddressResponse;
 import com.zhailiw.app.server.response.FavorResponse;
 import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.LoginResponse;
+import com.zhailiw.app.server.response.OrderDetailResponse;
 import com.zhailiw.app.server.response.ProductResponse;
 import com.zhailiw.app.server.response.ShopCarResponse;
 import com.zhailiw.app.server.response.ShopResponse;
@@ -362,5 +362,17 @@ public class UserAction extends BaseAction {
         map.put("quantity",quantity);
         map.put("productAttributeId",productAttributeId);
         return getRequest(AddOrderResponse.class,map,uri);
+    }
+
+    public OrderDetailResponse getOrderDetail(String orderId) throws HttpException {
+        String uri = getURL("User/payOrder");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderId",orderId);
+        return getRequest(OrderDetailResponse.class,map,uri);
+    }
+    public DefaultAddressResponse getDefaultAddress() throws HttpException {
+        String uri = getURL("User/getDefaultAddress");
+        LinkedHashMap map=new LinkedHashMap<>();
+        return getRequest(DefaultAddressResponse.class,map,uri);
     }
 }
