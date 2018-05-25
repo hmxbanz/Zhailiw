@@ -17,6 +17,7 @@ import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.ShopCarResponse;
+import com.zhailiw.app.view.activity.ProductDetailActivity;
 import com.zhailiw.app.view.activity.ShopCarActivity;
 import com.zhailiw.app.widget.LoadDialog;
 
@@ -71,7 +72,7 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
         this.recyclerView.setNestedScrollingEnabled(false);
         gridLayoutManager=new GridLayoutManager(context,1);
         this.recyclerView.setLayoutManager(gridLayoutManager);
-        this.btnPay=activity.findViewById(R.id.btn_pay);
+        this.btnPay=activity.findViewById(R.id.btn_buy);
         this.txtSum=activity.findViewById(R.id.txt_sum);
         this.txtSumPrice=activity.findViewById(R.id.txt_sum_price);
 
@@ -81,6 +82,9 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
     @Override
     public void onItemClick(View v, ShopCarResponse.DataBean.OrderListBean item, int num, int pos) {
         switch (v.getId()) {
+            case R.id.img_product:
+                ProductDetailActivity.StartActivity(activity,item.getProductId()+"");
+                break;
             case R.id.list_checkbox:
                 ShopCarResponse.DataBean.OrderListBean entity=list.get(pos);
                 if(((CheckBox)v).isChecked())
@@ -103,8 +107,6 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
                     this.txtSumPrice.setText("¥:"+ammount+"");
 
                 }
-
-
                 break;
         }
     }
@@ -145,6 +147,7 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
         if (result==null)return;
         switch (requestCode) {
             case GETSHOPCAR:
+                this.swiper.setRefreshing(false);
                 ShopCarResponse shopCarResponse = (ShopCarResponse) result;
                 if (shopCarResponse.getState() == Const.SUCCESS) {
                     totalPages=shopCarResponse.getTotalPages();
@@ -171,6 +174,9 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
                 if (commonResponse2.getState() == Const.SUCCESS) {
                     list.clear();
                     dataAdapter.notifyDataSetChanged();
+                    ammount=0;
+                    this.txtSumPrice.setText("0");
+                    orderAttributeIds.clear();
                     atm.request(GETSHOPCAR,ShopCarPresenter.this);
                 }else {
                     NToast.shortToast(context, commonResponse2.getMsg());
@@ -180,7 +186,9 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
     }
     @Override
     public void onRefresh() {
-
+        this.list.clear();
+        dataAdapter.notifyDataSetChanged();
+        atm.request(GETSHOPCAR,ShopCarPresenter.this);
     }
 
     public void onRightClick() {
@@ -206,8 +214,6 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
 
     public void onPayClick() {
         if(!isDel){
-            ammount=0;
-            this.txtSumPrice.setText("0");
             LoadDialog.show(context);
             atm.request(DELETEUYSHOP,ShopCarPresenter.this);
         }

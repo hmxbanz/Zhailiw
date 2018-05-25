@@ -13,6 +13,7 @@ import com.zhailiw.app.server.request.BindPhoneRequest;
 import com.zhailiw.app.server.request.LoginRequest;
 import com.zhailiw.app.server.request.RegisterRequest;
 import com.zhailiw.app.server.response.ADResponse;
+import com.zhailiw.app.server.response.AddOrderResponse;
 import com.zhailiw.app.server.response.AddressResponse;
 import com.zhailiw.app.server.response.CaptchaResponse;
 import com.zhailiw.app.server.response.CheckWxQqResponse;
@@ -21,11 +22,13 @@ import com.zhailiw.app.server.response.FavorResponse;
 import com.zhailiw.app.server.response.GalleryPicResponse;
 import com.zhailiw.app.server.response.GalleryResponse;
 import com.zhailiw.app.server.response.LoginResponse;
+import com.zhailiw.app.server.response.ProductResponse;
 import com.zhailiw.app.server.response.ShopCarResponse;
 import com.zhailiw.app.server.response.ShopResponse;
 import com.zhailiw.app.server.response.StyleResponse;
 import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.server.response.UserInfoResponse;
+import com.zhailiw.app.server.response.ProductAttributeResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -73,6 +76,18 @@ public class UserAction extends BaseAction {
         String uri = getURL("User/checkWXQQ");
         LinkedHashMap map=new LinkedHashMap<>();
         return getRequest(CheckWxQqResponse.class,map,uri);
+    }
+    //更新性别和出生日期
+    public CommonResponse updateInfo(String sex,String birthday) throws HttpException {
+        String uri = getURL("User/updateUserInfo");
+        if("".equals(sex))
+            sex="0";
+        if("".equals(birthday))
+            birthday="2018-1-1";
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("Sex",sex);
+        map.put("Birthday",birthday);
+        return getRequest(CommonResponse.class,map,uri);
     }
     //获取验证码
     public CaptchaResponse getCaptcha(String cellPhone,String type) throws HttpException
@@ -156,7 +171,7 @@ public class UserAction extends BaseAction {
         map.put("addressId",delAddressId+"");
         return getRequest(CommonResponse.class,map,uri);
     }
-    //删除收货地址
+    //设置默认收货地址
     public CommonResponse setAddress(int delAddressId) throws HttpException{
         String uri = getURL("User/setDefaultAddress");
         LinkedHashMap map=new LinkedHashMap<>();
@@ -317,5 +332,35 @@ public class UserAction extends BaseAction {
         String uri = getURL("User/deleteBuyShop");
         String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
         return postRequest(CommonResponse.class,json,uri);
+    }
+//取产品
+    public ProductResponse getProduct(String productId) throws HttpException{
+        String uri = getURL("User/getProduct");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        return getRequest(ProductResponse.class,map,uri);
+    }
+    //取产品规格
+    public ProductAttributeResponse getProductAttribute(String productId) throws HttpException{
+        String uri = getURL("User/getProductAttribute");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        return getRequest(ProductAttributeResponse.class,map,uri);
+    }
+//收藏商品
+    public CommonResponse addFavor(String productId) throws HttpException{
+        String uri = getURL("User/addMyFavors");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        return getRequest(CommonResponse.class,map,uri);
+    }
+    //加入购物车
+    public AddOrderResponse addOrderCar(String orderType, String quantity, String productAttributeId) throws HttpException{
+        String uri = getURL("User/addOrder");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderType",orderType);
+        map.put("quantity",quantity);
+        map.put("productAttributeId",productAttributeId);
+        return getRequest(AddOrderResponse.class,map,uri);
     }
 }

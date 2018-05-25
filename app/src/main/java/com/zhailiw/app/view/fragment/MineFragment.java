@@ -71,7 +71,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        //presenter.getInfo();
+        presenter.getInfo();
         NLog.d("fragment-----","onStart");
     }
 
@@ -130,6 +130,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), AddressActivity.class));
                 break;
             case R.id.layout_info:
+            case R.id.img_avatar:
                 startActivity(new Intent(getActivity(), MeActivity.class));
                 break;
         }

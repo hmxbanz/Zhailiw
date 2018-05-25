@@ -51,6 +51,12 @@
     <style name="dialogFullscreen">
         <item name="android:windowFullscreen">true</item>
     </style>
+    <style name="dialogFullscreenTranslucent">
+        <item name="android:windowBackground">@drawable/transparent_drawable</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <!--编辑输入框-->
     <style name="EditTextStyle">

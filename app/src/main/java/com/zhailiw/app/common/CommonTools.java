@@ -73,11 +73,20 @@ public class CommonTools {
         }
         return mDateFormat.format(new Date(time));
     }
+    //时间格式化
+    public static String formatDateTime3(long time) {
+        SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if (0 == time) {
+            return "";
+        }
+        return mDateFormat.format(new Date(time));
+    }
     //时间格式化/Date(3432433434)/
     public static String formatDateTime2(String time) {
+        if(TextUtils.isEmpty(time)) return "";
         String s=time.substring(6,time.indexOf(")"));
         long date= Long.parseLong(s);
-        return formatDateTime(date);
+        return formatDateTime3(date);
     }
     //检测包名的应用是否已经安装在手机
     public static boolean checkBrowser(Context context, String packageName) {

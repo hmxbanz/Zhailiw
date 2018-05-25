@@ -35,7 +35,7 @@ public class ShopCarActivity extends BaseActivity implements View.OnClickListene
         ((TextView)findViewById(R.id.txt_title)).setText("购物车");
         ((TextView)findViewById(R.id.txt_right)).setText("管理");
         findViewById(R.id.txt_right).setOnClickListener(this);
-        findViewById(R.id.btn_pay).setOnClickListener(this);
+        findViewById(R.id.btn_buy).setOnClickListener(this);
         this.checkbox=findViewById(R.id.checkbox);
         this.checkbox.setOnClickListener(this);
     }
@@ -49,7 +49,7 @@ public class ShopCarActivity extends BaseActivity implements View.OnClickListene
             case R.id.txt_right:
                 presenter.onRightClick();
                 break;
-            case R.id.btn_pay:
+            case R.id.btn_buy:
                 presenter.onPayClick();
             case R.id.checkbox:
                 presenter.onCheckAll(checkbox);

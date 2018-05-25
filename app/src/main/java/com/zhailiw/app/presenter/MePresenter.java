@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhailiw.app.Const;
+import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.common.PhotoUtils;
 import com.zhailiw.app.listener.AlertDialogCallBack;
@@ -35,6 +37,13 @@ import com.zhailiw.app.widget.SelectableRoundedImageView;
 
 import java.io.File;
 
+import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.OptionPicker;
+import cn.qqtheme.framework.util.ConvertUtils;
+import cn.qqtheme.framework.widget.WheelView;
+
+import static com.zhailiw.app.common.CommonTools.formatDateTime2;
+
 
 /**
  * Created by hmxbanz on 2017/4/5.
@@ -44,13 +53,15 @@ public class MePresenter extends BasePresenter implements OnDataListener{
     private static final int GETINFO = 3;
     public static final String UPDATENICKNAME = "updateNickName";
     private static final int CHECKWXQQ = 2;
+    private static final int UPDATEINFO=4;
     MeActivity mActivity;
-    private TextView nickName, txtBirthday,txtCellphone,txtWeixin,txtQQ;
+    private TextView nickName, txtBirthday,txtCellphone,txtWeixin,txtQQ,txtSex;
     private SelectableRoundedImageView avator;
     private GlideImageLoader glideImageLoader;
     private BottomMenuDialog dialog;
     private PhotoUtils photoUtils;
     private Uri selectUri;
+
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 101;
     private File selectedFile;
 
@@ -61,13 +72,14 @@ public class MePresenter extends BasePresenter implements OnDataListener{
         setPortraitChangeListener();
     }
 
-    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, TextView txtBirthday, TextView txtCellphone, TextView txtWeixin, TextView txtQQ) {
+    public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName, TextView txtBirthday, TextView txtCellphone, TextView txtWeixin, TextView txtQQ,TextView txtSex) {
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
         this.txtBirthday =txtBirthday;
         this.txtCellphone=txtCellphone;
         this.txtWeixin=txtWeixin;
         this.txtQQ=txtQQ;
+        this.txtSex = txtSex;
         //mView.initData();
         LoadDialog.show(context);
         atm.request(GETINFO, this);
@@ -93,6 +105,8 @@ public class MePresenter extends BasePresenter implements OnDataListener{
                 return userAction.getInfo();
             case CHECKWXQQ:
                 return userAction.checkWxQq();
+            case UPDATEINFO:
+                return userAction.updateInfo(this.txtSex.getText().toString().equals("男")?"true":"false",this.txtBirthday.getText().toString());
         }
         return null;
     }
@@ -101,6 +115,15 @@ public class MePresenter extends BasePresenter implements OnDataListener{
     public void onSuccess(int requestCode, Object result) {
         LoadDialog.dismiss(context);
         switch (requestCode) {
+            case UPDATEINFO:
+                if(result != null){
+                    CommonResponse commonResponse2= (CommonResponse) result;
+                    if (commonResponse2.getState() == Const.SUCCESS) {
+                    }
+                    else
+                    NToast.showToast(context,commonResponse2.getMsg(), Toast.LENGTH_LONG);
+                }
+                break;
             case UPLOADAVATOR:
                 if(result != null){
                     CommonResponse commonResponse= (CommonResponse) result;
@@ -120,9 +143,9 @@ public class MePresenter extends BasePresenter implements OnDataListener{
 //                    int min=10;
 //                    int s = random.nextInt(max)%(max-min+1) + min;
                     Glide.with(context).load(Const.IMGURI+entity.getPhotoSmall()).skipMemoryCache(true).diskCacheStrategy( DiskCacheStrategy.NONE ).into(this.avator);
-
                     this.nickName.setText(entity.getNickName());
-                    this.txtBirthday.setText(entity.getBirthday());
+                    this.txtSex.setText(entity.getSexName());
+                    this.txtBirthday.setText(formatDateTime2(entity.getBirthday()));
                     this.txtCellphone.setText(entity.getCellPhone());
                     atm.request(CHECKWXQQ,this);
                 }
@@ -263,5 +286,57 @@ public class MePresenter extends BasePresenter implements OnDataListener{
             editor.apply();
             initData();
             MainActivity.StartActivity(mActivity,0);
+    }
+    public void onYearMonthDayPicker(View view) {
+        final DatePicker picker = new DatePicker(mActivity);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setUseWeight(true);
+        picker.setTopPadding(ConvertUtils.toPx(context, 10));
+        picker.setRangeEnd(2018, 5, 22);
+        picker.setRangeStart(1970, 8, 29);
+        picker.setSelectedItem(1980, 1, 1);
+        picker.setResetWhileWheel(false);
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+            @Override
+            public void onDatePicked(String year, String month, String day) {
+                txtBirthday.setText(year + "-" + month + "-" + day);
+                atm.request(UPDATEINFO,MePresenter.this);
+            }
+        });
+        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
+            @Override
+            public void onYearWheeled(int index, String year) {
+                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onMonthWheeled(int index, String month) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onDayWheeled(int index, String day) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
+            }
+        });
+        picker.show();
+    }
+    public void onSexPicker(View view) {
+        OptionPicker picker = new OptionPicker(mActivity, new String[]{"女", "男" });
+        picker.setCanceledOnTouchOutside(false);
+        picker.setDividerRatio(WheelView.DividerConfig.FILL);
+        picker.setShadowColor(Color.RED, 40);
+        picker.setSelectedIndex(1);
+        picker.setCycleDisable(true);
+        picker.setTextSize(11);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+                //NToast.shortToast(context,"index=" + index + ", item=" + item);
+                txtSex.setText(item);
+                atm.request(UPDATEINFO,MePresenter.this);
+            }
+        });
+        picker.show();
     }
 }

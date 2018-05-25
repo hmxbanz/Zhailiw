@@ -17,7 +17,7 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 101;
     private Uri selectUri;
     private SelectableRoundedImageView selectableRoundedImageView;
-    private TextView txtNickName,txtBirthday,txtCellphone,txtWeixin,txtQQ;
+    private TextView txtNickName,txtBirthday,txtCellphone,txtWeixin,txtQQ,txtSex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_me);
         initViews();
         mePresenter =new MePresenter(this);
-        mePresenter.init(selectableRoundedImageView, txtNickName,txtBirthday,txtCellphone,txtWeixin,txtQQ);
+        mePresenter.init(selectableRoundedImageView, txtNickName,txtBirthday,txtCellphone,txtWeixin,txtQQ,txtSex);
     }
 
     public void initViews(){
@@ -41,6 +41,9 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
         txtWeixin =  findViewById(R.id.txt_weixin);
         txtQQ =  findViewById(R.id.txt_qq);
         findViewById(R.id.btn_login_off).setOnClickListener(this);
+        txtBirthday.setOnClickListener(this);
+        txtSex =  findViewById(R.id.txt_sex);
+        txtSex.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -56,6 +59,12 @@ public class MeActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.btn_login_off:
                 mePresenter.loginOff();
+                break;
+            case R.id.txt_birthday:
+                mePresenter.onYearMonthDayPicker(txtBirthday);
+                break;
+            case R.id.txt_sex:
+                mePresenter.onSexPicker(txtSex);
                 break;
         }
     }

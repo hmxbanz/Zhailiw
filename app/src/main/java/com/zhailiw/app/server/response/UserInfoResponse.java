@@ -7,7 +7,7 @@ public class UserInfoResponse {
      * state : 1
      * msg : 成功
      * totalPages : 0
-     * data : {"UserID":1477,"UserName":"13729213017         ","Password":"123","CreateDate":"/Date(1524909200760)/","RealName":null,"NickName":"555","UserInfoID":1477,"RoleName":"普通用户","RoleID":3,"CellPhone":"13729213017         ","RongCloudToken":"c67fd49a23fd49dabad7df03e47d6a6e","LevelID":null,"LevelName":null,"LevelAmount":null,"LevelDiscount":null,"LevelRebate":null,"PhotoBig":"/Images/User/2018/05/16/2018051610120287_b.jpg","PhotoSmall":"/Images/User/2018/05/16/2018051610120287_s.jpg","Sex":"","Birthday":""}
+     * data : {"UserID":1477,"UserName":"13729213017         ","Password":"123","CreateDate":"/Date(1524909200760)/","RealName":null,"NickName":"555","UserInfoID":1477,"RoleName":"普通用户","RoleID":3,"CellPhone":"13729213017         ","RongCloudToken":"c67fd49a23fd49dabad7df03e47d6a6e","LevelID":1,"LevelName":"V1","LevelAmount":500000,"LevelDiscount":0.8,"LevelRebate":0.1,"PhotoBig":"/Images/User/2018/05/16/2018051610120287_b.jpg","PhotoSmall":"/Images/User/2018/05/16/2018051610120287_s.jpg","Birthday":null,"SexName":"女","Sex":null}
      */
 
     private int state;
@@ -60,15 +60,16 @@ public class UserInfoResponse {
          * RoleID : 3
          * CellPhone : 13729213017
          * RongCloudToken : c67fd49a23fd49dabad7df03e47d6a6e
-         * LevelID : null
-         * LevelName : null
-         * LevelAmount : null
-         * LevelDiscount : null
-         * LevelRebate : null
+         * LevelID : 1
+         * LevelName : V1
+         * LevelAmount : 500000
+         * LevelDiscount : 0.8
+         * LevelRebate : 0.1
          * PhotoBig : /Images/User/2018/05/16/2018051610120287_b.jpg
          * PhotoSmall : /Images/User/2018/05/16/2018051610120287_s.jpg
-         * Sex :
-         * Birthday :
+         * Birthday : null
+         * SexName : 女
+         * Sex : null
          */
 
         private int UserID;
@@ -82,15 +83,16 @@ public class UserInfoResponse {
         private int RoleID;
         private String CellPhone;
         private String RongCloudToken;
-        private Object LevelID;
-        private Object LevelName;
-        private Object LevelAmount;
-        private Object LevelDiscount;
-        private Object LevelRebate;
+        private int LevelID;
+        private String LevelName;
+        private int LevelAmount;
+        private double LevelDiscount;
+        private double LevelRebate;
         private String PhotoBig;
         private String PhotoSmall;
-        private String Sex;
         private String Birthday;
+        private String SexName;
+        private Object Sex;
 
         public int getUserID() {
             return UserID;
@@ -180,43 +182,43 @@ public class UserInfoResponse {
             this.RongCloudToken = RongCloudToken;
         }
 
-        public Object getLevelID() {
+        public int getLevelID() {
             return LevelID;
         }
 
-        public void setLevelID(Object LevelID) {
+        public void setLevelID(int LevelID) {
             this.LevelID = LevelID;
         }
 
-        public Object getLevelName() {
+        public String getLevelName() {
             return LevelName;
         }
 
-        public void setLevelName(Object LevelName) {
+        public void setLevelName(String LevelName) {
             this.LevelName = LevelName;
         }
 
-        public Object getLevelAmount() {
+        public int getLevelAmount() {
             return LevelAmount;
         }
 
-        public void setLevelAmount(Object LevelAmount) {
+        public void setLevelAmount(int LevelAmount) {
             this.LevelAmount = LevelAmount;
         }
 
-        public Object getLevelDiscount() {
+        public double getLevelDiscount() {
             return LevelDiscount;
         }
 
-        public void setLevelDiscount(Object LevelDiscount) {
+        public void setLevelDiscount(double LevelDiscount) {
             this.LevelDiscount = LevelDiscount;
         }
 
-        public Object getLevelRebate() {
+        public double getLevelRebate() {
             return LevelRebate;
         }
 
-        public void setLevelRebate(Object LevelRebate) {
+        public void setLevelRebate(double LevelRebate) {
             this.LevelRebate = LevelRebate;
         }
 
@@ -236,20 +238,28 @@ public class UserInfoResponse {
             this.PhotoSmall = PhotoSmall;
         }
 
-        public String getSex() {
-            return Sex;
-        }
-
-        public void setSex(String Sex) {
-            this.Sex = Sex;
-        }
-
         public String getBirthday() {
             return Birthday;
         }
 
         public void setBirthday(String Birthday) {
             this.Birthday = Birthday;
+        }
+
+        public String getSexName() {
+            return SexName;
+        }
+
+        public void setSexName(String SexName) {
+            this.SexName = SexName;
+        }
+
+        public Object getSex() {
+            return Sex;
+        }
+
+        public void setSex(Object Sex) {
+            this.Sex = Sex;
         }
     }
 }

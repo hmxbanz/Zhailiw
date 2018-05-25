@@ -57,4 +57,6 @@
     <string name="txt_me">我的</string>
     <string name="add_new_address">增加新地址</string>
     <string name="str_pay">付款</string>
+    <string name="str_buy">立即购买</string>
+    <string name="str_add_shop_car">加入购物车</string>
 </resources>

@@ -39,7 +39,6 @@ public class MineFragmentPresenter extends BasePresenter implements OnDataListen
     public void init(SelectableRoundedImageView selectableRoundedImageView, TextView nickName) {
         this.avator = selectableRoundedImageView;
         this.nickName = nickName;
-        getInfo();
         BroadcastManager.getInstance(context).addAction(MineFragmentPresenter.UPDATEUNREAD, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -60,7 +59,6 @@ public class MineFragmentPresenter extends BasePresenter implements OnDataListen
 
     }
     public void getInfo(){
-        LoadDialog.show(context);
         atm.request(GETINFO,this);
     }
 

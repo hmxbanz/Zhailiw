@@ -94,6 +94,13 @@ public class ShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             dataHolder.txtQuantity.setText(listItem.getQuantity()+"");
             glideImageLoader.displayImage(context, Const.IMGURI+listItem.getPhotoSmall(),dataHolder.imageView);
             if(mListener == null) return;
+            dataHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int num=Integer.parseInt(dataHolder.txtQuantity.getText().toString());
+                    mListener.onItemClick(v,listItem,num*listItem.getPriceNow(),pos);
+                }
+            });
             dataHolder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

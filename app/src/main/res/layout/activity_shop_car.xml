@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
+            android:paddingBottom="50dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -54,7 +55,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="0dp"
                 android:layout_gravity="bottom"
-                android:id="@+id/btn_pay"
+                android:id="@+id/btn_buy"
                 android:text="@string/str_pay"
                 android:layout_weight="2"
                 android:layout_width="0dp"

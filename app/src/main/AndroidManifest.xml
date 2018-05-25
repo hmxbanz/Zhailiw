@@ -57,6 +57,7 @@
         <activity   android:name=".view.activity.FavorActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.OrderActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.ShopCarActivity" android:screenOrientation="portrait" />
+        <activity   android:name=".view.activity.ProductDetailActivity" android:screenOrientation="portrait" />
         <service android:name=".service.BluetoothService" />
         <provider
             android:name="android.support.v4.content.FileProvider"

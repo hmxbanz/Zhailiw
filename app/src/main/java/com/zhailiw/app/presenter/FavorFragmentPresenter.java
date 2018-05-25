@@ -20,6 +20,7 @@ import com.zhailiw.app.server.response.FavorResponse;
 import com.zhailiw.app.server.response.StyleResponse;
 import com.zhailiw.app.view.activity.FavorActivity;
 import com.zhailiw.app.view.activity.MainActivity;
+import com.zhailiw.app.view.activity.ProductDetailActivity;
 import com.zhailiw.app.view.activity.ShopActivity;
 import com.zhailiw.app.widget.LoadDialog;
 
@@ -121,6 +122,6 @@ public class FavorFragmentPresenter extends BasePresenter implements FavorAdapte
 
     @Override
     public void onItemClick(int position, FavorResponse.DataBean item) {
-
+        ProductDetailActivity.StartActivity(activity,item.getProductId()+"");
     }
 }

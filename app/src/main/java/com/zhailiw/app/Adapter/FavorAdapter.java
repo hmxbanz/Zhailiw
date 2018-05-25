@@ -81,12 +81,18 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final FavorResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             final DataHolder dataHolder=(DataHolder)holder;
-            dataHolder.layoutView.setOnClickListener(dataHolder);
+            //dataHolder.layoutView.setOnClickListener(dataHolder);
             dataHolder.txtProductName.setText(listItem.getProductName());
             dataHolder.txtProductInfo.setText(listItem.getProductInfo());
             dataHolder.txtProductPrice.setText(listItem.getProductPrice()+"元");
             glideImageLoader.displayImage(context, Const.IMGURI+listItem.getProductImage(),dataHolder.imageView);
             if(mListener == null) return;
+            dataHolder.layoutView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(position,listItem);
+                }
+            });
         }
     }
     @Override

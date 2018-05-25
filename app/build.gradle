@@ -56,6 +56,9 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation 'org.immutables:gson:2.1.8'
+    implementation('cn.qqtheme.framework:WheelPicker:1.5.5') {//滚轮选择
+        exclude group: 'com.android.support'
+    }
 }
 MobSDK {
     appKey "259113d838515"

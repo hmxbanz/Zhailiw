@@ -109,6 +109,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headerHolder.tagCloudLayout.setItemClickListener(new TagCloudLayout.TagItemClickListener() {
                 @Override
                 public void itemClick(int position) {
+
                     mListener.onTabItemClick(position,tabs.get(position));
                 }
             });

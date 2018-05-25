@@ -22,6 +22,7 @@ import com.zhailiw.app.server.async.OnDataListener;
 import com.zhailiw.app.server.response.ADResponse;
 import com.zhailiw.app.server.response.ShopResponse;
 import com.zhailiw.app.server.response.SystemObjResponse;
+import com.zhailiw.app.view.activity.ProductDetailActivity;
 import com.zhailiw.app.view.activity.ShopActivity;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
@@ -150,7 +151,7 @@ public class ShopPresenter extends BasePresenter implements OnDataListener, Shop
 
     @Override
     public void onItemClick(int position, ShopResponse.DataBean item) {
-
+        ProductDetailActivity.StartActivity(activity,item.getProductId()+"");
     }
 
     @Override
