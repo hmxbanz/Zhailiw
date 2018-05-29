@@ -77,8 +77,6 @@ public class BasePresenter implements OnDataListener {
     {
         isLogin = sp.getBoolean(Const.ISLOGIN, false);
         userAction.token = sp.getString("token","");
-        //userName=sp.getString(Const.LOGIN_USERNAME,"");
-        //password=sp.getString(Const.LOGING_PASSWORD,"");
     }
     protected void loginWork(String token)
     {

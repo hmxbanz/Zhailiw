@@ -6,25 +6,22 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mob.wrappers.PaySDKWrapper;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zhailiw.app.Adapter.OrderDetailAdapter;
-import com.zhailiw.app.Adapter.ShopCarAdapter;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NLog;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
+import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.DefaultAddressResponse;
 import com.zhailiw.app.server.response.OrderDetailResponse;
-import com.zhailiw.app.server.response.ShopCarResponse;
+import com.zhailiw.app.view.activity.AddressActivity;
 import com.zhailiw.app.view.activity.OrderDetailActivity;
 import com.zhailiw.app.widget.DialogPay;
 import com.zhailiw.app.widget.LoadDialog;
@@ -41,14 +38,16 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
     private final OrderDetailAdapter dataAdapter;
     private final List<OrderDetailResponse.DataBean.OrderListBean> list=new ArrayList<OrderDetailResponse.DataBean.OrderListBean>();
     private OrderDetailActivity activity;
-    private final int GETORDERDETAIL=1,GETDEFAULTADDRESS=2;
+    private final int GETORDERDETAIL=1, GETADDRESS =2,SETADDRESS=3;
     private String orderId;
     private TextView txtContact,txtAddress,txtOrderNo,txtOrderTotal;
+    private LinearLayout layoutAddress;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     private IWXAPI api;
     private OrderDetailResponse orderDetailResponse;
     private DialogPay dialog;
+    private String addressId;
 
     public OrderDetailPresenter(Context context){
         super(context);
@@ -63,9 +62,11 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
         api = WXAPIFactory.createWXAPI(context, null);
         api.registerApp(Const.APPID);
         this.txtContact = activity.findViewById(R.id.txt_contact);
+        this.layoutAddress = activity.findViewById(R.id.layout_address);
         this.txtAddress = activity.findViewById(R.id.txt_address);
         this.txtOrderNo = activity.findViewById(R.id.txt_order_no);
         this.txtOrderTotal = activity.findViewById(R.id.txt_order_total);
+        this.layoutAddress.setOnClickListener(this);
         activity.findViewById(R.id.btn_pay).setOnClickListener(this);
         this.recyclerView = activity.findViewById(R.id.recyclerView);
         this.recyclerView.setAdapter(dataAdapter);
@@ -80,8 +81,10 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
         switch (requestCode) {
             case GETORDERDETAIL:
                 return userAction.getOrderDetail(orderId);
-            case GETDEFAULTADDRESS:
-                return userAction.getDefaultAddress();
+            case GETADDRESS:
+                return userAction.getOrderAddress(this.addressId+"");
+            case SETADDRESS:
+                return userAction.setOrderAddress(this.orderId,this.addressId+"");
         }
         return null;
     }
@@ -93,29 +96,62 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
         switch (requestCode) {
             case GETORDERDETAIL:
                 orderDetailResponse = (OrderDetailResponse) result;
+                OrderDetailResponse.DataBean data = orderDetailResponse.getData();
                 if (orderDetailResponse.getState() == Const.SUCCESS) {
-                    this.txtOrderNo.setText("订单号："+orderDetailResponse.getData().getOrderNo());
-                    this.txtOrderTotal.setText("订单总价："+orderDetailResponse.getData().getTotal()+"元");
-                    list.addAll(orderDetailResponse.getData().getOrderList());
+                    this.txtOrderNo.setText("订单号："+data.getOrderNo());
+                    this.txtOrderTotal.setText("订单总价："+data.getTotal()+"元");
+                    list.addAll(data.getOrderList());
                     dataAdapter.notifyDataSetChanged();
-                    atm.request(GETDEFAULTADDRESS,this);
+                    if(data.getCellphone()==null)
+                    {
+                        this.txtContact.setText("请选择收货地址");
+                        this.txtAddress.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        this.txtAddress.setVisibility(View.VISIBLE);
+                        this.txtContact.setText("收货人："+data.getContact()+" 手机："+data.getCellphone());
+                        this.txtAddress.setText("送货地址："+data.getAddress());
+                    }
+
                 }
-                //NToast.shortToast(context, commonResponse.getMsg());
+                else
+                    NToast.shortToast(context, orderDetailResponse.getMsg());
                 break;
-            case GETDEFAULTADDRESS:
+            case GETADDRESS:
                 DefaultAddressResponse defaultResponse = (DefaultAddressResponse) result;
-                //NToast.shortToast(context, commonResponse.getMsg());
-                this.txtContact.setText("联系人："+defaultResponse.getDefaultAddress().getContact()+" 手机："+defaultResponse.getDefaultAddress().getCellphone());
-                this.txtAddress.setText("送货地址："+defaultResponse.getDefaultAddress().getAddress());
-                break;
+                if(defaultResponse.getState()==Const.SUCCESS)
+                {
+                    this.txtAddress.setVisibility(View.VISIBLE);
+                    this.txtContact.setText("收货人："+defaultResponse.getDefaultAddress().getContact()+" 手机："+defaultResponse.getDefaultAddress().getCellphone());
+                    this.txtAddress.setText("送货地址："+defaultResponse.getDefaultAddress().getAddress());
+                    atm.request(SETADDRESS,this);
                 }
+                else
+                    NToast.shortToast(context, orderDetailResponse.getMsg());
+
+                break;
+            case SETADDRESS:
+                CommonResponse commonResponse = (CommonResponse) result;
+                if (commonResponse.getState() == Const.SUCCESS) {
+
+                }
+                else
+                    NToast.shortToast(context, commonResponse.getMsg());
+                break;
         }
+ }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay:
+                if(orderDetailResponse.getData().getCellphone()==null)
+                    NToast.shortToast(context, "请先选择收货地址！");
                 showPhotoDialog(v);
+                break;
+            case R.id.layout_address:
+                AddressActivity.StartActivityForResult(context);
                 break;
         }
     }
@@ -155,6 +191,10 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
 
     }
 
+    public void getAddress(String addressId) {
+        this.addressId=addressId;
+        atm.request(GETADDRESS,this);
     }
+}
 
 

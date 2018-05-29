@@ -100,8 +100,13 @@ public class AddressAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 dataHolder.txtSetAddress.setTextColor(context.getResources().getColor(R.color.appTextColor));
             }
 
-
             if(mListener == null) return;
+            dataHolder.layoutView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(position,listItem);
+                }
+            });
             dataHolder.txtSetAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

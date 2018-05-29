@@ -5,6 +5,7 @@ import android.content.Context;
 import com.alibaba.fastjson.JSONException;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
+import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.common.json.JsonMananger;
 import com.zhailiw.app.server.request.AddAddressRequest;
 import com.zhailiw.app.server.request.BindPhoneRequest;
@@ -60,15 +61,17 @@ public class UserAction extends BaseAction {
      */
     public UserAction(Context context) {
         super(context);
+        mContext = context;
     }
     public static UserAction getInstance(Context context) {
-        if (instance == null) {
-            synchronized (UserAction.class) {
-                if (instance == null) {
-                    instance = new UserAction(context);
+            if (instance == null) {
+                synchronized (UserAction.class) {
+                    if (instance == null) {
+                        instance = new UserAction(context);
+                    }
                 }
             }
-        }
+
         return instance;
     }
     //检测微信QQ绑定
@@ -247,6 +250,7 @@ public class UserAction extends BaseAction {
                 beanResponse = JsonMananger.jsonToBean(result, t);
         }
         catch (JSONException e) {
+            NToast.shortToast(mContext,result);
             Logger.e(TAG, t.getSimpleName()+" occurs JSONException e=" + e.toString());
             return null;
         }
@@ -375,9 +379,10 @@ public class UserAction extends BaseAction {
         map.put("orderId",orderId);
         return getRequest(OrderDetailResponse.class,map,uri);
     }
-    public DefaultAddressResponse getDefaultAddress() throws HttpException {
-        String uri = getURL("User/getDefaultAddress");
+    public DefaultAddressResponse getOrderAddress(String addressId) throws HttpException {
+        String uri = getURL("User/getOrderAddress");
         LinkedHashMap map=new LinkedHashMap<>();
+        map.put("addressId",addressId);
         return getRequest(DefaultAddressResponse.class,map,uri);
     }
 
@@ -385,6 +390,14 @@ public class UserAction extends BaseAction {
         String uri = getURL("User/removeOrder");
         LinkedHashMap map=new LinkedHashMap<>();
         map.put("orderId",removeOrderId);
+        return getRequest(CommonResponse.class,map,uri);
+    }
+
+    public CommonResponse setOrderAddress(String orderId, String addressId) throws HttpException{
+        String uri = getURL("User/updateOrderAddress");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderId",orderId);
+        map.put("addressId",addressId);
         return getRequest(CommonResponse.class,map,uri);
     }
 }

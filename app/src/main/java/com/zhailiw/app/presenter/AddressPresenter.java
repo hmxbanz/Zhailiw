@@ -1,6 +1,7 @@
 package com.zhailiw.app.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -54,7 +55,10 @@ public class AddressPresenter extends BasePresenter implements OnDataListener, A
 
     @Override
     public void onItemClick(int position, AddressResponse.DataBean item) {
-
+        Intent mIntent = new Intent();
+        mIntent.putExtra("addressId", item.getAddressID()+"");
+        activity.setResult(1,mIntent);
+        activity.finish();
     }
 
     @Override

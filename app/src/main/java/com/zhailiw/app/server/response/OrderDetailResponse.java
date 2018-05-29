@@ -10,8 +10,8 @@ public class OrderDetailResponse {
     /**
      * state : 1
      * msg : 成功
-     * data : {"OrderList":[{"UserInfoId":1475,"OrderAttributeID":65,"Quantity":1,"OriginalPrice":25000,"TotalPrice":25000,"PriceNow":25000,"Type":"红黑700cmx800cm","GPR":null,"FactoryPrice":10000,"ProductAttributeName":null,"Price":25000,"ProductAttributeId":26,"CompanyId":12,"ProductNo":"ZL12-F-57","ProductInfo":"[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 \n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列\n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列","ProductName":"ms085沙发","PhotoSmall":"/Images/ZL_Product/2018/05/23/2018052314311805_s.jpg","ProductId":57,"Color":"红黑","TypeName":null,"OrderID":22}],"UserInfoId":1475,"OrderState":280,"OrderType":278,"CreateDate":"/Date(1527218104513)/","Remark":null,"OrderNo":"22201805251115045150","AliPayNo":null,"WxPayNo":null,"OrderDoneDate":null,"OrderStateName":"未付款","OrderTypeName":"商城","OrderID":22,"Total":25000,"PayTotal":null,"RebateTotal":null,"LevelDiscount":null,"LevelRebate":null}
-     * wxPayStr : {"appid":"wx6bffc7682e9eeb96","partnerid":"1382097702","noncestr":"6CD67D9B6F0150C77BDA2EDA01AE484C","sign":"5A93488C470AB105475773B79D058CA2","prepayid":"wx251321306169805f465698f03062357019","package":"Sign=WXPay","timestamp":"1527225691"}
+     * data : {"OrderList":[{"UserInfoId":1475,"OrderAttributeID":155,"Quantity":1,"OriginalPrice":275000,"TotalPrice":275000,"PriceNow":275000,"Type":"实验","GPR":null,"FactoryPrice":110000,"ProductAttributeName":null,"Price":275000,"ProductAttributeId":22,"CompanyId":12,"ProductNo":"ZL12-F-57","ProductInfo":"[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 \n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列\n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列","ProductName":"ms085沙发","PhotoSmall":"/Images/ZL_Product/2018/05/23/2018052314311805_s.jpg","ProductId":57,"Color":"白","TypeName":null,"OrderID":116}],"UserInfoId":1475,"OrderState":280,"OrderType":278,"CreateDate":"/Date(1527497317173)/","Remark":null,"OrderNo":"116201805281648374551","AliPayNo":null,"WxPayNo":null,"OrderDoneDate":null,"OrderStateName":"未付款","OrderTypeName":"商城","OrderID":116,"Total":275000,"PayTotal":55000,"RebateTotal":27500,"LevelDiscount":0.8,"LevelRebate":0.1,"AddressId":null,"Contact":null,"Cellphone":null,"Address":null}
+     * wxPayStr : {"appid":"wxb8d31ebd0f155f65","partnerid":"1503432121","noncestr":"8065D07DA4A77621450AA84FEE5656D9","sign":"158F2648EAF2B35A1E259DAB9D420A4A","prepayid":"wx29142154520971780f717ee13002743188","package":"Sign=WXPay","timestamp":"1527574914"}
      * aliPayStr :
      */
 
@@ -63,24 +63,28 @@ public class OrderDetailResponse {
 
     public static class DataBean {
         /**
-         * OrderList : [{"UserInfoId":1475,"OrderAttributeID":65,"Quantity":1,"OriginalPrice":25000,"TotalPrice":25000,"PriceNow":25000,"Type":"红黑700cmx800cm","GPR":null,"FactoryPrice":10000,"ProductAttributeName":null,"Price":25000,"ProductAttributeId":26,"CompanyId":12,"ProductNo":"ZL12-F-57","ProductInfo":"[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 \n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列\n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列","ProductName":"ms085沙发","PhotoSmall":"/Images/ZL_Product/2018/05/23/2018052314311805_s.jpg","ProductId":57,"Color":"红黑","TypeName":null,"OrderID":22}]
+         * OrderList : [{"UserInfoId":1475,"OrderAttributeID":155,"Quantity":1,"OriginalPrice":275000,"TotalPrice":275000,"PriceNow":275000,"Type":"实验","GPR":null,"FactoryPrice":110000,"ProductAttributeName":null,"Price":275000,"ProductAttributeId":22,"CompanyId":12,"ProductNo":"ZL12-F-57","ProductInfo":"[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 \n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列\n[蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木 双人床 莱克星顿系列","ProductName":"ms085沙发","PhotoSmall":"/Images/ZL_Product/2018/05/23/2018052314311805_s.jpg","ProductId":57,"Color":"白","TypeName":null,"OrderID":116}]
          * UserInfoId : 1475
          * OrderState : 280
          * OrderType : 278
-         * CreateDate : /Date(1527218104513)/
+         * CreateDate : /Date(1527497317173)/
          * Remark : null
-         * OrderNo : 22201805251115045150
+         * OrderNo : 116201805281648374551
          * AliPayNo : null
          * WxPayNo : null
          * OrderDoneDate : null
          * OrderStateName : 未付款
          * OrderTypeName : 商城
-         * OrderID : 22
-         * Total : 25000
-         * PayTotal : null
-         * RebateTotal : null
-         * LevelDiscount : null
-         * LevelRebate : null
+         * OrderID : 116
+         * Total : 275000
+         * PayTotal : 55000
+         * RebateTotal : 27500
+         * LevelDiscount : 0.8
+         * LevelRebate : 0.1
+         * AddressId : null
+         * Contact : null
+         * Cellphone : null
+         * Address : null
          */
 
         private int UserInfoId;
@@ -96,10 +100,14 @@ public class OrderDetailResponse {
         private String OrderTypeName;
         private int OrderID;
         private int Total;
-        private Object PayTotal;
-        private Object RebateTotal;
-        private Object LevelDiscount;
-        private Object LevelRebate;
+        private int PayTotal;
+        private int RebateTotal;
+        private double LevelDiscount;
+        private double LevelRebate;
+        private Object AddressId;
+        private Object Contact;
+        private Object Cellphone;
+        private Object Address;
         private List<OrderListBean> OrderList;
 
         public int getUserInfoId() {
@@ -206,36 +214,68 @@ public class OrderDetailResponse {
             this.Total = Total;
         }
 
-        public Object getPayTotal() {
+        public int getPayTotal() {
             return PayTotal;
         }
 
-        public void setPayTotal(Object PayTotal) {
+        public void setPayTotal(int PayTotal) {
             this.PayTotal = PayTotal;
         }
 
-        public Object getRebateTotal() {
+        public int getRebateTotal() {
             return RebateTotal;
         }
 
-        public void setRebateTotal(Object RebateTotal) {
+        public void setRebateTotal(int RebateTotal) {
             this.RebateTotal = RebateTotal;
         }
 
-        public Object getLevelDiscount() {
+        public double getLevelDiscount() {
             return LevelDiscount;
         }
 
-        public void setLevelDiscount(Object LevelDiscount) {
+        public void setLevelDiscount(double LevelDiscount) {
             this.LevelDiscount = LevelDiscount;
         }
 
-        public Object getLevelRebate() {
+        public double getLevelRebate() {
             return LevelRebate;
         }
 
-        public void setLevelRebate(Object LevelRebate) {
+        public void setLevelRebate(double LevelRebate) {
             this.LevelRebate = LevelRebate;
+        }
+
+        public Object getAddressId() {
+            return AddressId;
+        }
+
+        public void setAddressId(Object AddressId) {
+            this.AddressId = AddressId;
+        }
+
+        public Object getContact() {
+            return Contact;
+        }
+
+        public void setContact(Object Contact) {
+            this.Contact = Contact;
+        }
+
+        public Object getCellphone() {
+            return Cellphone;
+        }
+
+        public void setCellphone(Object Cellphone) {
+            this.Cellphone = Cellphone;
+        }
+
+        public Object getAddress() {
+            return Address;
+        }
+
+        public void setAddress(Object Address) {
+            this.Address = Address;
         }
 
         public List<OrderListBean> getOrderList() {
@@ -249,17 +289,17 @@ public class OrderDetailResponse {
         public static class OrderListBean {
             /**
              * UserInfoId : 1475
-             * OrderAttributeID : 65
+             * OrderAttributeID : 155
              * Quantity : 1
-             * OriginalPrice : 25000
-             * TotalPrice : 25000
-             * PriceNow : 25000
-             * Type : 红黑700cmx800cm
+             * OriginalPrice : 275000
+             * TotalPrice : 275000
+             * PriceNow : 275000
+             * Type : 实验
              * GPR : null
-             * FactoryPrice : 10000
+             * FactoryPrice : 110000
              * ProductAttributeName : null
-             * Price : 25000
-             * ProductAttributeId : 26
+             * Price : 275000
+             * ProductAttributeId : 22
              * CompanyId : 12
              * ProductNo : ZL12-F-57
              * ProductInfo : [蓝骑家居] 1.8米床 高档典雅 复古大气 进口杨木
@@ -268,9 +308,9 @@ public class OrderDetailResponse {
              * ProductName : ms085沙发
              * PhotoSmall : /Images/ZL_Product/2018/05/23/2018052314311805_s.jpg
              * ProductId : 57
-             * Color : 红黑
+             * Color : 白
              * TypeName : null
-             * OrderID : 22
+             * OrderID : 116
              */
 
             private int UserInfoId;
@@ -467,13 +507,13 @@ public class OrderDetailResponse {
 
     public static class WxPayStrBean {
         /**
-         * appid : wx6bffc7682e9eeb96
-         * partnerid : 1382097702
-         * noncestr : 6CD67D9B6F0150C77BDA2EDA01AE484C
-         * sign : 5A93488C470AB105475773B79D058CA2
-         * prepayid : wx251321306169805f465698f03062357019
+         * appid : wxb8d31ebd0f155f65
+         * partnerid : 1503432121
+         * noncestr : 8065D07DA4A77621450AA84FEE5656D9
+         * sign : 158F2648EAF2B35A1E259DAB9D420A4A
+         * prepayid : wx29142154520971780f717ee13002743188
          * package : Sign=WXPay
-         * timestamp : 1527225691
+         * timestamp : 1527574914
          */
 
         private String appid;

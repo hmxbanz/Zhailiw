@@ -44,4 +44,20 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String addressId = "";
+        if(data!=null)
+         addressId = data.getStringExtra("addressId");
+        switch (requestCode) {
+            case 1:
+                presenter.getAddress(addressId);
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+    }
+
 }
