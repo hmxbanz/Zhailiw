@@ -84,6 +84,7 @@ public class MineFragmentPresenter extends BasePresenter implements OnDataListen
                     this.nickName.setText(entity.getNickName());
                     ((TextView)activity.findViewById(R.id.txt_member)).setText(entity.getLevelName().toString());
                 }
+                else
                 NToast.shortToast(context, userInfoResponse.getMsg());
                 break;
         }

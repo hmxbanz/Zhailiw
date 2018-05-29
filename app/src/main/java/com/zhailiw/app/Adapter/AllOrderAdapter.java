@@ -1,25 +1,28 @@
 package com.zhailiw.app.Adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.zhailiw.app.Const;
+import com.fyales.tagcloud.library.TagCloudLayout;
 import com.zhailiw.app.R;
 import com.zhailiw.app.loader.GlideImageLoader;
-import com.zhailiw.app.server.response.FavorResponse;
+import com.zhailiw.app.server.response.ShopCarResponse;
+import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
 
 import java.util.List;
 
-public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<FavorResponse.DataBean> listItems;
+
+public class AllOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+    private List<ShopCarResponse.DataBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -30,12 +33,8 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private RecyclerView mRecyclerView;
     private GlideImageLoader glideImageLoader;
     private Context context;
+    private List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs;
 
-    public FavorAdapter(Context c){
-        this.context=c;
-        this.layoutInflater= LayoutInflater.from(c);
-        glideImageLoader=new GlideImageLoader();
-    }
     public void setOnItemClickListener(ItemClickListener listener) {
         mListener = listener;
     }
@@ -53,10 +52,17 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mFooterView = footerView;
         notifyItemInserted(0);//告知Adapter首位置项变动了
     }
-    public void setListItems(List<FavorResponse.DataBean> l)
+
+    public AllOrderAdapter(Context c){
+        this.context=c;
+        this.layoutInflater= LayoutInflater.from(c);
+        glideImageLoader=new GlideImageLoader();
+    }
+    public void setListItems(List<ShopCarResponse.DataBean> l)
     {
         this.listItems=l;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(mHeaderView != null && viewType == TYPE_HEADER)
@@ -68,30 +74,58 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_favor, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_order, parent, false);
             return new DataHolder(v);
         }
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(getItemViewType(position) == TYPE_HEADER) return;
         if(getItemViewType(position) == TYPE_FOOTER) return;
         final int pos = getRealPosition(holder);
-        final FavorResponse.DataBean listItem = listItems.get(pos);
+
+        if(getItemViewType(position) == TYPE_HEADER) return;
+        final ShopCarResponse.DataBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             final DataHolder dataHolder=(DataHolder)holder;
-            //dataHolder.layoutView.setOnClickListener(dataHolder);
-            dataHolder.txtProductName.setText(listItem.getProductName());
-            dataHolder.txtProductInfo.setText(listItem.getProductInfo());
-            dataHolder.txtProductPrice.setText(listItem.getProductPrice()+"元");
-            glideImageLoader.displayImage(context, Const.IMGURI+listItem.getProductImage(),dataHolder.imageView);
+            dataHolder.layoutAction.setVisibility(View.VISIBLE);
+            dataHolder.txtCount.setText("共"+listItem.getOrderList().size()+"件商品 ");
+            dataHolder.txtOrderTotal.setText("￥"+listItem.getTotal());
+            //装入item
+            List<ShopCarResponse.DataBean.OrderListBean> items = listItem.getOrderList();
+            GridLayoutManager gridLayoutManager=new GridLayoutManager(context,1);
+            dataHolder.recyclerView.setLayoutManager(gridLayoutManager);
+            AllOrderItemAdapter allOrderItemAdapter = new AllOrderItemAdapter(context);
+            allOrderItemAdapter.setListItems(items);
+            dataHolder.recyclerView.setAdapter(allOrderItemAdapter);
+
+            switch (listItem.getOrderState()) {
+                case 280:
+                    dataHolder.txtTips.setText("等待买家付款");
+                    break;
+                case 281:
+                    dataHolder.txtTips.setText("已付款");
+                    dataHolder.layoutAction.setVisibility(View.GONE);
+                    break;
+                case 298:
+                    dataHolder.txtTips.setText("已完成");
+                    dataHolder.layoutAction.setVisibility(View.GONE);
+                    break;
+            }
+
             if(mListener == null) return;
-            dataHolder.layoutView.setOnClickListener(new View.OnClickListener() {
+            dataHolder.btnPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClick(position,listItem);
+                    mListener.onItemClick(v,listItem);
                 }
             });
+            dataHolder.btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClick(v,listItem);
+                }
+            });
+
         }
     }
     @Override
@@ -145,10 +179,24 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         int position = holder.getLayoutPosition();
         return mHeaderView == null ? position : position - 1;
     }
-    public interface ItemClickListener {
-        void onItemClick(int position, FavorResponse.DataBean item);
+    public void setTabList(List<SystemObjResponse.SysObjBean.ChildDictionariesBean> tabs) {
+        this.tabs=tabs;
     }
+    public interface ItemClickListener {
+        void onItemClick(View v, ShopCarResponse.DataBean item);
+    }
+    class HeaderHolder extends RecyclerView.ViewHolder  {
+        private TagCloudLayout tagCloudLayout;
+        private TextView title;
+        public HeaderHolder(View itemView) {
+            super(itemView);
+            tagCloudLayout =  itemView.findViewById(R.id.tab_container);
+            title =  itemView.findViewById(R.id.title);
+        }
+    }
+
     public void onLoading(){
+        mFooterView.setVisibility(View.VISIBLE);
         TextView tips=mFooterView.findViewById(R.id.tips);
         MaterialProgressBar progressBar=mFooterView.findViewById(R.id.progress_wheel);
         mFooterView.setVisibility(View.VISIBLE);
@@ -156,53 +204,30 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         tips.setText(R.string.layout_dialog_loading);
     }
     public void onLoadingDone(){
+        mFooterView.setVisibility(View.VISIBLE);
         TextView tips=mFooterView.findViewById(R.id.tips);
         MaterialProgressBar progressBar=mFooterView.findViewById(R.id.progress_wheel);
-        mFooterView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         tips.setText("我是有底线的");
     }
-    public void onLoadingEnd(){
-        mFooterView.setVisibility(View.GONE);
-    }
-    class HeaderHolder extends RecyclerView.ViewHolder  {
-        public HeaderHolder(View itemView) {
-            super(itemView);
-        }
-    }
+
     public class DataHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        private ImageView imageView;
-        private TextView txtProductName;
-        private TextView txtProductInfo;
-        private TextView txtProductPrice;
-        private LinearLayout layoutView;
+        private TextView txtTips,txtCount,txtOrderTotal;
+        private LinearLayout layoutView,layoutAction;
+        private RecyclerView recyclerView;
+        private Button btnCancel,btnPay;
         public DataHolder(View itemView) {
             super(itemView);
-            imageView =  itemView.findViewById(R.id.img_product);
-            txtProductName =  itemView.findViewById(R.id.txt_product_name);
-            txtProductInfo =  itemView.findViewById(R.id.txt_product_type);
-            txtProductPrice =  itemView.findViewById(R.id.txt_product_price);
+            txtTips = itemView.findViewById(R.id.txt_tips);
+            txtCount =  itemView.findViewById(R.id.txt_count);
+            txtOrderTotal =  itemView.findViewById(R.id.txt_order_total);
+            txtOrderTotal.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            recyclerView =  itemView.findViewById(R.id.recyclerView);
+            btnPay =  itemView.findViewById(R.id.btn_pay);
+            btnCancel =  itemView.findViewById(R.id.btn_cancel);
             layoutView = itemView.findViewById(R.id.layout);
-        }
-
-        public ImageView getImageView() {
-            return imageView;
-        }
-        public void setImageView(ImageView imageView) {
-            this.imageView = imageView;
-        }
-        public TextView getTxtProductName() {
-            return txtProductName;
-        }
-        public void setTxtProductName(TextView txtProductName) {
-            this.txtProductName = txtProductName;
-        }
-        public TextView getTxtProductInfo() {
-            return txtProductInfo;
-        }
-        public void setTxtProductInfo(TextView txtProductInfo) {
-            this.txtProductInfo = txtProductInfo;
+            layoutAction=itemView.findViewById(R.id.layout_action);
         }
 
         @Override

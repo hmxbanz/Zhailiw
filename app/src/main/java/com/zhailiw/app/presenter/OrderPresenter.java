@@ -7,14 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.zhailiw.app.R;
-import com.zhailiw.app.view.activity.FavorActivity;
 import com.zhailiw.app.view.activity.OrderActivity;
-import com.zhailiw.app.view.fragment.AllFragment;
-import com.zhailiw.app.view.fragment.ArticleFragment;
-import com.zhailiw.app.view.fragment.DoneFragment;
-import com.zhailiw.app.view.fragment.FavorFragment;
-import com.zhailiw.app.view.fragment.NotPayFragment;
-import com.zhailiw.app.view.fragment.PayFragment;
+import com.zhailiw.app.view.fragment.OrderAllFragment;
+import com.zhailiw.app.view.fragment.OrderDoneFragment;
+import com.zhailiw.app.view.fragment.OrderNotPayFragment;
+import com.zhailiw.app.view.fragment.OrderPayFragment;
 
 import java.util.ArrayList;
 
@@ -40,10 +37,10 @@ public class OrderPresenter extends BasePresenter  {
         TabLayout tabLayout =  activity.findViewById(R.id.tabLayout);
         viewpager =  activity.findViewById(R.id.viewpager);
         fragments = new ArrayList<>();
-        fragments.add(AllFragment.getInstance());
-        fragments.add(NotPayFragment.getInstance());
-        fragments.add(PayFragment.getInstance());
-        fragments.add(DoneFragment.getInstance());
+        fragments.add(OrderAllFragment.getInstance());
+        fragments.add(OrderNotPayFragment.getInstance());
+        fragments.add(OrderPayFragment.getInstance());
+        fragments.add(OrderDoneFragment.getInstance());
 
         fragmentPagerAdapter = new FragmentPagerAdapter(activity.getSupportFragmentManager()) {
             @Override

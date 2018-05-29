@@ -194,7 +194,7 @@ public class UserAction extends BaseAction {
         return getRequest(ShopResponse.class,map,uri);
     }
     //取购物车
-    public ShopCarResponse getShopCar(String pageIndex, String orderState, String orderType) throws HttpException{
+    public ShopCarResponse getMyOrder(String pageIndex, String orderState, String orderType) throws HttpException{
         String uri = getURL("User/getMyOrders");
         LinkedHashMap map=new LinkedHashMap<>();
         map.put("pageIndex",pageIndex);
@@ -333,6 +333,11 @@ public class UserAction extends BaseAction {
         String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
         return postRequest(CommonResponse.class,json,uri);
     }
+    public AddOrderResponse payBuyShop(String orderAttributeIds) throws  HttpException{
+        String uri = getURL("User/addOrderFromShopCar");
+        String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
+        return postRequest(AddOrderResponse.class,json,uri);
+    }
 //取产品
     public ProductResponse getProduct(String productId) throws HttpException{
         String uri = getURL("User/getProduct");
@@ -374,5 +379,12 @@ public class UserAction extends BaseAction {
         String uri = getURL("User/getDefaultAddress");
         LinkedHashMap map=new LinkedHashMap<>();
         return getRequest(DefaultAddressResponse.class,map,uri);
+    }
+
+    public CommonResponse removeOrder(String removeOrderId) throws HttpException {
+        String uri = getURL("User/removeOrder");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderId",removeOrderId);
+        return getRequest(CommonResponse.class,map,uri);
     }
 }

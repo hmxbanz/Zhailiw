@@ -200,6 +200,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void onLoading(){
+        mFooterView.setVisibility(View.VISIBLE);
         TextView tips=mFooterView.findViewById(R.id.tips);
         MaterialProgressBar progressBar=mFooterView.findViewById(R.id.progress_wheel);
         mFooterView.setVisibility(View.VISIBLE);

@@ -40,7 +40,7 @@ public class DialogWithYesOrNoUtils {
         window.setContentView(R.layout.alert_dialog);
         textTitle = (TextView) window.findViewById(R.id.txt_title);
         textTitle.setText(titleText);
-        btnCancle = (TextView) window.findViewById(R.id.btn_cancle);
+        btnCancle = (TextView) window.findViewById(R.id.btn_cancel);
         btnCancle.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

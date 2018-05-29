@@ -68,7 +68,7 @@
 
                         <TextView
                             android:padding="10dp"
-                            android:id="@+id/txt_product_info"
+                            android:id="@+id/txt_product_type"
                             android:text="产品信息"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />

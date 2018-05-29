@@ -24,7 +24,7 @@
     <string name="dialog_bottom_picture">拍照</string>
     <string name="dialog_bottom_import_from_local">从相册选择</string>
     <string name="share_dialog_cancel">取消</string>
-    <string name="confirm">确认</string>
+    <string name="confirm">确 认</string>
     <string name="layout_dialog_loading">正在加载...</string>
     <string name="search">搜索</string>
     <string name="network_not_available">网络不可用</string>

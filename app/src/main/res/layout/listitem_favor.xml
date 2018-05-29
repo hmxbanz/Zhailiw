@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:layout_height="0dp" />
         <TextView
-            android:id="@+id/txt_product_info"
+            android:id="@+id/txt_product_type"
             android:text="介绍"
             android:layout_width="match_parent"
             android:layout_weight="1"

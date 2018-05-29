@@ -12,4 +12,5 @@ public class Const {
     public static final String SERVERURI="http://api.zhailiw.com/";
     public static final int SUCCESS=1,FAILURE=2;
 
+    public static final String APPID = "wxb8d31ebd0f155f65";
 }

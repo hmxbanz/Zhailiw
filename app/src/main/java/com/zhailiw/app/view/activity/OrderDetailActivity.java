@@ -33,7 +33,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     private void initViews() {
         findViewById(R.id.layout_back).setOnClickListener(this);
         ((TextView)findViewById(R.id.txt_title)).setText("订单详情");
-        findViewById(R.id.btn_buy).setOnClickListener(this);
     }
 
     @Override
@@ -42,7 +41,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.layout_back:
                 finish();
                 break;
-            case R.id.txt_right:
         }
     }
 

@@ -15,8 +15,10 @@ import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
 import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.server.HttpException;
+import com.zhailiw.app.server.response.AddOrderResponse;
 import com.zhailiw.app.server.response.CommonResponse;
 import com.zhailiw.app.server.response.ShopCarResponse;
+import com.zhailiw.app.view.activity.OrderDetailActivity;
 import com.zhailiw.app.view.activity.ProductDetailActivity;
 import com.zhailiw.app.view.activity.ShopCarActivity;
 import com.zhailiw.app.widget.LoadDialog;
@@ -32,7 +34,8 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
     private static final String TAG = ShopCarPresenter.class.getSimpleName();
     private static final int GETSHOPCAR = 1;
     private static final int UPDATEBUYSHOP = 2;
-    private static final int DELETEUYSHOP = 3;
+    private static final int DELETEBUYSHOP = 3;
+    private static final int PAYBUYSHOP = 4;
     private final ShopCarAdapter dataAdapter;
     private final List<ShopCarResponse.DataBean.OrderListBean> list=new ArrayList<>();
     private ShopCarActivity activity;
@@ -132,11 +135,13 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
     public Object doInBackground(int requestCode, String parameter) throws HttpException {
         switch (requestCode) {
             case GETSHOPCAR :
-                return userAction.getShopCar(pageIndex+"",null,"289");
+                return userAction.getMyOrder(pageIndex+"",null,"289");
             case UPDATEBUYSHOP :
                 return userAction.updateBuyShop(this.orderAttributeId,this.count);
-            case DELETEUYSHOP :
+            case DELETEBUYSHOP:
                 return userAction.deleteBuyShop(this.orderAttributeIds.toString());
+            case PAYBUYSHOP:
+                return userAction.payBuyShop(this.orderAttributeIds.toString());
         }
         return null;
     }
@@ -169,7 +174,7 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
                     NToast.shortToast(context, commonResponse.getMsg());
                 }
                 break;
-            case DELETEUYSHOP:
+            case DELETEBUYSHOP:
                 CommonResponse commonResponse2 = (CommonResponse) result;
                 if (commonResponse2.getState() == Const.SUCCESS) {
                     list.clear();
@@ -181,6 +186,13 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
                 }else {
                     NToast.shortToast(context, commonResponse2.getMsg());
                 }
+                break;
+            case PAYBUYSHOP:
+                AddOrderResponse addOrderResponse = (AddOrderResponse) result;
+                if (addOrderResponse.getState() == Const.SUCCESS) {
+                    OrderDetailActivity.StartActivity(context,addOrderResponse.getOrderId());
+                }else
+                    NToast.shortToast(context, addOrderResponse.getMsg());
                 break;
         }
     }
@@ -213,19 +225,20 @@ public class ShopCarPresenter extends BasePresenter implements ShopCarAdapter.It
 
 
     public void onPayClick() {
+        if(this.orderAttributeIds.size()==0)
+        {
+        NToast.shortToast(context,"请选择商品");
+        return;
+        }
+
         if(!isDel){
             LoadDialog.show(context);
-            atm.request(DELETEUYSHOP,ShopCarPresenter.this);
+            atm.request(DELETEBUYSHOP,ShopCarPresenter.this);
         }
         else
         {
-            if(this.orderAttributeIds.size()==0)
-            {
-                NToast.shortToast(context,"请选择要付款的商品");
-                return;
-            }
-            LoadDialog.show(context);
-
+           LoadDialog.show(context);
+           atm.request(PAYBUYSHOP,ShopCarPresenter.this);
         }
 
     }

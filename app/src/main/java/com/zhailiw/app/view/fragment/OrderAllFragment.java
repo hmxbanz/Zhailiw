@@ -3,25 +3,24 @@ package com.zhailiw.app.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhailiw.app.R;
-import com.zhailiw.app.presenter.GalleryFragmentPresenter;
-
-/**
- * Created by AMing on 16/6/21.
- * Company RongCloud
- */
-public class AllFragment extends Fragment implements View.OnClickListener  {
+import com.zhailiw.app.presenter.AllOrderFragmentPresenter;
+public class OrderAllFragment extends Fragment  {
     private View view;
-    public static AllFragment instance = null;
-    private GalleryFragmentPresenter presenter;
+    public static OrderAllFragment instance = null;
+    private AllOrderFragmentPresenter presenter;
+    private RecyclerView recycleView;
+    private SwipeRefreshLayout swiper;
 
-    public static AllFragment getInstance() {
+    public static OrderAllFragment getInstance() {
         if (instance == null) {
-            instance = new AllFragment();
+            instance = new OrderAllFragment();
         }
         return instance;
     }
@@ -31,9 +30,8 @@ public class AllFragment extends Fragment implements View.OnClickListener  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_all, null);
         initViews();
-//        initData();
-//        presenter = new GalleryFragmentPresenter(getContext());
-//        presenter.init(recycleView,swiper);
+        presenter = new AllOrderFragmentPresenter(getContext());
+        presenter.init(recycleView,swiper);
         return view;
     }
 
@@ -48,12 +46,8 @@ public class AllFragment extends Fragment implements View.OnClickListener  {
     }
 
     private void initViews() {
-//        recycleView=  view.findViewById(R.id.recyclerView);
-//        swiper=  view.findViewById(R.id.swiper);
+        recycleView=  view.findViewById(R.id.recyclerView);
+        swiper=  view.findViewById(R.id.swiper);
     }
 
-    @Override
-    public void onClick(View v) {
-      presenter.onMeClick(v);
-    }
 }

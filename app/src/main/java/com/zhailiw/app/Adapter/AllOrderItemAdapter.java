@@ -12,14 +12,15 @@ import android.widget.TextView;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
+import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.loader.GlideImageLoader;
-import com.zhailiw.app.server.response.FavorResponse;
+import com.zhailiw.app.server.response.ShopCarResponse;
 import com.zhailiw.app.widget.progressBar.MaterialProgressBar;
 
 import java.util.List;
 
-public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private List<FavorResponse.DataBean> listItems;
+public class AllOrderItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+    private List<ShopCarResponse.DataBean.OrderListBean> listItems;
     private LayoutInflater layoutInflater;
     private  final int TYPE_HEADER = 0;
     private  final int TYPE_NORMAL = 1;
@@ -31,7 +32,7 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private GlideImageLoader glideImageLoader;
     private Context context;
 
-    public FavorAdapter(Context c){
+    public AllOrderItemAdapter(Context c){
         this.context=c;
         this.layoutInflater= LayoutInflater.from(c);
         glideImageLoader=new GlideImageLoader();
@@ -53,7 +54,7 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mFooterView = footerView;
         notifyItemInserted(0);//告知Adapter首位置项变动了
     }
-    public void setListItems(List<FavorResponse.DataBean> l)
+    public void setListItems(List<ShopCarResponse.DataBean.OrderListBean> l)
     {
         this.listItems=l;
     }
@@ -68,7 +69,7 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             return new DataHolder(mFooterView);
         }
         else {
-            View v = layoutInflater.inflate(R.layout.listitem_favor, parent, false);
+            View v = layoutInflater.inflate(R.layout.listitem_order_item, parent, false);
             return new DataHolder(v);
         }
     }
@@ -77,21 +78,16 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if(getItemViewType(position) == TYPE_HEADER) return;
         if(getItemViewType(position) == TYPE_FOOTER) return;
         final int pos = getRealPosition(holder);
-        final FavorResponse.DataBean listItem = listItems.get(pos);
+        final ShopCarResponse.DataBean.OrderListBean listItem = listItems.get(pos);
         if(holder instanceof DataHolder) {
             final DataHolder dataHolder=(DataHolder)holder;
-            //dataHolder.layoutView.setOnClickListener(dataHolder);
+            dataHolder.layoutView.setOnClickListener(dataHolder);
             dataHolder.txtProductName.setText(listItem.getProductName());
-            dataHolder.txtProductInfo.setText(listItem.getProductInfo());
-            dataHolder.txtProductPrice.setText(listItem.getProductPrice()+"元");
-            glideImageLoader.displayImage(context, Const.IMGURI+listItem.getProductImage(),dataHolder.imageView);
+            dataHolder.txtProductType.setText("规格:"+listItem.getType());
+            dataHolder.txtProductPrice.setText("￥:"+listItem.getPriceNow()+"元");
+            dataHolder.txtQuantity.setText("x"+listItem.getQuantity());
+            glideImageLoader.displayImage(context, Const.IMGURI+listItem.getPhotoSmall(),dataHolder.imageView);
             if(mListener == null) return;
-            dataHolder.layoutView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onItemClick(position,listItem);
-                }
-            });
         }
     }
     @Override
@@ -146,7 +142,8 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mHeaderView == null ? position : position - 1;
     }
     public interface ItemClickListener {
-        void onItemClick(int position, FavorResponse.DataBean item);
+        void onItemClick(View v, ShopCarResponse.DataBean.OrderListBean item, int num, int pos);
+        void onNumClick(ShopCarResponse.DataBean.OrderListBean item, int count, int pos);
     }
     public void onLoading(){
         TextView tips=mFooterView.findViewById(R.id.tips);
@@ -174,35 +171,29 @@ public class FavorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     {
         private ImageView imageView;
         private TextView txtProductName;
-        private TextView txtProductInfo;
+        private TextView txtProductType;
         private TextView txtProductPrice;
+        private TextView txtIncrease;
+        private TextView txtQuantity;
+        private TextView txtDecrease;
         private LinearLayout layoutView;
+
         public DataHolder(View itemView) {
             super(itemView);
             imageView =  itemView.findViewById(R.id.img_product);
             txtProductName =  itemView.findViewById(R.id.txt_product_name);
-            txtProductInfo =  itemView.findViewById(R.id.txt_product_type);
+            txtProductType =  itemView.findViewById(R.id.txt_product_type);
             txtProductPrice =  itemView.findViewById(R.id.txt_product_price);
+            txtQuantity =  itemView.findViewById(R.id.txt_quantity);
             layoutView = itemView.findViewById(R.id.layout);
         }
 
-        public ImageView getImageView() {
-            return imageView;
+        public TextView getTxtProductPrice() {
+            return txtProductPrice;
         }
-        public void setImageView(ImageView imageView) {
-            this.imageView = imageView;
-        }
-        public TextView getTxtProductName() {
-            return txtProductName;
-        }
-        public void setTxtProductName(TextView txtProductName) {
-            this.txtProductName = txtProductName;
-        }
-        public TextView getTxtProductInfo() {
-            return txtProductInfo;
-        }
-        public void setTxtProductInfo(TextView txtProductInfo) {
-            this.txtProductInfo = txtProductInfo;
+
+        public void setTxtProductPrice(TextView txtProductPrice) {
+            this.txtProductPrice = txtProductPrice;
         }
 
         @Override

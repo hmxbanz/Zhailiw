@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
@@ -25,7 +24,6 @@ import com.zhailiw.app.server.response.ProductAttributeResponse;
 import com.zhailiw.app.server.response.ProductResponse;
 import com.zhailiw.app.view.activity.LoginActivity;
 import com.zhailiw.app.view.activity.ProductDetailActivity;
-import com.zhailiw.app.view.fragment.NotPayFragment;
 import com.zhailiw.app.widget.DialogBuy;
 import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
@@ -72,7 +70,7 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
 
         txtProductName = activity.findViewById(R.id.txt_product_name);
         txtProductNo = activity.findViewById(R.id.txt_product_no);
-        txtProductInfo = activity.findViewById(R.id.txt_product_info);
+        txtProductInfo = activity.findViewById(R.id.txt_product_type);
         activity.findViewById(R.id.img_favor).setOnClickListener(this);
         LoadDialog.show(context);
         atm.request(GETPRODUCT,this);
@@ -112,7 +110,7 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
                     banner.setImages(images);//设置图片集合
                     banner.start();
                     this.txtProductName.setText(productResponse.getData().getProductName());
-                    this.txtProductNo.setText(productResponse.getData().getProductNo());
+                    this.txtProductNo.setText("￥:"+productResponse.getData().getProductPrice()+"元");
                     this.txtProductInfo.setText(productResponse.getData().getProductInfo());
 
                     LinearLayout layoutContent=(LinearLayout) activity.findViewById(R.id.layout_content);
@@ -153,6 +151,13 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
                     OrderDetailActivity.StartActivity(context,addOrderResponse.getOrderId());
                 }
                 NToast.shortToast(context, addOrderResponse.getMsg());
+                break;
+            case ADDFAVOR:
+                CommonResponse commonResponse = (CommonResponse) result;
+                if (commonResponse.getState() == Const.SUCCESS) {
+                }
+                else
+                NToast.shortToast(context, commonResponse.getMsg());
                 break;
         }
 

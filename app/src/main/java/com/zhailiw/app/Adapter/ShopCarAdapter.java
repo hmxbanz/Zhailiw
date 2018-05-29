@@ -232,7 +232,7 @@ public class ShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             checkBox.setCompoundDrawables(drawable,null,null,null);
             imageView =  itemView.findViewById(R.id.img_product);
             txtProductName =  itemView.findViewById(R.id.txt_product_name);
-            txtProductInfo =  itemView.findViewById(R.id.txt_product_info);
+            txtProductInfo =  itemView.findViewById(R.id.txt_product_type);
             txtProductPrice =  itemView.findViewById(R.id.txt_product_price);
             txtIncrease =  itemView.findViewById(R.id.txt_increase);
             txtQuantity =  itemView.findViewById(R.id.txt_quantity);

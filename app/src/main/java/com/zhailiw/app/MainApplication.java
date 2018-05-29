@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.lzy.ninegrid.NineGridView;
 import com.mob.MobSDK;
 import com.zhailiw.app.common.NLog;
-import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 public class MainApplication extends Application {
 
@@ -20,6 +19,7 @@ public class MainApplication extends Application {
         MobSDK.init(this);
         //ZXingLibrary.initDisplayOpinion(this);
         NineGridView.setImageLoader(new PicassoImageLoader());
+
     }
 
     /** Picasso 加载 */

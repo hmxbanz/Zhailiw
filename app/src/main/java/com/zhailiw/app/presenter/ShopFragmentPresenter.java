@@ -65,6 +65,7 @@ public class ShopFragmentPresenter extends BasePresenter implements StyleAdapter
         if (result==null)return;
         switch (requestCode) {
             case GETSTYLE:
+                this.swiper.setRefreshing(false);
                 StyleResponse response = (StyleResponse) result;
                 if (response.getState() == Const.SUCCESS) {
                     if (response.getData().size() == 0) {
@@ -72,11 +73,10 @@ public class ShopFragmentPresenter extends BasePresenter implements StyleAdapter
                     else {
                         list.addAll(response.getData());
                         dataAdapter.notifyDataSetChanged();
-                        this.swiper.setRefreshing(false);
                     }
-                }else {
-                    NToast.shortToast(context, response.getMsg());
                 }
+                else
+                NToast.shortToast(context, response.getMsg());
 
                 break;
         }
@@ -91,7 +91,6 @@ public class ShopFragmentPresenter extends BasePresenter implements StyleAdapter
 
     @Override
     public void onItemClick(int position, StyleResponse.DataBean item) {
-        NToast.shortToast(activity,item.getName());
         ShopActivity.StartActivity(activity,item);
     }
 }

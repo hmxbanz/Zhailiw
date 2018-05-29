@@ -123,6 +123,7 @@ public class GalleryFragmentPresenter extends BasePresenter implements GalleryAd
                         list.addAll(galleryResponse.getData());
                         dataAdapter.notifyDataSetChanged();
                         this.swiper.setRefreshing(false);
+                        dataAdapter.getFooterView().setVisibility(View.GONE);
                     }
                 }else {
                     NToast.shortToast(context, galleryResponse.getMsg());

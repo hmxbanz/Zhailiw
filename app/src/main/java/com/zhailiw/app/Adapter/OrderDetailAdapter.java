@@ -1,20 +1,17 @@
 package com.zhailiw.app.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.R;
-import com.zhailiw.app.common.NToast;
 import com.zhailiw.app.loader.GlideImageLoader;
 import com.zhailiw.app.server.response.OrderDetailResponse;
 import com.zhailiw.app.server.response.ShopCarResponse;
@@ -188,7 +185,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
             imageView =  itemView.findViewById(R.id.img_product);
             txtProductName =  itemView.findViewById(R.id.txt_product_name);
-            txtProductInfo =  itemView.findViewById(R.id.txt_product_info);
+            txtProductInfo =  itemView.findViewById(R.id.txt_product_type);
             txtProductPrice =  itemView.findViewById(R.id.txt_product_price);
             txtQuantity =  itemView.findViewById(R.id.txt_quantity);
             layoutView = itemView.findViewById(R.id.layout);

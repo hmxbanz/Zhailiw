@@ -59,6 +59,12 @@
         <activity   android:name=".view.activity.ShopCarActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.ProductDetailActivity" android:screenOrientation="portrait" />
         <activity   android:name=".view.activity.OrderDetailActivity" android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:theme="@android:style/Theme.Translucent"-->
+            <!--android:name=".wxapi.WXPayEntryActivity"-->
+            <!--android:exported="true"-->
+            <!--android:launchMode="singleTop"/>-->
+
         <service android:name=".service.BluetoothService" />
         <provider
             android:name="android.support.v4.content.FileProvider"
