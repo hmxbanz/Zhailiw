@@ -40,6 +40,14 @@ public class OrderNotPayFragment extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.onRefresh();
+    }
+
+
     private void initViews() {
         recycleView = view.findViewById(R.id.recyclerView);
         swiper = view.findViewById(R.id.swiper);

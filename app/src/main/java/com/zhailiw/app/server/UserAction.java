@@ -30,6 +30,7 @@ import com.zhailiw.app.server.response.StyleResponse;
 import com.zhailiw.app.server.response.SystemObjResponse;
 import com.zhailiw.app.server.response.UserInfoResponse;
 import com.zhailiw.app.server.response.ProductAttributeResponse;
+import com.zhailiw.app.server.response.VersionResponse;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -344,14 +345,14 @@ public class UserAction extends BaseAction {
     }
 //取产品
     public ProductResponse getProduct(String productId) throws HttpException{
-        String uri = getURL("User/getProduct");
+        String uri = getURL("Home/getProduct");
         LinkedHashMap map=new LinkedHashMap<>();
         map.put("productId",productId);
         return getRequest(ProductResponse.class,map,uri);
     }
     //取产品规格
     public ProductAttributeResponse getProductAttribute(String productId) throws HttpException{
-        String uri = getURL("User/getProductAttribute");
+        String uri = getURL("Home/getProductAttribute");
         LinkedHashMap map=new LinkedHashMap<>();
         map.put("productId",productId);
         return getRequest(ProductAttributeResponse.class,map,uri);
@@ -399,5 +400,12 @@ public class UserAction extends BaseAction {
         map.put("orderId",orderId);
         map.put("addressId",addressId);
         return getRequest(CommonResponse.class,map,uri);
+    }
+
+    //版本检查
+    public VersionResponse checkVersion() throws HttpException {
+        String uri ="http://api.zhailiw.com/version.txt";
+        LinkedHashMap map=new LinkedHashMap<>();
+        return getRequest(VersionResponse.class,map,uri);
     }
 }

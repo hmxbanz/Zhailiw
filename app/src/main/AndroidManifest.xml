@@ -64,7 +64,7 @@
             <!--android:name=".wxapi.WXPayEntryActivity"-->
             <!--android:exported="true"-->
             <!--android:launchMode="singleTop"/>-->
-
+        <service android:name=".widget.downloadService.DownloadService" />
         <service android:name=".service.BluetoothService" />
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -50,7 +50,6 @@ public class AllOrderFragmentPresenter extends BasePresenter implements AllOrder
         this.recyclerView.setNestedScrollingEnabled(false);
         gridLayoutManager=new GridLayoutManager(context,1);
         this.recyclerView.setLayoutManager(gridLayoutManager);
-        atm.request(GETALLORDER,AllOrderFragmentPresenter.this);
     }
 
     @Override
@@ -87,7 +86,6 @@ public class AllOrderFragmentPresenter extends BasePresenter implements AllOrder
             case REMOVEORDER:
                 CommonResponse commonResponse=(CommonResponse) result;
                 if (commonResponse.getState() == Const.SUCCESS) {
-                    atm.request(GETALLORDER,AllOrderFragmentPresenter.this);
                 }
                     NToast.shortToast(context, commonResponse.getMsg());
         }
@@ -108,6 +106,15 @@ public class AllOrderFragmentPresenter extends BasePresenter implements AllOrder
                 break;
             case R.id.btn_cancel:
                 this.removeOrderId=item.getOrderID();
+                int index=0;
+                for (int i=0;i<list.size();i++) {
+                    if(list.get(i).getOrderID()==this.removeOrderId) {
+                        index = i;
+                        break;
+                    }
+                }
+                list.remove(index);
+                dataAdapter.notifyDataSetChanged();
                 atm.request(REMOVEORDER,this);
                 break;
         }

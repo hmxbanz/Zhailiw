@@ -24,8 +24,9 @@ public class OrderActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    public static void StartActivity(Context context) {
+    public static void StartActivity(Context context,int tabIndex) {
         Intent intent = new Intent(context, OrderActivity.class);
+        intent.putExtra("tabIndex", tabIndex);
         context.startActivity(intent);
     }
 

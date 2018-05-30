@@ -36,13 +36,9 @@ public class OrderAllFragment extends Fragment  {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
+        presenter.onRefresh();
     }
 
     private void initViews() {

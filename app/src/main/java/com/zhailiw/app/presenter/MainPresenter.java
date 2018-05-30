@@ -8,16 +8,19 @@ import android.widget.Toast;
 
 import com.zhailiw.app.Const;
 import com.zhailiw.app.common.NToast;
+import com.zhailiw.app.listener.AlertDialogCallBack;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.CommonResponse;
+import com.zhailiw.app.server.response.VersionResponse;
 import com.zhailiw.app.view.activity.LoginFirstActivity;
 import com.zhailiw.app.view.activity.MainActivity;
+import com.zhailiw.app.widget.DialogWithYesOrNoUtils;
 import com.zhailiw.app.widget.LoadDialog;
 import com.zhailiw.app.widget.downloadService.DownloadService;
 import com.zhailiw.app.widget.permissionLibrary.PermissionsManager;
 import com.zhailiw.app.widget.permissionLibrary.PermissionsResultAction;
 
-
+import static com.zhailiw.app.common.CommonTools.getVersionInfo;
 
 
 /**
@@ -39,13 +42,10 @@ public class MainPresenter extends BasePresenter {
 
     public void init(ViewPager viewPager) {
         this.viewPager=viewPager;
-//        LoadDialog.show(activity);
-//        atm.request(CHECKVERSION,this);
+        atm.request(CHECKVERSION,this);
         String[] Permissions=new String[]{Manifest.permission.CAMERA,
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                Manifest.permission.READ_EXTERNAL_STORAGE};
         //权限申请
         PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(activity,
                 Permissions,
@@ -65,13 +65,6 @@ public class MainPresenter extends BasePresenter {
     public void onMeClick() {
         basePresenter.initData();
         if(!basePresenter.isLogin){
-//            DialogWithYesOrNoUtils.getInstance().showDialog(context, "请先登录", new AlertDialogCallBack() {
-//                @Override
-//                public void executeEvent() {
-//                    activity.startActivity(new Intent(activity, LoginActivity.class));
-//                }
-//
-//            });
             activity.startActivity(new Intent(activity, LoginFirstActivity.class));
         }
         else {
@@ -85,7 +78,7 @@ public class MainPresenter extends BasePresenter {
 //            case AUTOLOGIN:
 //                return userAction.login(userName, password,null,"");
             case CHECKVERSION:
-               // return userAction.checkVersion();
+                return userAction.checkVersion();
         }
         return null;
     }
@@ -104,28 +97,25 @@ public class MainPresenter extends BasePresenter {
                 }
                 break;
             case CHECKVERSION:
-//                VersionResponse versionResponse = (VersionResponse) result;
-//                if (versionResponse.getState() == XtdConst.SUCCESS) {
-//                    final VersionResponse.ResultEntity entity=versionResponse.getAndroid();
-//                    String[] versionInfo = getVersionInfo(activity);
-//                    int versionCode = Integer.parseInt(versionInfo[0]);
-//                    if(entity.getVersionCode()>versionCode)
-//                    {
-//                        DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
-//                        dialog.showDialog(activity, "发现新版本:"+entity.getVersionName(), null,"立即更新",new AlertDialogCallback() {
-//                            @Override
-//                            public void executeEvent() {
-//                                goToDownload(entity.getDownloadUrl());
-//                            }
-//
-//
-//                        });
-//                        dialog.setContent(entity.getVersionInfo());
-//                    }
-//                    NToast.shortToast(activity, "版本检测成功");
-//                }else {
-//                    NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
-//                }
+                VersionResponse versionResponse = (VersionResponse) result;
+                if (versionResponse.getState() == Const.SUCCESS) {
+                    final VersionResponse.ResultEntity entity=versionResponse.getAndroid();
+                    String[] versionInfo = getVersionInfo(activity);
+                    int versionCode = Integer.parseInt(versionInfo[0]);
+                    if(entity.getVersionCode()>versionCode)
+                    {
+                        DialogWithYesOrNoUtils dialog=DialogWithYesOrNoUtils.getInstance();
+                        dialog.showDialog(activity, "发现新版本:"+entity.getVersionName(), new AlertDialogCallBack(){
+                            @Override
+                            public void executeEvent() {
+                                goToDownload(entity.getDownloadUrl());
+                            }
+                        });
+                        dialog.setContent(entity.getVersionInfo());
+                    }
+                }else {
+                    NToast.shortToast(activity, "版本检测："+versionResponse.getMsg());
+                }
                 break;
 
         }

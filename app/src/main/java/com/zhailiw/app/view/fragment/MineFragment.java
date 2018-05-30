@@ -119,9 +119,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), FavorActivity.class));
                 break;
             case R.id.layout_notpay:
+                OrderActivity.StartActivity(getContext(),1);
+                break;
             case R.id.layout_payed:
+                OrderActivity.StartActivity(getContext(),2);
+                break;
             case R.id.layout_done:
-                startActivity(new Intent(getActivity(), OrderActivity.class));
+                OrderActivity.StartActivity(getContext(),3);
                 break;
             case R.id.layout_about:
                 startActivity(new Intent(getActivity(), AboutActivity.class));

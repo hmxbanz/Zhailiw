@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ import com.zhailiw.app.view.activity.AddressActivity;
 import com.zhailiw.app.view.activity.OrderDetailActivity;
 import com.zhailiw.app.widget.DialogPay;
 import com.zhailiw.app.widget.LoadDialog;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,7 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
     private OrderDetailResponse orderDetailResponse;
     private DialogPay dialog;
     private String addressId;
+    private boolean isAddressSelect;
 
     public OrderDetailPresenter(Context context){
         super(context);
@@ -98,6 +102,8 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
                 orderDetailResponse = (OrderDetailResponse) result;
                 OrderDetailResponse.DataBean data = orderDetailResponse.getData();
                 if (orderDetailResponse.getState() == Const.SUCCESS) {
+                    TextPaint tp=this.txtOrderTotal.getPaint();
+                    tp.setFakeBoldText(true);
                     this.txtOrderNo.setText("订单号："+data.getOrderNo());
                     this.txtOrderTotal.setText("订单总价："+data.getTotal()+"元");
                     list.addAll(data.getOrderList());
@@ -106,9 +112,11 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
                     {
                         this.txtContact.setText("请选择收货地址");
                         this.txtAddress.setVisibility(View.GONE);
+                        this.isAddressSelect=false;
                     }
                     else
                     {
+                        this.isAddressSelect=true;
                         this.txtAddress.setVisibility(View.VISIBLE);
                         this.txtContact.setText("收货人："+data.getContact()+" 手机："+data.getCellphone());
                         this.txtAddress.setText("送货地址："+data.getAddress());
@@ -122,6 +130,7 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
                 DefaultAddressResponse defaultResponse = (DefaultAddressResponse) result;
                 if(defaultResponse.getState()==Const.SUCCESS)
                 {
+                    this.isAddressSelect=true;
                     this.txtAddress.setVisibility(View.VISIBLE);
                     this.txtContact.setText("收货人："+defaultResponse.getDefaultAddress().getContact()+" 手机："+defaultResponse.getDefaultAddress().getCellphone());
                     this.txtAddress.setText("送货地址："+defaultResponse.getDefaultAddress().getAddress());
@@ -146,8 +155,9 @@ public class OrderDetailPresenter extends BasePresenter implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay:
-                if(orderDetailResponse.getData().getCellphone()==null)
-                    NToast.shortToast(context, "请先选择收货地址！");
+                if(!isAddressSelect){
+                    NToast.shortToast(context, "请选择收货地址！");
+                return;}
                 showPhotoDialog(v);
                 break;
             case R.id.layout_address:

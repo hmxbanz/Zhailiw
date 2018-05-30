@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,6 +61,8 @@ public class DialogPay extends Dialog implements View.OnClickListener {
         void onSubmit(int i);
     }
     public void setData(OrderDetailResponse order){
+        TextPaint tp=this.txtProductPrice.getPaint();
+        tp.setFakeBoldText(true);
         this.txtProductPrice.setText("￥:"+order.getData().getTotal()+" 元");
         this.txtOrderNo.setText("订单号:"+order.getData().getOrderNo());
     }
