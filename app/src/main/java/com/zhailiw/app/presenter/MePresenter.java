@@ -149,6 +149,7 @@ public class MePresenter extends BasePresenter implements OnDataListener{
                     this.txtCellphone.setText(entity.getCellPhone());
                     atm.request(CHECKWXQQ,this);
                 }
+                else
                 NToast.shortToast(context, userInfoResponse.getMsg());
                 break;
             case CHECKWXQQ:

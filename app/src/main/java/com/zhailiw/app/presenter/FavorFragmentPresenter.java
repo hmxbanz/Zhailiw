@@ -88,6 +88,7 @@ public class FavorFragmentPresenter extends BasePresenter implements FavorAdapte
 
     @Override
     public void onSuccess(int requestCode, Object result) {
+        this.swiper.setRefreshing(false);
         LoadDialog.dismiss(context);
         if (result==null)return;
         switch (requestCode) {
@@ -99,9 +100,8 @@ public class FavorFragmentPresenter extends BasePresenter implements FavorAdapte
                     else {
                         list.addAll(response.getData());
                         dataAdapter.notifyDataSetChanged();
-                        this.swiper.setRefreshing(false);
-                        dataAdapter.onLoadingEnd();
                     }
+                    dataAdapter.onLoadingEnd();
                 }else {
                     NToast.shortToast(context, response.getMsg());
                 }

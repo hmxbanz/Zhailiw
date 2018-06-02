@@ -156,7 +156,6 @@ public class ProductDetailPresenter extends BasePresenter implements OnDataListe
                 CommonResponse commonResponse = (CommonResponse) result;
                 if (commonResponse.getState() == Const.SUCCESS) {
                 }
-                else
                 NToast.shortToast(context, commonResponse.getMsg());
                 break;
         }

@@ -224,6 +224,98 @@ public class UserAction extends BaseAction {
         String uri = getURL("/Sys/GetSysObj");
         return getRequest(SystemObjResponse.class,null,uri);
     }
+
+//取收藏
+    public FavorResponse getFavors(String pageIndex) throws HttpException {
+        String uri = getURL("User/getMyFavors");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("pageIndex",pageIndex);
+        return getRequest(FavorResponse.class,map,uri);
+    }
+
+    public CommonResponse updateBuyShop(int orderAttributeId, int count) throws  HttpException{
+        String uri = getURL("User/updateBuyShop");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderAttributeId",orderAttributeId+"");
+        map.put("count",count+"");
+        return getRequest(CommonResponse.class,map,uri);
+    }
+    public CommonResponse deleteBuyShop(String orderAttributeIds) throws  HttpException{
+        String uri = getURL("User/deleteBuyShop");
+        String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
+        return postRequest(CommonResponse.class,json,uri);
+    }
+    public AddOrderResponse payBuyShop(String orderAttributeIds) throws  HttpException{
+        String uri = getURL("User/addOrderFromShopCar");
+        String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
+        return postRequest(AddOrderResponse.class,json,uri);
+    }
+//取产品
+    public ProductResponse getProduct(String productId) throws HttpException{
+        String uri = getURL("Home/getProduct");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        return getRequest(ProductResponse.class,map,uri);
+    }
+    //取产品规格
+    public ProductAttributeResponse getProductAttribute(String productId) throws HttpException{
+        String uri = getURL("Home/getProductAttribute");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        return getRequest(ProductAttributeResponse.class,map,uri);
+    }
+//收藏商品
+    public CommonResponse addFavor(String productId) throws HttpException{
+        String uri = getURL("User/addMyFavors");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("productId",productId);
+        return getRequest(CommonResponse.class,map,uri);
+    }
+    //加入购物车
+    public AddOrderResponse addOrderCar(String orderType, String quantity, String productAttributeId) throws HttpException{
+        String uri = getURL("User/addOrder");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderType",orderType);
+        map.put("quantity",quantity);
+        map.put("productAttributeId",productAttributeId);
+        return getRequest(AddOrderResponse.class,map,uri);
+    }
+
+    public OrderDetailResponse getOrderDetail(String orderId) throws HttpException {
+        String uri = getURL("User/payOrder");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderId",orderId);
+        return getRequest(OrderDetailResponse.class,map,uri);
+    }
+    public DefaultAddressResponse getOrderAddress(String addressId) throws HttpException {
+        String uri = getURL("User/getOrderAddress");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("addressId",addressId);
+        return getRequest(DefaultAddressResponse.class,map,uri);
+    }
+
+    public CommonResponse removeOrder(String removeOrderId) throws HttpException {
+        String uri = getURL("User/removeOrder");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderId",removeOrderId);
+        return getRequest(CommonResponse.class,map,uri);
+    }
+
+    public CommonResponse setOrderAddress(String orderId, String addressId) throws HttpException{
+        String uri = getURL("User/updateOrderAddress");
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("orderId",orderId);
+        map.put("addressId",addressId);
+        return getRequest(CommonResponse.class,map,uri);
+    }
+
+    //版本检查
+    public VersionResponse checkVersion() throws HttpException {
+        String uri ="http://api.zhailiw.com/version.txt";
+        LinkedHashMap map=new LinkedHashMap<>();
+        return getRequest(VersionResponse.class,map,uri);
+    }
+
     //get请求
     public <T> T getRequest(Class<T> t, LinkedHashMap map, String uri)throws HttpException
     {
@@ -317,95 +409,5 @@ public class UserAction extends BaseAction {
             return null;
         }
         return beanResponse;
-    }
-//取收藏
-    public FavorResponse getFavors(String pageIndex) throws HttpException {
-        String uri = getURL("User/getMyFavors");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("pageIndex",pageIndex);
-        return getRequest(FavorResponse.class,map,uri);
-    }
-
-    public CommonResponse updateBuyShop(int orderAttributeId, int count) throws  HttpException{
-        String uri = getURL("User/updateBuyShop");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("orderAttributeId",orderAttributeId+"");
-        map.put("count",count+"");
-        return getRequest(CommonResponse.class,map,uri);
-    }
-    public CommonResponse deleteBuyShop(String orderAttributeIds) throws  HttpException{
-        String uri = getURL("User/deleteBuyShop");
-        String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
-        return postRequest(CommonResponse.class,json,uri);
-    }
-    public AddOrderResponse payBuyShop(String orderAttributeIds) throws  HttpException{
-        String uri = getURL("User/addOrderFromShopCar");
-        String json="{\"orderAttributeIds\":"+orderAttributeIds+"}";
-        return postRequest(AddOrderResponse.class,json,uri);
-    }
-//取产品
-    public ProductResponse getProduct(String productId) throws HttpException{
-        String uri = getURL("Home/getProduct");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("productId",productId);
-        return getRequest(ProductResponse.class,map,uri);
-    }
-    //取产品规格
-    public ProductAttributeResponse getProductAttribute(String productId) throws HttpException{
-        String uri = getURL("Home/getProductAttribute");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("productId",productId);
-        return getRequest(ProductAttributeResponse.class,map,uri);
-    }
-//收藏商品
-    public CommonResponse addFavor(String productId) throws HttpException{
-        String uri = getURL("User/addMyFavors");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("productId",productId);
-        return getRequest(CommonResponse.class,map,uri);
-    }
-    //加入购物车
-    public AddOrderResponse addOrderCar(String orderType, String quantity, String productAttributeId) throws HttpException{
-        String uri = getURL("User/addOrder");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("orderType",orderType);
-        map.put("quantity",quantity);
-        map.put("productAttributeId",productAttributeId);
-        return getRequest(AddOrderResponse.class,map,uri);
-    }
-
-    public OrderDetailResponse getOrderDetail(String orderId) throws HttpException {
-        String uri = getURL("User/payOrder");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("orderId",orderId);
-        return getRequest(OrderDetailResponse.class,map,uri);
-    }
-    public DefaultAddressResponse getOrderAddress(String addressId) throws HttpException {
-        String uri = getURL("User/getOrderAddress");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("addressId",addressId);
-        return getRequest(DefaultAddressResponse.class,map,uri);
-    }
-
-    public CommonResponse removeOrder(String removeOrderId) throws HttpException {
-        String uri = getURL("User/removeOrder");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("orderId",removeOrderId);
-        return getRequest(CommonResponse.class,map,uri);
-    }
-
-    public CommonResponse setOrderAddress(String orderId, String addressId) throws HttpException{
-        String uri = getURL("User/updateOrderAddress");
-        LinkedHashMap map=new LinkedHashMap<>();
-        map.put("orderId",orderId);
-        map.put("addressId",addressId);
-        return getRequest(CommonResponse.class,map,uri);
-    }
-
-    //版本检查
-    public VersionResponse checkVersion() throws HttpException {
-        String uri ="http://api.zhailiw.com/version.txt";
-        LinkedHashMap map=new LinkedHashMap<>();
-        return getRequest(VersionResponse.class,map,uri);
     }
 }
