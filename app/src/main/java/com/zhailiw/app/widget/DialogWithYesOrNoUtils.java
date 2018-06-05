@@ -34,7 +34,7 @@ public class DialogWithYesOrNoUtils {
 
     public void showDialog(Context context, String titleText, final DialogCallBack callBack) {
         this.context= context;
-        final AlertDialog alterDialog = new AlertDialog.Builder(this.context).create();
+        final AlertDialog alterDialog = new AlertDialog.Builder(context,R.style.myDialog).create();
         alterDialog.show();
         Window window=alterDialog.getWindow();
         window.setContentView(R.layout.alert_dialog);
