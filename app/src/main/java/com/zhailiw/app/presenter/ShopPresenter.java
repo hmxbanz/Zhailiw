@@ -98,7 +98,7 @@ public class ShopPresenter extends BasePresenter implements OnDataListener, Shop
             case GETPRODUCTS :
                 return userAction.getProducts(pageIndex+"",this.styleId,this.productTypeId);
             case GETADS :
-                return userAction.getAds();
+                return userAction.getAds(this.styleId);
         }
         return null;
     }

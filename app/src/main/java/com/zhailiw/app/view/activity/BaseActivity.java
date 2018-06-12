@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+import com.jaeger.library.StatusBarUtil;
+import com.zhailiw.app.R;
 
 /**
  * Created by hmx on 2016/5/21.
@@ -21,12 +23,15 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //x.view().inject(this);
-        //setStatusBar();
+        //        if(this instanceof DetailActivity)
+//            return;
+//        else
+            setStatusBar();
         }
 
     protected void setStatusBar() {
-        //StatusBarUtil.setTransparent(this);
-        //StatusBarUtil.setColor(this, getResources().getColor(R.color.titleBlue));
+        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.mainColor));
     }
 
     @Override

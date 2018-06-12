@@ -207,9 +207,11 @@ public class UserAction extends BaseAction {
         return getRequest(ShopCarResponse.class,map,uri);
     }
     //取广告
-    public ADResponse getAds() throws HttpException{
+    public ADResponse getAds(String type) throws HttpException{
         String uri = getURL("Home/getAds");
-        return getRequest(ADResponse.class,null,uri);
+        LinkedHashMap map=new LinkedHashMap<>();
+        map.put("type",type);
+        return getRequest(ADResponse.class,map,uri);
     }
     //手机绑定
     public CommonResponse bindPhone(String userName, String captcha,String openId, String bindType ) throws HttpException
