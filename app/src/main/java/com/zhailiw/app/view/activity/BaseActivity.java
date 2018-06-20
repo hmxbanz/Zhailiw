@@ -1,5 +1,7 @@
 package com.zhailiw.app.view.activity;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +12,11 @@ import android.widget.ViewFlipper;
 import com.jaeger.library.StatusBarUtil;
 import com.zhailiw.app.R;
 
+import java.lang.reflect.Method;
+
+import static com.zhailiw.app.common.CommonTools.checkDeviceHasNavigationBar;
+import static com.zhailiw.app.common.CommonTools.getActionBarHeight;
+
 /**
  * Created by hmx on 2016/5/21.
  */
@@ -19,6 +26,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected RelativeLayout layoutBack,layoutRight;
     private ViewFlipper contentView;
     private LinearLayout headLayout;
+    protected int paddingParams;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +35,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         //        if(this instanceof DetailActivity)
 //            return;
 //        else
+        //if(!checkDeviceHasNavigationBar(this))
+paddingParams=getActionBarHeight(this);
             setStatusBar();
         }
 

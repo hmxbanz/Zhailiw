@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ import com.zhailiw.app.view.fragment.ShopFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zhailiw.app.common.CommonTools.checkDeviceHasNavigationBar;
 
 public class MainActivity extends BaseActivity {
     private ViewPager viewPager;
@@ -52,6 +55,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initViews() {
+        if(checkDeviceHasNavigationBar(this)){
+            View rootView=findViewById(R.id.root_view);
+            //LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) rootView.getLayoutParams();
+            //lp.setMargins(0,0, 0, 0);
+            rootView.setPadding(0,0,0,paddingParams);
+        }
         RelativeLayout homeLayout, shopLayout,meLayout;
         homeLayout =  findViewById(R.id.tab_layout_home);
         shopLayout =  findViewById(R.id.tab_layout_shop);

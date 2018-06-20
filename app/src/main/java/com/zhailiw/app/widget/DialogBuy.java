@@ -89,6 +89,9 @@ public class DialogBuy extends Dialog implements View.OnClickListener {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //window.setBackgroundDrawableResource(R.drawable.transparent_drawable);
 
+        findViewById(R.id.root_view).setOnClickListener(this);
+
+
         btnSubmit =  findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
         tagCloudLayout =  findViewById(R.id.tab_container);
@@ -142,6 +145,9 @@ public class DialogBuy extends Dialog implements View.OnClickListener {
                 break;
             case R.id.txt_increase:
                 quantity++;
+                break;
+            case R.id.root_view:
+                dismiss();
                 break;
         }
         this.txtQuantity.setText(quantity+"");

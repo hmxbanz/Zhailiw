@@ -1,21 +1,25 @@
 package com.zhailiw.app.common;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.ViewConfiguration;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -212,6 +216,45 @@ public class CommonTools {
         NLog.setDebug(true);
         NLog.e("imei", imei);
         return imei;
+    }
+
+    /**
+     * 获取是否存在NavigationBar，是否有虚拟按钮
+     */
+    public static boolean checkDeviceHasNavigationBar(Context context) {
+        boolean hasNavigationBar = false;
+        Resources rs = context.getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+
+        }
+        return hasNavigationBar;
+
+    }
+    /**
+     * 获取虚拟按钮ActionBar的高度
+     *
+     * @param activity activity
+     * @return ActionBar高度
+     */
+    public static int getActionBarHeight(Activity activity) {
+        TypedValue tv = new TypedValue();
+        if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            return TypedValue.complexToDimensionPixelSize(tv.data, activity.getResources().getDisplayMetrics());
+        }
+        return 0;
     }
 
 }
