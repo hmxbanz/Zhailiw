@@ -8,8 +8,10 @@ import android.os.Message;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.zhailiw.app.Const;
+import com.zhailiw.app.common.CommonTools;
 import com.zhailiw.app.server.HttpException;
 import com.zhailiw.app.server.response.SystemObjResponse;
+import com.zhailiw.app.view.activity.GuideActivity;
 import com.zhailiw.app.view.activity.MainActivity;
 import com.zhailiw.app.view.activity.StartActivity;
 import com.zhailiw.app.widget.ACache;
@@ -35,12 +37,12 @@ public class StartPresenter extends BasePresenter {
     }
 
     public void init() {
-//        if (CommonTools.isFristRun(activity)) {
-//            Intent intent = new Intent(activity, GuideActivity.class);
-//            activity.startActivity(intent);
-//            activity.finish();
-//            return;
-//        }
+        if (CommonTools.isFristRun(activity)) {
+            Intent intent = new Intent(activity, GuideActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
+            return;
+        }
         String systemObjCache = aCache.getAsString("SystemObjCache");
         Logger.d("systemObjCache %s:", systemObjCache);
         if (systemObjCache==null || ("null").equals(systemObjCache)) {

@@ -140,8 +140,10 @@ public class UserAction extends BaseAction {
     }
     //取风格
     public StyleResponse getStyles() throws HttpException {
-        String uri = getURL("Home/getStyles");
+        String uri = getURL("User/getClients");
         LinkedHashMap map=new LinkedHashMap<>();
+        map.put("pageIndex","1");
+        map.put("keyword","");
         return getRequest(StyleResponse.class,map,uri);
     }
     //上传头像

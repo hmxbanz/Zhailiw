@@ -86,6 +86,7 @@ public class LoginFirstPresenter extends BasePresenter  {
         weixin.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, final HashMap<String, Object> hashMap) {
+                LoadDialog.dismiss(context);
                 Log.d(TAG, " _Weixin: -->> onComplete: Platform:" + platform.toString());
                 Log.d(TAG, " _Weixin: -->> onComplete: hashMap:" + hashMap);
                 //weixin.removeAccount(true); //移除授权状态和本地缓存，下次授权会重新授权
@@ -100,6 +101,17 @@ public class LoginFirstPresenter extends BasePresenter  {
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
+                LoadDialog.dismiss(context);
+                if(i==8){
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NToast.shortToast(context,"手机没有安装微信");
+                        }
+                    });
+                }
+
+
                 Log.d(TAG, " _Weixin: -->> onError:  " + throwable.toString());
                 throwable.printStackTrace();
                 weixin.removeAccount(true);
@@ -133,6 +145,7 @@ public class LoginFirstPresenter extends BasePresenter  {
         qq.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int action, final HashMap<String, Object> hashMap) {
+                LoadDialog.dismiss(context);
                 Log.d(TAG, " _QQ: -->> onComplete: Platform:" + platform.toString());
                 Log.d(TAG, " _QQ: -->> onComplete: hashMap:" + hashMap);
                 if (action == Platform.ACTION_USER_INFOR) {
@@ -155,6 +168,7 @@ public class LoginFirstPresenter extends BasePresenter  {
             }
             @Override
             public void onError(Platform platform, int action, Throwable throwable) {
+                LoadDialog.dismiss(context);
                 Log.d(TAG, " _QQ: -->> onError:  " + throwable.toString());
                 throwable.printStackTrace();
             }
